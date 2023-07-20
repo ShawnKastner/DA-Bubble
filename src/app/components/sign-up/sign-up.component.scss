@@ -1,0 +1,122 @@
+.login-content {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card {
+  display: flex;
+  align-items: center;
+  height: 605px;
+  width: 606px;
+  border-radius: 30px;
+  gap: 32px;
+  background-color: #ffff;
+
+  mat-card-header {
+    margin-top: 18px;
+
+    h1 {
+      color: #444df2;
+      font-size: 2.8rem;
+      font-weight: 700;
+    }
+  }
+
+  mat-card-content {
+    .login-form {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: 35px;
+
+      input {
+        width: 400px;
+        border-radius: 100px;
+        padding: 18px 32px;
+        border: unset;
+        background-color: #eceefe;
+
+        &::placeholder {
+          position: relative;
+          left: 32px;
+        }
+
+        &:hover {
+          cursor: pointer;
+          border: 1px solid black;
+        }
+      }
+
+      .background-name {
+        background-image: url("/../assets/img/person_filled.png");
+        background-position: 5px center;
+        background-position-x: 25px;
+        background-repeat: no-repeat;
+      }
+
+      .background-email {
+        background-image: url("/../assets/img/mail.png");
+        background-position: 5px center;
+        background-position-x: 25px;
+        background-repeat: no-repeat;
+      }
+
+      .background-password {
+        background-image: url("/../assets/img/lock.png");
+        background-position: 5px center;
+        background-position-x: 25px;
+        background-repeat: no-repeat;
+      }
+    }
+  }
+
+  .back-arrow {
+    position: absolute;
+    top: 30px;
+    left: 32px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.continue-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  top: 90px;
+
+  button {
+    background-color: #444df2;
+    color: #ffff;
+    border: unset;
+    border-radius: 25px;
+    padding: 12px 25px;
+    font-weight: 700;
+    transition: ease-in-out 75ms;
+
+    &:hover {
+      cursor: pointer;
+      opacity: 0.6;
+      transition: ease-in-out 75ms;
+    }
+  }
+
+  button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.logo-container {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+
+  img {
+    height: 45px;
+  }
+}
