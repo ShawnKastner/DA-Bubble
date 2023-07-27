@@ -16,22 +16,34 @@
           class="background-name"
           placeholder="Name und Nachname"
           type="text"
+          [(ngModel)]="completeName"
+          #name="ngModel"
+          required
         />
         <input
           class="background-email"
           placeholder="beispielname@email.com"
           type="email"
+          [(ngModel)]="email"
+          #userEmail="ngModel"
+          required
         />
         <input
           class="background-password"
           placeholder="Passwort"
           type="password"
+          [(ngModel)]="password"
+          #userPassword="ngModel"
+          required
         />
       </div>
       <div class="continue-btn-container">
-        <button disabled>Weiter</button>
+        <button (click)="authService.SignUp(userEmail.value, userPassword.value)"
+          [disabled]="!name.valid || !userEmail.valid || !userPassword.valid"
+        >
+          Weiter
+        </button>
       </div>
     </mat-card-content>
-
   </mat-card>
 </div>

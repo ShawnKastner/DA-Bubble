@@ -20,11 +20,13 @@
           class="background-email"
           placeholder="beispielname@email.com"
           type="email"
+          #userEmail
         />
         <input
           class="background-password"
           placeholder="Passwort"
           type="password"
+          #userPassword
         />
         <a [routerLink]="'sendResetMail'" href="#">Passwort vergessen?</a>
       </div>
@@ -36,7 +38,7 @@
       </button>
     </div>
     <div class="login-btn-container">
-      <button class="login-btn">Anmelden</button
+      <button (click)="authService.SignIn(userEmail.value, userPassword.value)" class="login-btn">Anmelden</button
       ><button class="guest-btn">Gäste-Login</button>
     </div>
   </mat-card>
