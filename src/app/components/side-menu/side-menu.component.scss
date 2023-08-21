@@ -1,0 +1,136 @@
+.daBubble-logo {
+  position: absolute;
+  top: 25px;
+  left: 45px;
+}
+
+.side-menu {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 366px;
+  height: 715px;
+  border-radius: 30px;
+  padding: 32px 30px;
+  gap: 25px;
+  position: fixed;
+  top: 115px;
+  left: 20px;
+  background-color: #ffff;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 306px;
+
+  span {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  mat-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 20.5px;
+    height: 40px;
+    width: 40px;
+    transition: ease-in-out 125ms;
+
+    &:hover {
+      background-color: #eceefe;
+      color: #535af1;
+      border-radius: 100%;
+      transition: ease-in-out 125ms;
+    }
+  }
+}
+
+.drop-down {
+  display: flex;
+  justify-content: space-between;
+}
+
+.channels {
+  width: 306px;
+}
+
+.drop-down-channel {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  span {
+    font-size: 1.25rem;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: ease-in-out 125ms;
+
+    &:hover {
+      color: #535af1;
+      cursor: pointer;
+      transition: ease-in-out 125ms;
+    }
+  }
+}
+
+.add-btn {
+  cursor: pointer;
+  transition: ease-in-out 125ms;
+
+  &:hover {
+    background-color: #eceefe;
+    color: #535af1;
+    border-radius: 100%;
+    transition: ease-in-out 125ms;
+  }
+}
+
+.channel-names {
+  padding: 4px 34px;
+  gap: 10px;
+  font-size: 1.125rem;
+  width: fit-content;
+  transition: ease-in-out 125ms;
+
+  &:hover {
+    cursor: pointer;
+    border-radius: 20px;
+    background-color: #eceefe;
+    transition: ease-in-out 125ms;
+
+    mat-icon {
+      color: #535af1;
+    }
+  }
+}
+
+.add-channel {
+  padding: 4px 34px;
+  gap: 10px;
+  font-size: 1.125rem;
+  transition: ease-in-out 125ms;
+
+  mat-icon {
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+  }
+
+  &:hover {
+    mat-icon {
+      background-color: #535af1;
+    }
+
+    cursor: pointer;
+    color: #535af1;
+    transition: ease-in-out 125ms;
+  }
+}

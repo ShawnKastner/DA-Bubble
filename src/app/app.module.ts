@@ -26,6 +26,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { SendResetMailComponent } from './components/send-reset-mail/send-reset-mail.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { HomeComponent } from './components/home/home.component';
+import { SideMenuComponent } from './components/side-menu/side-menu.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { HomeComponent } from './components/home/home.component';
     SendResetMailComponent,
     ResetPasswordComponent,
     HomeComponent,
+    SideMenuComponent,
   ],
   imports: [
     provideFirebaseApp(() => initializeApp(environment.firebase)),
