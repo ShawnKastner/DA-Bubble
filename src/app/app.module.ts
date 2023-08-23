@@ -17,6 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
 
 //Components
 import { AppRoutingModule } from './app-routing.module';
@@ -27,6 +28,8 @@ import { SendResetMailComponent } from './components/send-reset-mail/send-reset-
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { HomeComponent } from './components/home/home.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
+import { ChannelComponent } from './components/channel/channel.component';
+import { AddChannelDialogComponent } from './components/side-menu/add-channel-dialog/add-channel-dialog.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,8 @@ import { SideMenuComponent } from './components/side-menu/side-menu.component';
     ResetPasswordComponent,
     HomeComponent,
     SideMenuComponent,
+    ChannelComponent,
+    AddChannelDialogComponent,
   ],
   imports: [
     provideFirebaseApp(() => initializeApp(environment.firebase)),
@@ -52,6 +57,7 @@ import { SideMenuComponent } from './components/side-menu/side-menu.component';
     MatDividerModule,
     MatIconModule,
     FormsModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

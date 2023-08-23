@@ -6,7 +6,7 @@
     <mat-icon>edit_square</mat-icon>
   </div>
 
-  <div>
+  <div class="gap-25 flex-column">
     <div class="channels">
       <div class="drop-down">
         <div class="drop-down-channel">
@@ -15,7 +15,7 @@
             <span>Channels</span>
           </div>
         </div>
-        <mat-icon class="add-btn">add</mat-icon>
+        <mat-icon (click)="openAddChannelDialog()" class="add-btn">add</mat-icon>
       </div>
       <div class="align-center channel-names">
         <mat-icon>tag</mat-icon><span>Entwicklerteam</span>

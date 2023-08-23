@@ -5,14 +5,30 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;  
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .text-center {
   text-align: center;
 }
 
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
 .align-center {
   display: flex;
   align-items: center;
+}
+
+.gap-25 {
+  display: flex;
+  gap: 25px;
+}
+
+.add-channel-dialog, .mat-mdc-dialog-surface {
+  height: 539px;
+  width: 872px;
+  border-radius: 30px !important;
 }
