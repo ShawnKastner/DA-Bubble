@@ -18,6 +18,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 
 //Components
 import { AppRoutingModule } from './app-routing.module';
@@ -30,6 +32,7 @@ import { HomeComponent } from './components/home/home.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { ChannelComponent } from './components/channel/channel.component';
 import { AddChannelDialogComponent } from './components/side-menu/add-channel-dialog/add-channel-dialog.component';
+import { AddUsersDialogComponent } from './components/side-menu/add-channel-dialog/add-users-dialog/add-users-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +45,7 @@ import { AddChannelDialogComponent } from './components/side-menu/add-channel-di
     SideMenuComponent,
     ChannelComponent,
     AddChannelDialogComponent,
+    AddUsersDialogComponent,
   ],
   imports: [
     provideFirebaseApp(() => initializeApp(environment.firebase)),
@@ -58,6 +62,8 @@ import { AddChannelDialogComponent } from './components/side-menu/add-channel-di
     MatIconModule,
     FormsModule,
     MatDialogModule,
+    MatCheckboxModule,
+    MatRadioModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

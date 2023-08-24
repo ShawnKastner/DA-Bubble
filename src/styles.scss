@@ -27,8 +27,16 @@ body {
   gap: 25px;
 }
 
-.add-channel-dialog, .mat-mdc-dialog-surface {
+.add-channel-dialog {
   height: 539px;
   width: 872px;
+}
+
+.add-user-dialog {
+  height: 279px;
+  width: 710px;
+}
+
+.mat-mdc-dialog-surface {
   border-radius: 30px !important;
 }

@@ -1,5 +1,10 @@
-.add-channel-content {
+.add-users-content {
   padding: 40px;
+}
+
+.headline {
+  display: flex;
+  justify-content: space-between;
 
   h1 {
     font-weight: 700;
@@ -9,28 +14,18 @@
   span {
     font-size: 1rem;
   }
-}
 
-.form-field {
-  span {
-    font-size: 1.125rem;
-    font-weight: 700;
-  }
+  mat-icon {
+    cursor: pointer;
+    transition: ease-in-out 125ms;
 
-  input {
-    height: 10px;
-    border-radius: 40px;
-    padding: 18px 20px;
-    border: 1px solid #adb0d9;
-
-    &:focus {
-      outline: none;
+    &:hover {
+      background-color: #eceefe;
+      color: #535af1;
+      border-radius: 100%;
+      transition: ease-in-out 125ms;
     }
   }
-}
-
-.gap-20 {
-  gap: 20px;
 }
 
 .btn-container {
