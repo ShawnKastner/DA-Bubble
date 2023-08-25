@@ -17,10 +17,10 @@
         </div>
         <mat-icon (click)="openAddChannelDialog()" class="add-btn">add</mat-icon>
       </div>
-      <div class="align-center channel-names">
-        <mat-icon>tag</mat-icon><span>Entwicklerteam</span>
+      <div *ngFor="let channel of channels | async" class="align-center channel-names">
+        <mat-icon>tag</mat-icon><span>{{ channel.channelName }}</span>
       </div>
-      <div class="align-center add-channel">
+      <div (click)="openAddChannelDialog()" class="align-center add-channel">
         <mat-icon>add_circle</mat-icon><span>Channel hinzufügen</span>
       </div>
     </div>
@@ -32,7 +32,6 @@
             <span>Direktnachrichten</span>
           </div>
         </div>
-        <mat-icon class="add-btn">add</mat-icon>
       </div>
     </div>
   </div>

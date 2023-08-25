@@ -7,6 +7,9 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./add-users-dialog.component.scss'],
 })
 export class AddUsersDialogComponent {
+  addAllUser!: string;
+  certainPeople!: string;
+
   constructor(private dialogRef: MatDialogRef<AddUsersDialogComponent>) {}
 
   closeDialog() {

@@ -1,20 +1,38 @@
 <div class="add-channel-content flex-column gap-20">
-  <h1>Channel erstellen</h1>
+  <div class="headline">
+    <h1>Channel erstellen</h1>
+    <mat-icon (click)="closeDialog()">close</mat-icon>
+  </div>
   <span
     >Channels dienen deinem Team zur Kommunikation. Am besten sollten sie
     themenbezogen sein #marketing zum Beispiel.</span
   >
-  <div class="form-field flex-column gap-20">
+  <form class="form-field flex-column gap-20">
     <div class="channel-name gap-20 flex-column">
       <span>Channel-Name</span>
-      <input placeholder="#  z.B. Kooperationsprojekte" />
+      <input
+        name="channelName"
+        [(ngModel)]="channelService.channelName"
+        placeholder="#  z.B. Kooperationsprojekte"
+        type="text"
+      />
     </div>
     <div class="description gap-20 flex-column">
       <span>Beschreibung</span>
-      <input placeholder="Dein Text hier" />
+      <input
+        name="description"
+        [(ngModel)]="channelService.description"
+        placeholder="Dein Text hier"
+        type="text"
+      />
     </div>
-  </div>
+  </form>
   <div class="btn-container">
-    <button (click)="openAddUserToChannelDialog()" class="add-btn">Erstellen</button>
+    <button
+      (click)="addChannel()"
+      class="add-btn"
+    >
+      Erstellen
+    </button>
   </div>
 </div>
