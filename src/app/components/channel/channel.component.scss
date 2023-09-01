@@ -1,0 +1,30 @@
+.channel-content {
+  height: 715px;
+  border-radius: 30px;
+  background-color: #ffff;
+  padding: 32px 30px;
+}
+
+.header {
+  display: flex;
+  
+  .headline {
+    display: flex;
+    gap: 10px;
+    padding: 6px 10px;
+    transition: ease-in-out 125ms;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #eceefe;
+      color: #535af1;
+      border-radius: 20px;
+      transition: ease-in-out 125ms;
+    }
+
+    span {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+  }
+}

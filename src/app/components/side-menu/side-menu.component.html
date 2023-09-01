@@ -1,4 +1,3 @@
-<img class="daBubble-logo" src="assets/img/daBubble-logo.png">
 <div class="side-menu">
   <div class="header">
     <img src="assets/img/Workspace-logo.png" />
@@ -17,7 +16,7 @@
         </div>
         <mat-icon (click)="openAddChannelDialog()" class="add-btn">add</mat-icon>
       </div>
-      <div *ngFor="let channel of channels | async" class="align-center channel-names">
+      <div *ngFor="let channel of channels | async" class="align-center channel-names" [routerLink]=" channel.id">
         <mat-icon>tag</mat-icon><span>{{ channel.channelName }}</span>
       </div>
       <div (click)="openAddChannelDialog()" class="align-center add-channel">

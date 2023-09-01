@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { Timestamp } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Channel } from 'src/app/models/channel.model';
 
@@ -10,6 +11,7 @@ export class ChannelService {
   channelName!: string;
   description!: string;
   channelsCollection!: AngularFirestoreCollection<Channel>;
+  createdDate = new Date().getTime();
 
   constructor(private firestore: AngularFirestore) {
     this.channelsCollection = this.firestore.collection<Channel>('channels');
@@ -30,11 +32,17 @@ export class ChannelService {
    */
   addNewChannel() {
     const channelId = this.firestore.createId();
-    const channel = new Channel(this.channelName, this.description, channelId);
+    const channel = new Channel(this.channelName, this.description, channelId, this.createdDate);
     this.firestore
       .collection('channels')
       .doc(channelId)
       .set(channel.channelToJSON());
+      this.clearInput();
+  }
+
+  clearInput() {
+    this.channelName = '';
+    this.description = '';
   }
 
   /**
@@ -51,5 +59,20 @@ export class ChannelService {
    */
   getAllChannels(): Observable<Channel[]> {
     return this.channelsCollection.valueChanges();
+  }
+  
+  /**
+   * The `getCurrentChannel(channelId: string)` method is used to retrieve the current channel from the Firestore database.
+   * It takes a `channelId` parameter, which is the unique identifier of the channel.
+   * 
+   * @method
+   * @name getCurrentChannel
+   * @kind method
+   * @memberof ChannelService
+   * @param {string} channelId
+   * @returns {Observable<unknown>}
+   */
+  getCurrentChannel(channelId: string) {
+    return this.firestore.collection('channels').doc(channelId).valueChanges();
   }
 }

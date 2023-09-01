@@ -1,0 +1,18 @@
+.daBubble-logo {
+  position: absolute;
+  top: 25px;
+  left: 45px;
+}
+
+.main-content {
+  display: flex;
+  position: relative;
+  top: 115px;
+  margin-left: 20px;
+  margin-right: 20px;
+  gap: 20px;
+}
+
+.router-outlet {
+  width: 100%;
+}
