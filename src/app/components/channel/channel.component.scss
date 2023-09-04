@@ -36,10 +36,18 @@
   gap: 20px;
 }
 
+.flex-end {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 25px;
+}
+
 .message-content {
   height: 500px;
   display: flex;
   flex-direction: column-reverse;
+  overflow-y: auto;
 }
 
 .messages-container {

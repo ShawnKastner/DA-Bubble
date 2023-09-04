@@ -7,26 +7,34 @@
   </div>
   <div class="message-content">
     <div class="messages-container">
-      <div class="row-reverse">
-        <div><img src="assets/img/00c.Charaters.png" /></div>
-        <div>
-          <div class="author-with-date">
-            <span>15:06</span>
-            <h3>Frederick Beck</h3>
+      <div class="flex-end">
+        <ng-container *ngFor="let message of allMessages; let i = index">
+          <ng-container *ngIf="i === 0 || isNewDate(allMessages[i - 1], message)">
+            <div class="date-divider">
+              <span>{{ channelService.getFormattedDateFromTimestamp(message.createdDate) }}</span>
+            </div>
+          </ng-container>
+          
+          <div class="row-reverse">
+            <div>
+              <img src="assets/img/00c.Charaters.png" />
+            </div>
+            <div>
+              <div class="author-with-date">
+                <span>{{ channelService.getFormattedTimeFromTimestamp(message.createdDate) }}</span>
+                <h3>{{ message.messagedAuthor }}</h3>
+              </div>
+              <span class="message">{{ message.channelMessage }}</span>
+            </div>
           </div>
-          <span class="message"
-            >Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi
-            tenetur beatae nisi, at fugit ducimus odit et error porro!
-            Perferendis eum, dolor saepe voluptate ab praesentium vero
-            molestiae! Possimus, eligendi!</span
-          >
-        </div>
+        </ng-container>
       </div>
     </div>
-    <div class="date-divider"><span>Heute</span></div>
   </div>
+  
   <div class="text-editor">
-    <textarea [(ngModel)]="channelService.message"
+    <textarea
+      [(ngModel)]="channelService.message"
       placeholder="Nachricht an #{{ currentChannel?.channelName }}"
     ></textarea>
     <div class="add-elements">
@@ -35,6 +43,12 @@
       <mat-icon>sentiment_satisfied</mat-icon>
       <mat-icon>alternate_email</mat-icon>
     </div>
-    <mat-icon class="send-btn" (click)="channelService.sendMessage(channelService.message, currentChannelID)">send</mat-icon>
+    <mat-icon
+      class="send-btn"
+      (click)="
+        channelService.sendMessage(channelService.message, currentChannelID)
+      "
+      >send</mat-icon
+    >
   </div>
 </div>

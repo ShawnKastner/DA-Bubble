@@ -92,7 +92,7 @@ export class ChannelService {
   /**
    * The `sendMessage` method in the `ChannelService` class is responsible for sending a message to a specific channel in the
    * Firestore database.
-   * 
+   *
    * @method
    * @name sendMessage
    * @kind method
@@ -118,5 +118,86 @@ export class ChannelService {
       .doc(messageID)
       .set(channelMessage.messageToJSON());
     this.message = '';
+  }
+
+  /**
+   * The `getAllMessages(channelId: string)` method is used to retrieve all the messages from a specific channel in the
+   * Firestore database. It takes a `channelId` parameter, which is the unique identifier of the channel.
+   *
+   * @method
+   * @name getAllMessages
+   * @kind method
+   * @memberof ChannelService
+   * @param {string} channelId
+   * @returns {Observable<firebase.firestore.DocumentData[]>}
+   */
+  getAllMessages(channelId: string) {
+    return this.firestore
+      .collection('channels')
+      .doc(channelId)
+      .collection('messages', (ref) => ref.orderBy('createdDate'))
+      .valueChanges();
+  }
+
+  /**
+   * The `getFormattedTimeFromTimestamp(timestamp: number): string` method in the `ChannelService` class is used to format a
+   * timestamp into a string representation of time.
+   * 
+   * @method
+   * @name getFormattedTimeFromTimestamp
+   * @kind method
+   * @memberof ChannelService
+   * @param {number} timestamp
+   * @returns {string}
+   */
+  getFormattedTimeFromTimestamp(timestamp: number): string {
+    const date = new Date(timestamp);
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  }
+
+  /**
+   * The `getFormattedDateFromTimestamp(timestamp: number): string` method in the `ChannelService` class is used to format a
+   * timestamp into a string representation of a formatted date.
+   * 
+   * @method
+   * @name getFormattedDateFromTimestamp
+   * @kind method
+   * @memberof ChannelService
+   * @param {number} timestamp
+   * @returns {string}
+   */
+  getFormattedDateFromTimestamp(timestamp: number): string {
+    const daysOfWeek = [
+      'Sonntag',
+      'Montag',
+      'Dienstag',
+      'Mittwoch',
+      'Donnerstag',
+      'Freitag',
+      'Samstag',
+    ];
+    const months = [
+      'Januar',
+      'Februar',
+      'März',
+      'April',
+      'Mai',
+      'Juni',
+      'Juli',
+      'August',
+      'September',
+      'Oktober',
+      'November',
+      'Dezember',
+    ];
+
+    const date = new Date(timestamp);
+    const dayOfWeek = daysOfWeek[date.getDay()];
+    const dayOfMonth = date.getDate();
+    const month = months[date.getMonth()];
+
+    return `${dayOfWeek}, ${dayOfMonth}. ${month}`;
   }
 }
