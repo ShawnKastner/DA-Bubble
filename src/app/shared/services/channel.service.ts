@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { Timestamp } from '@angular/fire/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+} from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { Channel } from 'src/app/models/channel.model';
+import { Message } from 'src/app/models/message.model';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +16,12 @@ export class ChannelService {
   description!: string;
   channelsCollection!: AngularFirestoreCollection<Channel>;
   createdDate = new Date().getTime();
+  message!: string;
 
-  constructor(private firestore: AngularFirestore) {
+  constructor(
+    private firestore: AngularFirestore,
+    private authService: AuthService
+  ) {
     this.channelsCollection = this.firestore.collection<Channel>('channels');
   }
 
@@ -32,12 +40,17 @@ export class ChannelService {
    */
   addNewChannel() {
     const channelId = this.firestore.createId();
-    const channel = new Channel(this.channelName, this.description, channelId, this.createdDate);
+    const channel = new Channel(
+      this.channelName,
+      this.description,
+      channelId,
+      this.createdDate
+    );
     this.firestore
       .collection('channels')
       .doc(channelId)
       .set(channel.channelToJSON());
-      this.clearInput();
+    this.clearInput();
   }
 
   clearInput() {
@@ -50,7 +63,7 @@ export class ChannelService {
    * from the Firestore database by calling the `valueChanges()` method on the `channelsCollection` property. The
    * `valueChanges()` method returns an `Observable` that emits an array of `Channel` objects whenever there are changes in
    * the Firestore collection.
-   * 
+   *
    * @method
    * @name getAllChannels
    * @kind method
@@ -60,11 +73,11 @@ export class ChannelService {
   getAllChannels(): Observable<Channel[]> {
     return this.channelsCollection.valueChanges();
   }
-  
+
   /**
    * The `getCurrentChannel(channelId: string)` method is used to retrieve the current channel from the Firestore database.
    * It takes a `channelId` parameter, which is the unique identifier of the channel.
-   * 
+   *
    * @method
    * @name getCurrentChannel
    * @kind method
@@ -74,5 +87,36 @@ export class ChannelService {
    */
   getCurrentChannel(channelId: string) {
     return this.firestore.collection('channels').doc(channelId).valueChanges();
+  }
+
+  /**
+   * The `sendMessage` method in the `ChannelService` class is responsible for sending a message to a specific channel in the
+   * Firestore database.
+   * 
+   * @method
+   * @name sendMessage
+   * @kind method
+   * @memberof ChannelService
+   * @param {string} message
+   * @param {string} channelId
+   * @returns {void}
+   */
+  sendMessage(message: string, channelId: string) {
+    const messageID = this.firestore.createId();
+    const messagedAuthor = this.authService.userData.displayName;
+    const createdDate = new Date().getTime();
+    const channelMessage = new Message(
+      message,
+      messageID,
+      createdDate,
+      messagedAuthor
+    );
+    this.firestore
+      .collection('channels')
+      .doc(channelId)
+      .collection('messages')
+      .doc(messageID)
+      .set(channelMessage.messageToJSON());
+    this.message = '';
   }
 }

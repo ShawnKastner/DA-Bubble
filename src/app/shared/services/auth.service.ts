@@ -48,18 +48,20 @@ export class AuthService {
       });
   }
   // Sign up with email/password
-  SignUp(email: string, password: string) {
-    return this.afAuth
-      .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        /* Call the SendVerificaitonMail() function when new user sign 
-        up and returns promise */
-        this.SetUserData(result.user);
+  async SignUp(email: string, password: string, displayName: string) {
+    try {
+      const result = await this.afAuth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      if (result.user) {
+        await result.user.updateProfile({ displayName: displayName });
+        await this.SetUserData(result.user); // Warte auf die Speicherung der Benutzerdaten
         this.router.navigate(['/']);
-      })
-      .catch((error) => {
-        window.alert(error.message);
-      });
+      }
+    } catch (error) {
+      window.alert(error);
+    }
   }
 
   // Send email verfificaiton when new user sign up

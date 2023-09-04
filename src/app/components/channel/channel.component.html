@@ -26,7 +26,7 @@
     <div class="date-divider"><span>Heute</span></div>
   </div>
   <div class="text-editor">
-    <textarea
+    <textarea [(ngModel)]="channelService.message"
       placeholder="Nachricht an #{{ currentChannel?.channelName }}"
     ></textarea>
     <div class="add-elements">
@@ -35,6 +35,6 @@
       <mat-icon>sentiment_satisfied</mat-icon>
       <mat-icon>alternate_email</mat-icon>
     </div>
-    <mat-icon class="send-btn">send</mat-icon>
+    <mat-icon class="send-btn" (click)="channelService.sendMessage(channelService.message, currentChannelID)">send</mat-icon>
   </div>
 </div>

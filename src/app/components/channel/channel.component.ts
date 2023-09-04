@@ -13,9 +13,8 @@ export class ChannelComponent implements OnInit {
   currentChannel!: any;
 
   constructor(
-    private channelService: ChannelService,
+    public channelService: ChannelService,
     private route: ActivatedRoute,
-    private firestore: AngularFirestore
   ) {}
 
   ngOnInit() {

@@ -38,7 +38,7 @@
         />
       </div>
       <div class="continue-btn-container">
-        <button (click)="authService.SignUp(userEmail.value, userPassword.value)"
+        <button (click)="authService.SignUp(userEmail.value, userPassword.value, name.value)"
           [disabled]="!name.valid || !userEmail.valid || !userPassword.valid"
         >
           Weiter
