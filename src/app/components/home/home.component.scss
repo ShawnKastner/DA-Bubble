@@ -16,3 +16,10 @@
 .router-outlet {
   width: 100%;
 }
+
+app-search {
+  position: absolute;
+  top: 25px;
+  right: 20px;
+  width: calc(100% - 485px);
+}
