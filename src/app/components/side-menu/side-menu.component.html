@@ -14,9 +14,15 @@
             <span>Channels</span>
           </div>
         </div>
-        <mat-icon (click)="openAddChannelDialog()" class="add-btn">add</mat-icon>
+        <mat-icon (click)="openAddChannelDialog()" class="add-btn"
+          >add</mat-icon
+        >
       </div>
-      <div *ngFor="let channel of channels | async" class="align-center channel-names" [routerLink]=" channel.id">
+      <div
+        *ngFor="let channel of channels | async"
+        class="align-center channel-names"
+        [routerLink]="channel.id"
+      >
         <mat-icon>tag</mat-icon><span>{{ channel.channelName }}</span>
       </div>
       <div (click)="openAddChannelDialog()" class="align-center add-channel">
@@ -31,6 +37,15 @@
             <span>Direktnachrichten</span>
           </div>
         </div>
+      </div>
+      <div *ngFor="let user of allUsers | async" class="direct-messages-users">
+        <img src="assets/img/00c.Charaters.png" />
+        <span
+          >{{ user.displayName
+          }}{{
+            user.displayName === authService.userData.displayName ? " (Du)" : ""
+          }}</span
+        >
       </div>
     </div>
   </div>
