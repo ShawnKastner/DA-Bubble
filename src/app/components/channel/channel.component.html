@@ -14,8 +14,17 @@
   </div>
   <div class="message-content">
     <div class="messages-container">
-      <div class="flex-end">
-        <ng-container *ngFor="let message of allMessages; let i = index">
+      <div
+        *ngFor="let message of allMessages; let i = index"
+        class="flex-end"
+        [ngStyle]="{
+          'align-items':
+            message.messagedAuthor === authService.userData.displayName
+              ? 'flex-end'
+              : 'flex-start'
+        }"
+      >
+        <ng-container>
           <ng-container
             *ngIf="i === 0 || isNewDate(allMessages[i - 1], message)"
           >
@@ -28,12 +37,28 @@
             </div>
           </ng-container>
 
-          <div class="row-reverse">
+          <div
+            [ngStyle]="{
+              'flex-direction':
+                message.messagedAuthor === authService.userData.displayName
+                  ? 'row-reverse'
+                  : 'row'
+            }"
+            class="row-reverse"
+          >
             <div>
               <img src="assets/img/00c.Charaters.png" />
             </div>
             <div>
-              <div class="author-with-date">
+              <div
+                [ngStyle]="{
+                  'flex-direction':
+                    message.messagedAuthor !== authService.userData.displayName
+                      ? 'row-reverse'
+                      : 'row'
+                }"
+                class="author-with-date"
+              >
                 <span>{{
                   channelService.getFormattedTimeFromTimestamp(
                     message.createdDate
@@ -41,7 +66,20 @@
                 }}</span>
                 <h3>{{ message.messagedAuthor }}</h3>
               </div>
-              <span class="message">{{ message.channelMessage }}</span>
+              <span
+                class="message"
+                [ngStyle]="{
+                  'background-color':
+                    message.messagedAuthor !== authService.userData.displayName
+                      ? '#eceefe'
+                      : '',
+                  color:
+                    message.messagedAuthor !== authService.userData.displayName
+                      ? 'black'
+                      : ''
+                }"
+                >{{ message.channelMessage }}</span
+              >
             </div>
           </div>
         </ng-container>

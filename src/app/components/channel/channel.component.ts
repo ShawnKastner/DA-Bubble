@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { ChannelService } from 'src/app/shared/services/channel.service';
 
 @Component({
@@ -15,8 +16,9 @@ export class ChannelComponent implements OnInit {
 
   constructor(
     public channelService: ChannelService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    public authService: AuthService
+    ) {}
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
