@@ -4,24 +4,41 @@
       <mat-icon>tag</mat-icon><span>{{ currentChannel?.channelName }}</span>
       <mat-icon>keyboard_arrow_down</mat-icon>
     </div>
+    <div class="add-members">
+      <div class="members-preview">
+        <img src="assets/img/Members preview.png" />
+        <span>3</span>
+      </div>
+      <mat-icon>person_add</mat-icon>
+    </div>
   </div>
   <div class="message-content">
     <div class="messages-container">
       <div class="flex-end">
         <ng-container *ngFor="let message of allMessages; let i = index">
-          <ng-container *ngIf="i === 0 || isNewDate(allMessages[i - 1], message)">
+          <ng-container
+            *ngIf="i === 0 || isNewDate(allMessages[i - 1], message)"
+          >
             <div class="date-divider">
-              <span>{{ channelService.getFormattedDateFromTimestamp(message.createdDate) }}</span>
+              <span>{{
+                channelService.getFormattedDateFromTimestamp(
+                  message.createdDate
+                )
+              }}</span>
             </div>
           </ng-container>
-          
+
           <div class="row-reverse">
             <div>
               <img src="assets/img/00c.Charaters.png" />
             </div>
             <div>
               <div class="author-with-date">
-                <span>{{ channelService.getFormattedTimeFromTimestamp(message.createdDate) }}</span>
+                <span>{{
+                  channelService.getFormattedTimeFromTimestamp(
+                    message.createdDate
+                  )
+                }}</span>
                 <h3>{{ message.messagedAuthor }}</h3>
               </div>
               <span class="message">{{ message.channelMessage }}</span>
@@ -31,7 +48,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="text-editor">
     <textarea
       [(ngModel)]="channelService.message"
