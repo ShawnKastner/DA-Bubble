@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { Channel } from 'src/app/models/channel.model';
 import { Message } from 'src/app/models/message.model';
 import { AuthService } from './auth.service';
+import { AddUsersDialogComponent } from 'src/app/components/side-menu/add-channel-dialog/add-users-dialog/add-users-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +22,8 @@ export class ChannelService {
 
   constructor(
     private firestore: AngularFirestore,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialog: MatDialog
   ) {
     this.channelsCollection = this.firestore.collection<Channel>('channels');
   }
@@ -42,7 +45,7 @@ export class ChannelService {
     const channelId = this.firestore.createId();
     const channel = new Channel(
       this.channelName,
-      this.description,
+      this.description || '',
       channelId,
       this.createdDate
     );
@@ -50,7 +53,26 @@ export class ChannelService {
       .collection('channels')
       .doc(channelId)
       .set(channel.channelToJSON());
+    this.openAddUserDialog(channelId);
     this.clearInput();
+  }
+
+  /**
+   * The `openAddUserDialog(channelId: string)` method in the `ChannelService` class is responsible for opening a dialog box
+   * to add users to a specific channel. It takes a `channelId` parameter, which is the unique identifier of the channel.
+   * 
+   * @method
+   * @name openAddUserDialog
+   * @kind method
+   * @memberof ChannelService
+   * @param {string} channelId
+   * @returns {void}
+   */
+  openAddUserDialog(channelId: string) {
+    const dialogRef = this.dialog.open(AddUsersDialogComponent, {
+      panelClass: 'add-user-dialog',
+      data: { channelId: channelId }, // Hier wird die channelId übergeben
+    });
   }
 
   clearInput() {
@@ -142,7 +164,7 @@ export class ChannelService {
   /**
    * The `getFormattedTimeFromTimestamp(timestamp: number): string` method in the `ChannelService` class is used to format a
    * timestamp into a string representation of time.
-   * 
+   *
    * @method
    * @name getFormattedTimeFromTimestamp
    * @kind method
@@ -160,7 +182,7 @@ export class ChannelService {
   /**
    * The `getFormattedDateFromTimestamp(timestamp: number): string` method in the `ChannelService` class is used to format a
    * timestamp into a string representation of a formatted date.
-   * 
+   *
    * @method
    * @name getFormattedDateFromTimestamp
    * @kind method

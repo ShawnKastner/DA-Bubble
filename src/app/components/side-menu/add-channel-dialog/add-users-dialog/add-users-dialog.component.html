@@ -3,15 +3,18 @@
     <h1>Leute hinzufügen</h1>
     <mat-icon (click)="closeDialog()">close</mat-icon>
   </div>
-  <div class="flex-column">
-    <mat-radio-button color="primary"
-      >Alle Mitglieder von Office Team hinzufügen</mat-radio-button
-    >
-    <mat-radio-button color="primary"
-      >Bestimmte Leute hinzufügen</mat-radio-button
+  <div>
+    <mat-radio-group [(ngModel)]="selectedOption" class="flex-column">
+      <mat-radio-button value="allMembers" color="primary"
+        >Alle Mitglieder von
+        <span color="#535AF1">Office Team</span> hinzufügen</mat-radio-button
+      >
+      <mat-radio-button color="primary"
+        >Bestimmte Leute hinzufügen</mat-radio-button
+      ></mat-radio-group
     >
   </div>
   <div class="btn-container">
-    <button>Erstellen</button>
+    <button (click)="addUsers()">Erstellen</button>
   </div>
 </div>

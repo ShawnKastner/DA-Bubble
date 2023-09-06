@@ -11,11 +11,10 @@ import { ChannelService } from 'src/app/shared/services/channel.service';
   styleUrls: ['./add-channel-dialog.component.scss'],
 })
 export class AddChannelDialogComponent {
-
   constructor(
     private dialog: MatDialog,
     private dialogRef: DialogRef<AddChannelDialogComponent>,
-    public channelService: ChannelService,
+    public channelService: ChannelService
   ) {}
 
   closeDialog() {
@@ -23,7 +22,8 @@ export class AddChannelDialogComponent {
   }
 
   /**
-   * The `addChannel()` method is a function that is called when the user wants to add a new channel.
+   * The `addChannel()` method is a function that is called when the user wants to add a new channel. It calls the
+   * `addNewChannel()` method from the `channelService` to add the new channel and then closes the dialog.
    * 
    * @method
    * @name addChannel
@@ -34,8 +34,5 @@ export class AddChannelDialogComponent {
   addChannel() {
     this.channelService.addNewChannel();
     this.dialogRef.close();
-    this.dialog.open(AddUsersDialogComponent, {
-      panelClass: 'add-user-dialog',
-    });
   }
 }
