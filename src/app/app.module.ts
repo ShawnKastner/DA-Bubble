@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 //Components
 import { AppRoutingModule } from './app-routing.module';
@@ -66,6 +67,7 @@ import { SearchComponent } from './components/search/search.component';
     MatDialogModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatAutocompleteModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

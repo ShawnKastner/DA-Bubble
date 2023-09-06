@@ -9,10 +9,23 @@
         >Alle Mitglieder von
         <span color="#535AF1">Office Team</span> hinzufügen</mat-radio-button
       >
-      <mat-radio-button color="primary"
+      <mat-radio-button value="certainPeople" color="primary"
         >Bestimmte Leute hinzufügen</mat-radio-button
       ></mat-radio-group
     >
+  </div>
+  <div *ngIf="selectedOption === 'certainPeople'" class="input-container">
+    <input type="text"
+      placeholder="Namen eingeben"
+      aria-label="Number"
+      matInput
+      [ngModel]="selectedUsers.join(', ')" 
+      [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option [value]="user.displayName" *ngFor="let user of allUsers | async" [value]="user.displayName" (click)="selectUser(user.displayName)">
+        {{ user.displayName }}
+      </mat-option>
+    </mat-autocomplete>
   </div>
   <div class="btn-container">
     <button (click)="addUsers()">Erstellen</button>

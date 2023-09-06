@@ -12,7 +12,6 @@ import { ChannelService } from 'src/app/shared/services/channel.service';
 })
 export class AddChannelDialogComponent {
   constructor(
-    private dialog: MatDialog,
     private dialogRef: DialogRef<AddChannelDialogComponent>,
     public channelService: ChannelService
   ) {}

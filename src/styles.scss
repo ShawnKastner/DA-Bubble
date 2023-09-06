@@ -35,10 +35,11 @@ body {
 }
 
 .add-user-dialog {
-  height: 279px;
+  height: 300px;
   width: 710px;
 }
 
 .mat-mdc-dialog-surface {
   border-radius: 30px !important;
+  overflow: hidden !important;
 }
