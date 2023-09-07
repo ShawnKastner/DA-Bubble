@@ -15,12 +15,14 @@ export class ChannelComponent implements OnInit {
   currentChannelID!: string;
   currentChannel!: any;
   allMessages!: any;
+  memberNumber!: Number;
 
   constructor(
     public channelService: ChannelService,
     private route: ActivatedRoute,
     public authService: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private firestore: AngularFirestore
   ) {}
 
   ngOnInit() {
@@ -28,6 +30,7 @@ export class ChannelComponent implements OnInit {
       this.currentChannelID = params['id'];
       this.getCurrentChannel();
       this.getChannelMessages();
+      this.getMemberNumber();
     });
   }
 
@@ -104,7 +107,18 @@ export class ChannelComponent implements OnInit {
         channelID: this.currentChannelID,
         channelName: this.currentChannel.channelName,
       },
-      panelClass: 'add-member-dialog'
+      panelClass: 'add-member-dialog',
     });
+  }
+
+  getMemberNumber() {
+    this.firestore
+      .collection('channels')
+      .doc(this.currentChannelID)
+      .collection('members')
+      .valueChanges()
+      .subscribe((data) => {
+        this.memberNumber = data.length;
+      });
   }
 }

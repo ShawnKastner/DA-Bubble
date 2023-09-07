@@ -31,6 +31,7 @@ export class AddMemberDialogComponent implements OnInit {
   }
 
   closeDialog() {
+    this.channelService.selectedUsers = [];
     this.dialogRef.close();
   }
 
@@ -59,6 +60,6 @@ export class AddMemberDialogComponent implements OnInit {
         .add(userData);
     });
 
-    this.dialogRef.close();
+    this.closeDialog();
   }
 }
