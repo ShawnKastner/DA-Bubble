@@ -2,7 +2,7 @@ html,
 body {
   height: 100%;
   background-color: #eceefe;
-  font-family:'Nunito', sans-serif !important;
+  font-family: "Nunito", sans-serif !important;
   overflow-x: hidden;
 }
 body {
@@ -29,6 +29,24 @@ body {
   gap: 25px;
 }
 
+.close-btn {
+  height: 40px !important;
+  width: 40px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+
+  transition: ease-in-out 125ms;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #eceefe;
+    color: #535af1;
+    border-radius: 100%;
+    transition: ease-in-out 125ms;
+  }
+}
+
 .add-channel-dialog {
   height: 539px;
   width: 872px;
@@ -37,6 +55,12 @@ body {
 .add-user-dialog {
   height: 300px;
   width: 710px;
+}
+
+.add-member-dialog {
+  width: 514px;
+  height: 294px;
+  border-radius: 30px 0px 30px 30px;
 }
 
 .mat-mdc-dialog-surface {

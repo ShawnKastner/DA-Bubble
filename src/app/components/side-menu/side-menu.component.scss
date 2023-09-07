@@ -75,18 +75,6 @@
   }
 }
 
-.add-btn {
-  cursor: pointer;
-  transition: ease-in-out 125ms;
-
-  &:hover {
-    background-color: #eceefe;
-    color: #535af1;
-    border-radius: 100%;
-    transition: ease-in-out 125ms;
-  }
-}
-
 .channel-names {
   padding: 4px 34px;
   gap: 10px;

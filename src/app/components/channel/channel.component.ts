@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ChannelService } from 'src/app/shared/services/channel.service';
+import { AddMemberDialogComponent } from './add-member-dialog/add-member-dialog.component';
 
 @Component({
   selector: 'app-channel',
@@ -17,8 +19,9 @@ export class ChannelComponent implements OnInit {
   constructor(
     public channelService: ChannelService,
     private route: ActivatedRoute,
-    public authService: AuthService
-    ) {}
+    public authService: AuthService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -93,5 +96,15 @@ export class ChannelComponent implements OnInit {
       previousDate.getDate() !== currentDate.getDate();
 
     return result;
+  }
+
+  openAddMemberDialog() {
+    this.dialog.open(AddMemberDialogComponent, {
+      data: {
+        channelID: this.currentChannelID,
+        channelName: this.currentChannel.channelName,
+      },
+      panelClass: 'add-member-dialog'
+    });
   }
 }

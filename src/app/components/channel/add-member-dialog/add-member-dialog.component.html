@@ -1,0 +1,41 @@
+<div class="add-member-dialog-content flex-column">
+  <div class="headline">
+    <h2>Leute hinzufügen</h2>
+    <mat-icon class="close-btn" (click)="closeDialog()">close</mat-icon>
+  </div>
+
+  <div class="tag-with-span">
+    <mat-icon>tag</mat-icon> <span>{{ currentChannelName }}</span>
+  </div>
+
+  <input
+    type="text"
+    placeholder="Namen eingeben"
+    aria-label="Number"
+    matInput
+    [ngModel]="channelService.selectedUsers.join(', ')"
+    [matAutocomplete]="auto"
+  />
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-option
+      [value]="user.displayName"
+      *ngFor="let user of allUsers | async"
+      [value]="user.displayName"
+      (click)="channelService.selectUser(user.displayName)"
+    >
+      {{ user.displayName }}
+    </mat-option>
+  </mat-autocomplete>
+
+  <div class="btn-container">
+    <button
+      (click)="addUserToChannel()"
+      [disabled]="channelService.selectedUsers.length === 0"
+      [ngClass]="{
+        'enabled-btn': channelService.selectedUsers.length > 0
+      }"
+    >
+      Hinzufügen
+    </button>
+  </div>
+</div>

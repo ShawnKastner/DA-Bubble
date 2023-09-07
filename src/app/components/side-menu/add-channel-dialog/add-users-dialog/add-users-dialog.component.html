@@ -1,7 +1,7 @@
 <div class="add-users-content">
   <div class="headline">
     <h1>Leute hinzufügen</h1>
-    <mat-icon (click)="closeDialog()">close</mat-icon>
+    <mat-icon class="close-btn" (click)="closeDialog()">close</mat-icon>
   </div>
   <div>
     <mat-radio-group [(ngModel)]="selectedOption" class="flex-column">
@@ -19,10 +19,10 @@
       placeholder="Namen eingeben"
       aria-label="Number"
       matInput
-      [ngModel]="selectedUsers.join(', ')" 
+      [ngModel]="channelService.selectedUsers.join(', ')" 
       [matAutocomplete]="auto">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-      <mat-option [value]="user.displayName" *ngFor="let user of allUsers | async" [value]="user.displayName" (click)="selectUser(user.displayName)">
+      <mat-option [value]="user.displayName" *ngFor="let user of allUsers | async" [value]="user.displayName" (click)="channelService.selectUser(user.displayName)">
         {{ user.displayName }}
       </mat-option>
     </mat-autocomplete>

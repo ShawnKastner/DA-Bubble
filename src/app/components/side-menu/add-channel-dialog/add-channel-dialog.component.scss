@@ -14,18 +14,6 @@
   span {
     font-size: 1rem;
   }
-
-  mat-icon {
-    cursor: pointer;
-    transition: ease-in-out 125ms;
-
-    &:hover {
-      background-color: #eceefe;
-      color: #535af1;
-      border-radius: 100%;
-      transition: ease-in-out 125ms;
-    }
-  }
 }
 
 .form-field {
