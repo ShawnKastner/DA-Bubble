@@ -1,0 +1,16 @@
+<div class="member-dialog-content">
+  <div class="headline">
+    <h2>Mitglieder</h2>
+    <mat-icon class="close-btn" (click)="closeDialog()">close</mat-icon>
+  </div>
+
+  <div *ngFor="let member of allChannelMembers" class="members">
+    <img src="assets/img/00c.Charaters.png" />
+    <span>{{ member.displayName }}</span>
+  </div>
+
+  <div class="add-members">
+    <mat-icon>person_add</mat-icon>
+    <span>Mitglieder hinzufügen</span>
+  </div>
+</div>

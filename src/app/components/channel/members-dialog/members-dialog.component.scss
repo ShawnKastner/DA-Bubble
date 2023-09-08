@@ -1,0 +1,54 @@
+.member-dialog-content {
+  padding: 40px;
+}
+
+.headline {
+  display: flex;
+  justify-content: space-between;
+
+  h2 {
+    margin: unset;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+}
+
+.members {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 4px 20px;
+
+  span {
+    font-size: 1.125rem;
+  }
+
+  img {
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+  }
+}
+
+.add-members {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 29px;
+
+  span {
+    font-size: 1.125rem;
+  }
+
+  mat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    width: 32px;
+    background-color: #eceefe;
+    border-radius: 100%;
+    position: relative;
+    transition: ease-in-out 125ms;
+  }
+}

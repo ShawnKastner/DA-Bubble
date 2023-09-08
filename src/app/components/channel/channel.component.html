@@ -5,7 +5,7 @@
       <mat-icon>keyboard_arrow_down</mat-icon>
     </div>
     <div class="add-members">
-      <div class="members-preview">
+      <div (click)="openShowMembersDialog()" class="members-preview" [class.dialog-opened]="isMembersDialogOpen">
         <img src="assets/img/Members preview.png" />
         <span>{{ memberNumber }}</span>
       </div>

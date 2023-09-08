@@ -36,6 +36,7 @@ import { AddChannelDialogComponent } from './components/side-menu/add-channel-di
 import { AddUsersDialogComponent } from './components/side-menu/add-channel-dialog/add-users-dialog/add-users-dialog.component';
 import { SearchComponent } from './components/search/search.component';
 import { AddMemberDialogComponent } from './components/channel/add-member-dialog/add-member-dialog.component';
+import { MembersDialogComponent } from './components/channel/members-dialog/members-dialog.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { AddMemberDialogComponent } from './components/channel/add-member-dialog
     AddUsersDialogComponent,
     SearchComponent,
     AddMemberDialogComponent,
+    MembersDialogComponent,
   ],
   imports: [
     provideFirebaseApp(() => initializeApp(environment.firebase)),
