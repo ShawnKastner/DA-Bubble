@@ -1,5 +1,6 @@
 .member-dialog-content {
   padding: 40px;
+  gap: 20px;
 }
 
 .headline {
@@ -35,6 +36,8 @@
   align-items: center;
   gap: 15px;
   padding: 12px 29px;
+  border-radius: 30px;
+  transition: ease-in-out 125ms;
 
   span {
     font-size: 1.125rem;
@@ -49,6 +52,14 @@
     background-color: #eceefe;
     border-radius: 100%;
     position: relative;
-    transition: ease-in-out 125ms;
+    transition: ease-in-out 75ms;
+  }
+
+  &:hover {
+    cursor: pointer;
+    color: #535af1;
+    background-color: #eceefe;
+    transform: scale(1.05);
+    transition: ease-in-out 75ms;
   }
 }
