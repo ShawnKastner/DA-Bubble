@@ -53,7 +53,6 @@ export class MembersDialogComponent implements OnInit {
       .valueChanges()
       .subscribe((data: any) => {
         this.allChannelMembers = data;
-        console.log(this.allChannelMembers);
       });
   }
 

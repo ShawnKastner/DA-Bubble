@@ -1,0 +1,136 @@
+.choose-avatar-content {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card {
+  display: flex;
+  align-items: center;
+  height: 605px;
+  width: 606px;
+  border-radius: 30px;
+  gap: 25px;
+  background-color: #ffff;
+
+  mat-card-header {
+    margin-top: 18px;
+
+    h1 {
+      color: #444df2;
+      font-size: 2.8rem;
+      font-weight: 700;
+    }
+  }
+
+  .back-arrow {
+    position: absolute;
+    top: 30px;
+    left: 32px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.avatar-and-name {
+  align-items: center;
+  gap: 15px;
+
+  span {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+}
+
+.list-of-avatars {
+  gap: 8px;
+
+  span {
+    font-size: 1.25rem;
+  }
+}
+
+.avatars {
+  display: flex;
+  gap: 8px;
+  transition: ease-in-out 75ms;
+
+  img {
+    border-radius: 100%;
+    border: 3px solid transparent;
+
+    &:hover {
+      cursor: pointer;
+      border-color: lightgrey;
+      transition: ease-in-out 75ms;
+    }
+  }
+}
+
+.choose-own-image {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  span {
+    font-size: 1.25rem;
+  }
+
+  button {
+    border-radius: 25px;
+    border: 1px solid #444df2;
+    color: #444df2;
+    background-color: #ffff;
+    padding: 12px 25px;
+    font-size: 1.125rem;
+    font-weight: 700;
+    transition: ease-in-out 125ms;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #444df2;
+      color: #ffff;
+      transition: ease-in-out 125ms;
+    }
+  }
+}
+
+.continue-btn-container {
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    background-color: #444df2;
+    color: #ffff;
+    border: unset;
+    border-radius: 25px;
+    padding: 12px 25px;
+    font-weight: 700;
+    transition: ease-in-out 75ms;
+
+    &:hover {
+      cursor: pointer;
+      opacity: 0.6;
+      transition: ease-in-out 75ms;
+    }
+  }
+}
+
+.logo-container {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+
+  img {
+    height: 45px;
+  }
+}

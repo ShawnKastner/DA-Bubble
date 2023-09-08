@@ -19,6 +19,8 @@
   align-items: center;
   gap: 15px;
   padding: 4px 20px;
+  border-radius: 30px;
+  transition: ease-in-out 75ms;
 
   span {
     font-size: 1.125rem;
@@ -28,6 +30,12 @@
     height: 50px;
     width: 50px;
     border-radius: 100%;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: #eceefe;
+    transition: ease-in-out 75ms;
   }
 }
 

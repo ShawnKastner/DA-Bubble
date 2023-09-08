@@ -1,0 +1,34 @@
+<div class="logo-container">
+  <img src="assets/img/daBubble-logo.png" />
+</div>
+
+<div class="choose-avatar-content flex-column">
+  <mat-card>
+    <mat-icon class="back-arrow">arrow_back</mat-icon>
+    <mat-card-header>
+      <h1>Wähle deinen Avatar</h1>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="avatar-and-name flex-column">
+        <img src="assets/img/81. Profile.png" />
+        <span>Frederick Beck</span>
+      </div>
+
+      <div class="flex-column list-of-avatars">
+        <span>Aus der Liste wählen</span>
+        <div class="avatars">
+          <img *ngFor="let avatar of allAvatars" [src]="avatar.src" />
+        </div>
+      </div>
+
+      <div class="choose-own-image">
+        <span>eigenes Bild verwenden</span>
+        <button>Datei hochladen</button>
+      </div>
+
+      <div class="continue-btn-container">
+        <button>Weiter</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
