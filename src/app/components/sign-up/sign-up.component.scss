@@ -34,18 +34,17 @@ mat-card {
       input {
         width: 400px;
         border-radius: 100px;
-        padding: 18px 32px;
+        padding: 18px 50px;
         border: unset;
         background-color: #eceefe;
-
-        &::placeholder {
-          position: relative;
-          left: 32px;
-        }
 
         &:hover {
           cursor: pointer;
           border: 1px solid black;
+        }
+
+        &:focus {
+          outline: 1px solid #444df2;
         }
       }
 
