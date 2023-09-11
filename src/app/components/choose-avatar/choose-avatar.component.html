@@ -4,14 +4,14 @@
 
 <div class="choose-avatar-content flex-column">
   <mat-card>
-    <mat-icon class="back-arrow">arrow_back</mat-icon>
+    <mat-icon [routerLink]="'/'" class="back-arrow">arrow_back</mat-icon>
     <mat-card-header>
       <h1>Wähle deinen Avatar</h1>
     </mat-card-header>
     <mat-card-content>
       <div class="avatar-and-name flex-column">
-        <img [src]="selectedAvatarFromList || 'assets/img/81. Profile.png'" />
-        <span>Frederick Beck</span>
+        <img [src]="selectedAvatarFromList || showSelectedProfileImage || 'assets/img/81. Profile.png'" />
+        <span>{{ currentUserName }}</span>
       </div>
 
       <div class="flex-column list-of-avatars">
@@ -23,7 +23,8 @@
 
       <div class="choose-own-image">
         <span>eigenes Bild verwenden</span>
-        <button>Datei hochladen</button>
+        <button (click)="fileInput.click()">Datei hochladen</button>
+        <input type="file" #fileInput style="display: none" (change)="updateProfileImage($event)" />
       </div>
 
       <div class="continue-btn-container">
