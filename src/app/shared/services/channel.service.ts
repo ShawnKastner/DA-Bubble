@@ -3,7 +3,7 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Channel } from 'src/app/models/channel.model';
 import { Message } from 'src/app/models/message.model';
 import { AuthService } from './auth.service';
@@ -25,7 +25,7 @@ export class ChannelService {
   constructor(
     private firestore: AngularFirestore,
     private authService: AuthService,
-    private dialog: MatDialog,
+    private dialog: MatDialog
   ) {
     this.channelsCollection = this.firestore.collection<Channel>('channels');
   }
@@ -128,12 +128,15 @@ export class ChannelService {
   sendMessage(message: string, channelId: string) {
     const messageID = this.firestore.createId();
     const messagedAuthor = this.authService.userData.displayName;
+    const uid = this.authService.userData.uid;
+    const avatar = '';
     const createdDate = new Date().getTime();
     const channelMessage = new Message(
       message,
       messageID,
       createdDate,
-      messagedAuthor
+      messagedAuthor,
+      avatar
     );
     this.firestore
       .collection('channels')

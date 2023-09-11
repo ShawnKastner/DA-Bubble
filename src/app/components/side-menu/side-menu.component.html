@@ -39,7 +39,7 @@
         </div>
       </div>
       <div *ngFor="let user of allUsers | async" class="direct-messages-users">
-        <img src="assets/img/00c.Charaters.png" />
+        <img [src]="user.avatar || 'assets/img/81. Profile.png'" />
         <span
           >{{ user.displayName
           }}{{

@@ -45,6 +45,12 @@ mat-card-content {
   align-items: center;
   gap: 15px;
 
+  img {
+    width: 168px;
+    height: 168px;
+    border-radius: 100%;
+  }
+
   span {
     font-size: 2rem;
     font-weight: 700;

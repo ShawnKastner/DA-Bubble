@@ -5,7 +5,7 @@
   </div>
 
   <div *ngFor="let member of allChannelMembers" class="members">
-    <img src="assets/img/00c.Charaters.png" />
+    <img [src]="member.avatar || 'assets/img/81. Profile.png'" />
     <span
       >{{ member.displayName
       }}{{

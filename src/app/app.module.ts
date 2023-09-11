@@ -11,6 +11,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getStorage, provideStorage } from '@angular/fire/storage';
 
 //Imports
 import { MatCardModule } from '@angular/material/card';
@@ -61,6 +62,7 @@ import { ChooseAvatarComponent } from './components/choose-avatar/choose-avatar.
     AngularFireModule.initializeApp(environment.firebase),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
+    provideStorage(() => getStorage()),
     AngularFireDatabaseModule,
     AngularFirestoreModule,
     BrowserModule,

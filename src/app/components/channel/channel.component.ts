@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { ChannelService } from 'src/app/shared/services/channel.service';
 import { AddMemberDialogComponent } from './add-member-dialog/add-member-dialog.component';
 import { MembersDialogComponent } from './members-dialog/members-dialog.component';
+import { collection } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-channel',
@@ -18,6 +19,7 @@ export class ChannelComponent implements OnInit {
   allMessages!: any;
   memberNumber!: Number;
   isMembersDialogOpen = false;
+  currentUserAvatar!: string;
 
   constructor(
     public channelService: ChannelService,
