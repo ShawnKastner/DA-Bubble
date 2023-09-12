@@ -5,12 +5,17 @@
     <mat-icon>edit_square</mat-icon>
   </div>
 
-  <div class="gap-25 flex-column">
+  <div style="overflow: auto" class="gap-25 flex-column">
     <div class="channels">
       <div class="drop-down">
         <div class="drop-down-channel">
-          <div class="title">
-            <mat-icon>arrow_drop_down</mat-icon><mat-icon>workspaces</mat-icon>
+          <div (click)="hideChannel()" class="title">
+            <mat-icon [ngClass]="{ hide: hideChannels == true }"
+              >arrow_drop_down</mat-icon
+            >
+            <mat-icon [ngClass]="{ hide: hideChannels == false }"
+              >arrow_right</mat-icon
+            ><mat-icon>workspaces</mat-icon>
             <span>Channels</span>
           </div>
         </div>
@@ -19,26 +24,42 @@
         >
       </div>
       <div
-        *ngFor="let channel of channels | async"
-        class="align-center channel-names"
-        [routerLink]="channel.id"
+        [ngClass]="{ hide: hideChannels == true }"
+        class="gap-25 flex-column"
       >
-        <mat-icon>tag</mat-icon><span>{{ channel.channelName }}</span>
-      </div>
-      <div (click)="openAddChannelDialog()" class="align-center add-channel">
-        <mat-icon>add_circle</mat-icon><span>Channel hinzufügen</span>
+        <div
+          *ngFor="let channel of channels | async"
+          class="align-center channel-names"
+          [routerLink]="channel.id"
+        >
+          <mat-icon>tag</mat-icon><span>{{ channel.channelName }}</span>
+        </div>
+
+        <div (click)="openAddChannelDialog()" class="align-center add-channel">
+          <mat-icon>add_circle</mat-icon><span>Channel hinzufügen</span>
+        </div>
       </div>
     </div>
     <div class="direct-messages">
       <div class="drop-down">
         <div class="drop-down-channel">
-          <div class="title">
-            <mat-icon>arrow_drop_down</mat-icon><mat-icon>workspaces</mat-icon>
+          <div (click)="hideUser()" class="title">
+            <mat-icon [ngClass]="{ hide: hideUsers == true }"
+              >arrow_drop_down</mat-icon
+            >
+            <mat-icon [ngClass]="{ hide: hideUsers == false }"
+              >arrow_right</mat-icon
+            >
+            <mat-icon>workspaces</mat-icon>
             <span>Direktnachrichten</span>
           </div>
         </div>
       </div>
-      <div *ngFor="let user of allUsers | async" class="direct-messages-users">
+      <div
+        *ngFor="let user of allUsers | async"
+        class="direct-messages-users"
+        [ngClass]="{ hide: hideUsers == true }"
+      >
         <img [src]="user.avatar || 'assets/img/81. Profile.png'" />
         <span
           >{{ user.displayName

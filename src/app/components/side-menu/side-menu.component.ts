@@ -16,6 +16,8 @@ export class SideMenuComponent implements OnInit {
   allChannels!: any[];
   channels: Observable<Channel[]> | undefined;
   allUsers!: Observable<any[]>;
+  hideChannels = false;
+  hideUsers = false;
 
   constructor(
     private dialog: MatDialog,
@@ -44,5 +46,21 @@ export class SideMenuComponent implements OnInit {
     this.dialog.open(AddChannelDialogComponent, {
       panelClass: 'add-channel-dialog',
     });
+  }
+
+  hideChannel() {
+    if (this.hideChannels == false) {
+      this.hideChannels = true;
+    } else {
+      this.hideChannels = false;
+    }
+  }
+
+  hideUser() {
+    if (this.hideUsers == false) {
+      this.hideUsers = true;
+    } else {
+      this.hideUsers = false;
+    }
   }
 }

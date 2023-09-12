@@ -84,3 +84,8 @@ body {
   border-radius: 30px !important;
   overflow: hidden !important;
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 0px;
+}
