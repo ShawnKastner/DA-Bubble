@@ -57,7 +57,7 @@ export class AuthService {
       if (result.user) {
         await result.user.updateProfile({ displayName: displayName });
         await this.SetUserData(result.user); // Warte auf die Speicherung der Benutzerdaten
-        this.router.navigate(['/']);
+        this.router.navigate(['chooseAvatar']);
       }
     } catch (error) {
       window.alert(error);
