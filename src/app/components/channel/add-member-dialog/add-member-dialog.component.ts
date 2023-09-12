@@ -47,19 +47,19 @@ export class AddMemberDialogComponent implements OnInit {
   addUserToChannel() {
     const selectedUsers = this.channelService.selectedUsers;
     const currentChannelID = this.currentChannelID;
-
-    selectedUsers.forEach((user) => {
+  
+    selectedUsers.forEach((userName) => {
       const userData = {
-        displayName: user,
+        displayName: userName,
+        avatar: this.channelService.userAvatars[userName], // Avatar aus dem Objekt abrufen
       };
-
       this.firestore
         .collection('channels')
         .doc(currentChannelID)
         .collection('members')
         .add(userData);
     });
-
+  
     this.closeDialog();
   }
-}
+}  

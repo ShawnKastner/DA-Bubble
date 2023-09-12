@@ -3,13 +3,14 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
-import { Observable, map } from 'rxjs';
+import { Observable, map, take } from 'rxjs';
 import { Channel } from 'src/app/models/channel.model';
 import { Message } from 'src/app/models/message.model';
 import { AuthService } from './auth.service';
 import { AddUsersDialogComponent } from 'src/app/components/side-menu/add-channel-dialog/add-users-dialog/add-users-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogRef } from '@angular/cdk/dialog';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,8 @@ export class ChannelService {
   createdDate = new Date().getTime();
   message!: string;
   selectedUsers: string[] = [];
+  currentUserAvatar!: string;
+  userAvatars: { [userName: string]: string } = {};
 
   constructor(
     private firestore: AngularFirestore,
@@ -114,22 +117,23 @@ export class ChannelService {
   }
 
   /**
+   * Description
    * The `sendMessage` method in the `ChannelService` class is responsible for sending a message to a specific channel in the
-   * Firestore database.
-   *
+   * Firestore database. It takes two parameters: `message` (the content of the message) and `channelId` (the unique
+   * identifier of the channel).
+   * @async
    * @method
    * @name sendMessage
    * @kind method
    * @memberof ChannelService
    * @param {string} message
    * @param {string} channelId
-   * @returns {void}
+   * @returns {Promise<void>}
    */
-  sendMessage(message: string, channelId: string) {
+  async sendMessage(message: string, channelId: string) {
     const messageID = this.firestore.createId();
     const messagedAuthor = this.authService.userData.displayName;
-    const uid = this.authService.userData.uid;
-    const avatar = '';
+    const avatar = await this.getCurrentAvatar();
     const createdDate = new Date().getTime();
     const channelMessage = new Message(
       message,
@@ -145,6 +149,37 @@ export class ChannelService {
       .doc(messageID)
       .set(channelMessage.messageToJSON());
     this.message = '';
+  }
+
+  /**
+   * The above code is defining an asynchronous function called `getCurrentAvatar`.
+   *
+   * @async
+   * @method
+   * @name getCurrentAvatar
+   * @kind method
+   * @memberof ChannelService
+   * @returns {Promise<any>}
+   */
+  async getCurrentAvatar() {
+    const uid = this.authService.userData.uid;
+    try {
+      const userData: any = await this.firestore
+        .collection('users')
+        .doc(uid)
+        .valueChanges()
+        .pipe(take(1)) // Das Abo nach einem Wert beenden
+        .toPromise();
+
+      if (userData && userData.avatar) {
+        return userData.avatar;
+      } else {
+        return ''; // Defaultwert, wenn kein Avatar gefunden wurde
+      }
+    } catch (error) {
+      console.error('Error getting current avatar:', error);
+      return ''; // Defaultwert bei Fehler
+    }
   }
 
   /**
@@ -228,6 +263,8 @@ export class ChannelService {
     return `${dayOfWeek}, ${dayOfMonth}. ${month}`;
   }
 
+  //Add certain people to Channel
+
   /**
    * The `selectUser(userName: string)` method is used to add a selected user to the `selectedUsers` array. It takes the
    * `userName` as a parameter and checks if the `userName` is not already present in the `selectedUsers` array. If it is not
@@ -242,8 +279,39 @@ export class ChannelService {
    */
   selectUser(userName: string) {
     if (!this.selectedUsers.includes(userName)) {
-      this.selectedUsers.push(userName);
+      // Hier den Avatar für den ausgewählten Benutzer abrufen
+      this.getAvatarFromUsers(userName).subscribe((avatar) => {
+        this.selectedUsers.push(userName);
+        this.userAvatars[userName] = avatar; // Den Avatar dem Objekt userAvatars zuordnen
+      });
     }
+  }
+
+  /**
+   * The above code is defining a function called "getAvatarFromUsers" that takes in a parameter called "userName" of type
+   * string.
+   *
+   * @method
+   * @name getAvatarFromUsers
+   * @kind method
+   * @memberof ChannelService
+   * @param {string} userName
+   * @returns {Observable<any>}
+   */
+  getAvatarFromUsers(userName: string) {
+    return this.firestore
+      .collection('users', (ref) => ref.where('displayName', '==', userName))
+      .valueChanges()
+      .pipe(
+        take(1), // Das Abo nach einem Wert beenden
+        map((users: any[]) => {
+          if (users && users.length > 0 && users[0].avatar) {
+            return users[0].avatar;
+          } else {
+            return ''; // Defaultwert, wenn kein Avatar gefunden wurde
+          }
+        })
+      );
   }
 
   /**
@@ -272,6 +340,7 @@ export class ChannelService {
           const user: any = doc.data();
           const member = {
             displayName: user.displayName,
+            avatar: this.userAvatars[userName],
           };
           const memberRef = channelRef.collection('members').doc(doc.id);
           batch.set(memberRef, member);
@@ -333,5 +402,90 @@ export class ChannelService {
     return this.firestore
       .collection('users', (ref) => ref.where('displayName', '==', userName))
       .get();
+  }
+
+  //Add all users to channel
+
+  /**
+   * The above code is defining an asynchronous function called "getAllUserAndAddItToChannel" that takes a parameter called
+   * "channelId" of type string. This function is responsible for fetching all users from the Firestore collection and
+   * add it to channel collection
+   *
+   * @async
+   * @method
+   * @name getAllUserAndAddItToChannel
+   * @kind method
+   * @memberof ChannelService
+   * @param {string} channelId
+   * @returns {Promise<void>}
+   */
+  async getAllUserAndAddItToChannel(channelId: string) {
+    const batch = this.firestore.firestore.batch();
+    const channelRef = this.firestore.collection('channels').doc(channelId).ref;
+
+    try {
+      const querySnapshot = await this.getUserCollection().toPromise();
+      if (querySnapshot) {
+        for (const doc of querySnapshot.docs) {
+          const user: any = doc.data();
+          const userName = user.displayName;
+
+          const userQuerySnapshot = await this.getUserByName(
+            userName
+          ).toPromise();
+
+          if (userQuerySnapshot) {
+            userQuerySnapshot.forEach((userDoc: any) => {
+              const userAvatar: any = userDoc.data().avatar;
+
+              const member = {
+                displayName: userName,
+                avatar: userAvatar || '',
+              };
+              const memberRef = channelRef.collection('members').doc(doc.id);
+              batch.set(memberRef, member);
+            });
+          } else {
+            console.error(
+              `getUserByName('${userName}') hat null oder undefined zurückgegeben.`
+            );
+          }
+        }
+      } else {
+        console.error(
+          'getUserCollection() hat null oder undefined zurückgegeben.'
+        );
+      }
+
+      await this.finalizeBatch(batch);
+    } catch (error) {
+      console.error('Fehler beim Hinzufügen von Benutzern zum Kanal:', error);
+    }
+  }
+
+  /**
+   * The `finalizeBatchAndCloseDialog(batch: any)` method is responsible for committing a batch operation and closing the
+   * dialog. It takes a `batch` parameter, which represents the batch operation to be committed.
+   *
+   * @method
+   * @name finalizeBatchAndCloseDialog
+   * @kind method
+   * @memberof AddUsersDialogComponent
+   * @param {any} batch
+   * @returns {void}
+   */
+  finalizeBatch(batch: any) {
+    batch
+      .commit()
+      .then(() => {
+        console.log('Alle Benutzer wurden zum Kanal hinzugefügt.');
+      })
+      .catch((error: any) => {
+        console.error('Fehler beim Hinzufügen von Benutzern zum Kanal:', error);
+      });
+  }
+
+  getUserCollection() {
+    return this.firestore.collection('users').get();
   }
 }
