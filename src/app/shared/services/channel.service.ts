@@ -24,6 +24,7 @@ export class ChannelService {
   selectedUsers: string[] = [];
   currentUserAvatar!: string;
   userAvatars: { [userName: string]: string } = {};
+  allChannelMembers!: any;
 
   constructor(
     private firestore: AngularFirestore,
@@ -487,5 +488,28 @@ export class ChannelService {
 
   getUserCollection() {
     return this.firestore.collection('users').get();
+  }
+
+  /**
+   * The `getAllChannelMembers()` method is retrieving all the members of a specific channel from the Firestore database. It
+   * uses the `channelID` provided in the `data` object to access the corresponding collection of members in the Firestore
+   * database. It then subscribes to the `valueChanges()` observable to receive the data and assigns it to the
+   * `allChannelMembers` property. Finally, it logs the `allChannelMembers` to the console.
+   *
+   * @method
+   * @name getAllChannelMembers
+   * @kind method
+   * @memberof MembersDialogComponent
+   * @returns {void}
+   */
+  getAllChannelMembers(channelID: string) {
+    this.firestore
+      .collection('channels')
+      .doc(channelID)
+      .collection('members')
+      .valueChanges()
+      .subscribe((data: any) => {
+        this.allChannelMembers = data;
+      });
   }
 }

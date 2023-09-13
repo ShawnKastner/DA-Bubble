@@ -22,6 +22,7 @@
       *ngFor="let user of allUsers | async"
       [value]="user.displayName"
       (click)="channelService.selectUser(user.displayName)"
+      [disabled]="isUserMember(user.displayName)"
     >
       {{ user.displayName }}
     </mat-option>

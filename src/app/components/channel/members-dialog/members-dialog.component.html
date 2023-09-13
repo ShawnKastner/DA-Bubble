@@ -4,7 +4,7 @@
     <mat-icon class="close-btn" (click)="closeDialog()">close</mat-icon>
   </div>
 
-  <div *ngFor="let member of allChannelMembers" class="members">
+  <div *ngFor="let member of channelService.allChannelMembers" class="members">
     <img [src]="member.avatar || 'assets/img/81. Profile.png'" />
     <span
       >{{ member.displayName

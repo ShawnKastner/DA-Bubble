@@ -15,6 +15,7 @@ export class AddMemberDialogComponent implements OnInit {
   currentChannelName!: string;
   currentChannelID!: string;
   allUsers!: Observable<any[]>;
+  allChannelMembers!: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -28,8 +29,13 @@ export class AddMemberDialogComponent implements OnInit {
     this.currentChannelName = this.data.channelName;
     this.currentChannelID = this.data.channelID;
     this.allUsers = this.directMessageService.getAllUsers();
+    this.channelService.getAllChannelMembers(this.currentChannelID);
   }
 
+  isUserMember(userDisplayName: string): boolean {
+    return this.channelService.allChannelMembers.some((member: any) => member.displayName === userDisplayName);
+  }
+  
   closeDialog() {
     this.channelService.selectedUsers = [];
     this.dialogRef.close();
@@ -37,7 +43,7 @@ export class AddMemberDialogComponent implements OnInit {
 
   /**
    * The `addUserToChannel()` method is responsible for adding selected users to a channel.
-   * 
+   *
    * @method
    * @name addUserToChannel
    * @kind method
@@ -47,7 +53,7 @@ export class AddMemberDialogComponent implements OnInit {
   addUserToChannel() {
     const selectedUsers = this.channelService.selectedUsers;
     const currentChannelID = this.currentChannelID;
-  
+
     selectedUsers.forEach((userName) => {
       const userData = {
         displayName: userName,
@@ -59,7 +65,7 @@ export class AddMemberDialogComponent implements OnInit {
         .collection('members')
         .add(userData);
     });
-  
+
     this.closeDialog();
   }
-}  
+}
