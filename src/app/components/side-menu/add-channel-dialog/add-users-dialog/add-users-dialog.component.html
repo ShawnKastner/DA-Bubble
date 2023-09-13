@@ -28,6 +28,6 @@
     </mat-autocomplete>
   </div>
   <div class="btn-container">
-    <button (click)="addUsers()">Erstellen</button>
+    <button [disabled]="!selectedOption" (click)="addUsers()">Erstellen</button>
   </div>
 </div>

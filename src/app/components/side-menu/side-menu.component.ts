@@ -18,12 +18,12 @@ export class SideMenuComponent implements OnInit {
   allUsers!: Observable<any[]>;
   hideChannels = false;
   hideUsers = false;
-
+  
   constructor(
     private dialog: MatDialog,
     public channelService: ChannelService,
     public directMessagesService: DirectMessagesService,
-    public authService: AuthService
+    public authService: AuthService,
   ) {}
 
   ngOnInit() {
@@ -48,6 +48,17 @@ export class SideMenuComponent implements OnInit {
     });
   }
 
+  /**
+   * The `hideChannel()` method is a toggle function that changes the value of the `hideChannels` property. If `hideChannels`
+   * is currently `false`, it will be set to `true`, and if it is currently `true`, it will be set to `false`. This method is
+   * used to control the visibility of the channels in the side menu.
+   * 
+   * @method
+   * @name hideChannel
+   * @kind method
+   * @memberof SideMenuComponent
+   * @returns {void}
+   */
   hideChannel() {
     if (this.hideChannels == false) {
       this.hideChannels = true;
@@ -56,11 +67,22 @@ export class SideMenuComponent implements OnInit {
     }
   }
 
+  /**
+   * The `hideUser()` method is a toggle function that changes the value of the `hideUsers` property. If `hideUsers` is
+   * currently `false`, it will be set to `true`, and if it is currently `true`, it will be set to `false`. This method is
+   * used to control the visibility of the users in the side menu.
+   * 
+   * @method
+   * @name hideUser
+   * @kind method
+   * @memberof SideMenuComponent
+   * @returns {void}
+   */
   hideUser() {
     if (this.hideUsers == false) {
       this.hideUsers = true;
     } else {
       this.hideUsers = false;
     }
-  }
+  }  
 }
