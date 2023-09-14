@@ -1,0 +1,30 @@
+<div class="edit-member-content flex-column">
+  <div class="headline">
+    <h2>Dein Profil bearbeiten</h2>
+    <mat-icon (click)="closeDialog()" class="close-btn">close</mat-icon>
+  </div>
+  <div class="img-container">
+    <img [src]="memberAvatar || 'assets/img/81. Profile.png'" />
+  </div>
+
+  <div class="input-container">
+    <div class="flex-column gap-7">
+      <div class="gap-20">
+        <mat-icon>account_circle</mat-icon>
+        <span>Vollständiger Name</span>
+      </div>
+      <input [(ngModel)]="fullName" />
+    </div>
+    <div class="flex-column gap-7">
+      <div class="gap-20">
+        <mat-icon>mail</mat-icon>
+        <span>E-Mail-Adresse</span>
+      </div>
+      <input [(ngModel)]="email" />
+    </div>
+  </div>
+  <div class="btn-container">
+    <button class="cancel-btn">Abbrechen</button>
+    <button class="save-btn">Speichern</button>
+  </div>
+</div>

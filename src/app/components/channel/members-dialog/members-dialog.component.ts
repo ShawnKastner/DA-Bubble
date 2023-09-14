@@ -37,7 +37,7 @@ export class MembersDialogComponent implements OnInit {
    * The `openAddMemberDialog()` method is responsible for opening a dialog box to add a new member to a channel. It closes
    * the current dialog box and opens the `AddMemberDialogComponent` dialog box. It passes the `channelID` and `channelName`
    * as data to the `AddMemberDialogComponent`.
-   * 
+   *
    * @method
    * @name openAddMemberDialog
    * @kind method
@@ -58,8 +58,8 @@ export class MembersDialogComponent implements OnInit {
   openMemberDetails(member: any) {
     this.closeDialog();
     this.dialog.open(MemberDetailsComponent, {
-      data: { memberData: member } ,
-      panelClass: 'member-details-dialog'
-    })
+      data: { memberData: member },
+      panelClass: 'member-details-dialog',
+    });
   }
 }

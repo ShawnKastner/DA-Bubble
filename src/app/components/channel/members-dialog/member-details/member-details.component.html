@@ -7,14 +7,13 @@
     <img [src]=" this.memberDetails.avatar || 'assets/img/81. Profile.png'" />
   </div>
   <div class="name-and-active-status">
-    <div>
+    <div class="flex-column gap-15">
       <span class="name">{{ this.memberDetails.displayName }}</span>
       <div class="active-status">
         <div class="green-dot"></div>
         <span>Active</span>
       </div>
     </div>
-    <span class="edit">Bearbeiten</span>
   </div>
   <div class="email-content">
     <div class="mail-address">
@@ -24,5 +23,8 @@
         <a href="mailto:{{ this.memberDetails.email }}">{{ this.memberDetails.email }}</a>
       </div>
     </div>
+  </div>
+  <div class="btn-container">
+    <button><mat-icon>mode_comment</mat-icon>Nachricht</button>
   </div>
 </div>
