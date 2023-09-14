@@ -24,6 +24,7 @@ export class ChannelService {
   selectedUsers: string[] = [];
   currentUserAvatar!: string;
   userAvatars: { [userName: string]: string } = {};
+  userEmails: { [userName: string]: string } = {};
   allChannelMembers!: any;
 
   constructor(
@@ -283,7 +284,10 @@ export class ChannelService {
       // Hier den Avatar für den ausgewählten Benutzer abrufen
       this.getAvatarFromUsers(userName).subscribe((avatar) => {
         this.selectedUsers.push(userName);
-        this.userAvatars[userName] = avatar; // Den Avatar dem Objekt userAvatars zuordnen
+        this.userAvatars[userName] = avatar;
+        this.getEmailFromUsers(userName).subscribe((email) => {
+          this.userEmails[userName] = email;
+        });
       });
     }
   }
@@ -304,12 +308,39 @@ export class ChannelService {
       .collection('users', (ref) => ref.where('displayName', '==', userName))
       .valueChanges()
       .pipe(
-        take(1), // Das Abo nach einem Wert beenden
+        take(1),
         map((users: any[]) => {
           if (users && users.length > 0 && users[0].avatar) {
             return users[0].avatar;
           } else {
-            return ''; // Defaultwert, wenn kein Avatar gefunden wurde
+            return '';
+          }
+        })
+      );
+  }
+
+  /**
+   * The above code is defining a function called "getEmailFromUsers" that takes in a parameter called "userName" of type
+   * string.
+   * 
+   * @method
+   * @name getEmailFromUsers
+   * @kind method
+   * @memberof ChannelService
+   * @param {string} userName
+   * @returns {Observable<any>}
+   */
+  getEmailFromUsers(userName: string) {
+    return this.firestore
+      .collection('users', (ref) => ref.where('displayName', '==', userName))
+      .valueChanges()
+      .pipe(
+        take(1),
+        map((users: any[]) => {
+          if (users && users.length > 0 && users[0].email) {
+            return users[0].email;
+          } else {
+            return '';
           }
         })
       );
@@ -342,6 +373,7 @@ export class ChannelService {
           const member = {
             displayName: user.displayName,
             avatar: this.userAvatars[userName],
+            email: this.userEmails[userName],
           };
           const memberRef = channelRef.collection('members').doc(doc.id);
           batch.set(memberRef, member);
@@ -438,10 +470,12 @@ export class ChannelService {
           if (userQuerySnapshot) {
             userQuerySnapshot.forEach((userDoc: any) => {
               const userAvatar: any = userDoc.data().avatar;
+              const userEmail: any = userDoc.data().email;
 
               const member = {
                 displayName: userName,
                 avatar: userAvatar || '',
+                email: userEmail,
               };
               const memberRef = channelRef.collection('members').doc(doc.id);
               batch.set(memberRef, member);

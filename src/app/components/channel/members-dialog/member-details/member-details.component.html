@@ -1,0 +1,28 @@
+<div class="member-details-content flex-column">
+  <div class="headline">
+    <h2>Profil</h2>
+    <mat-icon (click)="closeDialog()" class="close-btn">close</mat-icon>
+  </div>
+  <div class="img-container">
+    <img [src]=" this.memberDetails.avatar || 'assets/img/81. Profile.png'" />
+  </div>
+  <div class="name-and-active-status">
+    <div>
+      <span class="name">{{ this.memberDetails.displayName }}</span>
+      <div class="active-status">
+        <div class="green-dot"></div>
+        <span>Active</span>
+      </div>
+    </div>
+    <span class="edit">Bearbeiten</span>
+  </div>
+  <div class="email-content">
+    <div class="mail-address">
+      <mat-icon>mail</mat-icon>
+      <div class="flex-column">
+        <span>E-Mail-Adresse</span>
+        <a href="mailto:{{ this.memberDetails.email }}">{{ this.memberDetails.email }}</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -57,7 +57,8 @@ export class AddMemberDialogComponent implements OnInit {
     selectedUsers.forEach((userName) => {
       const userData = {
         displayName: userName,
-        avatar: this.channelService.userAvatars[userName], // Avatar aus dem Objekt abrufen
+        avatar: this.channelService.userAvatars[userName], 
+        email: this.channelService.userEmails[userName],
       };
       this.firestore
         .collection('channels')

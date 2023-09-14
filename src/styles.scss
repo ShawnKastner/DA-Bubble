@@ -80,9 +80,17 @@ body {
   }
 }
 
+.member-details-dialog {
+  width: 500px;
+  height: 600px;
+
+  .mat-mdc-dialog-surface {
+    border-radius: 30px 30px 30px 30px !important;
+  }
+}
+
 .mat-mdc-dialog-surface {
   border-radius: 30px !important;
-  overflow: hidden !important;
 }
 
 /* width */

@@ -7,6 +7,7 @@ import {
 import { AddMemberDialogComponent } from '../add-member-dialog/add-member-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ChannelService } from 'src/app/shared/services/channel.service';
+import { MemberDetailsComponent } from './member-details/member-details.component';
 
 @Component({
   selector: 'app-members-dialog',
@@ -14,6 +15,7 @@ import { ChannelService } from 'src/app/shared/services/channel.service';
   styleUrls: ['./members-dialog.component.scss'],
 })
 export class MembersDialogComponent implements OnInit {
+  selectedMember: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -51,6 +53,13 @@ export class MembersDialogComponent implements OnInit {
       },
       panelClass: 'add-member-dialog',
     });
-  
+  }
+
+  openMemberDetails(member: any) {
+    this.closeDialog();
+    this.dialog.open(MemberDetailsComponent, {
+      data: { memberData: member } ,
+      panelClass: 'member-details-dialog'
+    })
   }
 }
