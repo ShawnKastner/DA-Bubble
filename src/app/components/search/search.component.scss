@@ -1,9 +1,11 @@
 .search-bar {
+  position: relative;
+
   input {
     border-radius: 32px;
     padding: 18px 45px;
     font-size: 1.5rem;
-    width: calc(100% - 90px);
+    width: 500px;
     border: none;
 
     &:focus {
@@ -14,7 +16,7 @@
   mat-icon {
     position: absolute;
     top: 20px;
-    right: 25px;
+    right: 15px;
     color: #686868;
   }
 }

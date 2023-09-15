@@ -1,0 +1,25 @@
+.profile-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-right: 20px;
+  transition: ease-in-out 125ms;
+
+  span {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  img {
+    height: 70px;
+    width: 70px;
+    border-radius: 42px;
+    object-fit: cover;
+  }
+
+  &:hover {
+    cursor: pointer;
+    color: #535af1;
+    transition: ease-in-out 125ms;
+  }
+}

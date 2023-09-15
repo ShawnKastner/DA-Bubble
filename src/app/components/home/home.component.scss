@@ -17,9 +17,12 @@
   width: 100%;
 }
 
-app-search {
+.search-and-profile {
+  display: flex;
+  justify-content: space-between;
   position: absolute;
   top: 25px;
-  right: 20px;
-  width: calc(100% - 485px);
+  left: 467px;
+  gap: 50px;
+  width: calc(100% - 467px);
 }
