@@ -8,6 +8,9 @@ import { HomeComponent } from './components/home/home.component';
 import { ChannelComponent } from './components/channel/channel.component';
 import { ChooseAvatarComponent } from './components/choose-avatar/choose-avatar.component';
 
+// route guard
+import { AuthGuard } from './shared/guard/auth.guard';
+
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'signUp', component: SignUpComponent },
@@ -17,6 +20,7 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: ':id',
