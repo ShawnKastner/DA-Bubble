@@ -1,0 +1,86 @@
+.member-details-content {
+  padding: 45px 40px;
+  gap: 38px;
+}
+
+.headline {
+  display: flex;
+  justify-content: space-between;
+}
+
+.img-container {
+  display: flex;
+  justify-content: center;
+
+  img {
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    object-fit: cover;
+  }
+}
+
+.name-and-active-status {
+  .edit {
+    color: rgba(83, 90, 241, 1);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .name {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  .active-status {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: rgba(146, 200, 62, 1);
+
+    .green-dot {
+      background-color: rgba(146, 200, 62, 1);
+      width: 16px;
+      height: 16px;
+      border-radius: 100%;
+    }
+  }
+}
+
+.email-content {
+  display: flex;
+  align-items: center;
+
+  .mail-address {
+    display: flex;
+    gap: 20px;
+
+    div {
+      gap: 20px;
+    }
+
+    span {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    a {
+      text-decoration: none;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
+
+.edit-and-name {
+  display: flex;
+  justify-content: space-between;
+}
+
+.gap-15 {
+  gap: 15px;
+}

@@ -40,8 +40,10 @@ import { AddMemberDialogComponent } from './components/channel/add-member-dialog
 import { MembersDialogComponent } from './components/channel/members-dialog/members-dialog.component';
 import { ChooseAvatarComponent } from './components/choose-avatar/choose-avatar.component';
 import { MemberDetailsComponent } from './components/channel/members-dialog/member-details/member-details.component';
-import { EditMemberComponent } from './components/profile/edit-member/edit-member.component';
+import { EditMemberComponent } from './components/profile/logout-dialog/profile-dialog/edit-member/edit-member.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { LogoutDialogComponent } from './components/profile/logout-dialog/logout-dialog.component';
+import { ProfileDialogComponent } from './components/profile/logout-dialog/profile-dialog/profile-dialog.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     MemberDetailsComponent,
     EditMemberComponent,
     ProfileComponent,
+    LogoutDialogComponent,
+    ProfileDialogComponent,
   ],
   imports: [
     provideFirebaseApp(() => initializeApp(environment.firebase)),

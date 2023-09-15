@@ -12,14 +12,14 @@ export class EditMemberComponent implements OnInit {
   memberAvatar!: string;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { memberData: any },
+    @Inject(MAT_DIALOG_DATA) public data: { profileData: any },
     private dialogRef: MatDialogRef<EditMemberComponent>
   ) {}
 
   ngOnInit() {
-    this.email = this.data.memberData.email;
-    this.fullName = this.data.memberData.displayName;
-    this.memberAvatar = this.data.memberData.avatar;
+    this.email = this.data.profileData.email;
+    this.fullName = this.data.profileData.displayName;
+    this.memberAvatar = this.data.profileData.avatar;
   }
 
   closeDialog() {

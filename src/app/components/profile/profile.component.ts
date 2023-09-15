@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { EditMemberComponent } from './edit-member/edit-member.component';
+import { EditMemberComponent } from './logout-dialog/profile-dialog/edit-member/edit-member.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { LogoutDialogComponent } from './logout-dialog/logout-dialog.component';
 
 @Component({
   selector: 'app-profile',
@@ -13,10 +14,7 @@ export class ProfileComponent implements OnInit {
   userData: any;
   userID!: string;
 
-  constructor(
-    private dialog: MatDialog,
-    private firestore: AngularFirestore
-  ) {
+  constructor(private dialog: MatDialog, private firestore: AngularFirestore) {
     const userDataString = localStorage.getItem('user');
     if (userDataString) {
       this.userData = JSON.parse(userDataString);
@@ -38,10 +36,10 @@ export class ProfileComponent implements OnInit {
       });
   }
 
-  openEditMemberDialog() {
-    this.dialog.open(EditMemberComponent, {
+  openProfileLogoutDialog() {
+    this.dialog.open(LogoutDialogComponent, {
+      panelClass: 'logout-dialog',
       data: { profileData: this.profileDetails },
-      panelClass: 'edit-member-dialog',
     });
   }
 }

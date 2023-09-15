@@ -92,6 +92,33 @@ body {
 .edit-member-dialog {
   width: 500px;
   height: 698px;
+  position: absolute !important;
+  top: 105px;
+  right: 20px;
+
+  .mat-mdc-dialog-surface {
+    border-radius: 30px 30px 30px 30px !important;
+  }
+}
+
+.logout-dialog {
+  position: absolute !important;
+  top: 105px;
+  right: 20px;
+  width: 282px;
+  height: 181px;
+
+  .mat-mdc-dialog-surface {
+    border-radius: 30px 0px 30px 30px !important;
+  }
+}
+
+.profile-dialog {
+  width: 500px;
+  height: 600px;
+  position: absolute !important;
+  top: 105px;
+  right: 20px;
 
   .mat-mdc-dialog-surface {
     border-radius: 30px 30px 30px 30px !important;

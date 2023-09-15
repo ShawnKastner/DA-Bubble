@@ -1,0 +1,20 @@
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  height: 100%;
+
+  span {
+    font-size: 1.5rem;
+    font-weight: 600;
+    transition: ease-in-out 125ms;
+
+    &:hover {
+      cursor: pointer;
+      color: #535af1;
+      transition: ease-in-out 125ms;
+    }
+  }
+}
