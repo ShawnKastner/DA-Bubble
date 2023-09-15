@@ -9,10 +9,18 @@ import { ChannelComponent } from './components/channel/channel.component';
 import { ChooseAvatarComponent } from './components/choose-avatar/choose-avatar.component';
 
 // route guard
-import { AuthGuard } from './shared/guard/auth.guard';
+import {
+  canActivate,
+  redirectUnauthorizedTo,
+  redirectLoggedInTo,
+} from '@angular/fire/auth-guard';
+
+const redirectToLogin = () => redirectUnauthorizedTo(['']);
+const redirectToHome = () => redirectLoggedInTo(['home']);
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: '', component: LoginComponent, ...canActivate(redirectToHome) },
   { path: 'signUp', component: SignUpComponent },
   { path: 'forgetPassword', component: ResetPasswordComponent },
   { path: 'sendResetMail', component: SendResetMailComponent },
@@ -20,13 +28,13 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [AuthGuard],
     children: [
       {
         path: ':id',
         component: ChannelComponent,
       },
     ],
+    ...canActivate(redirectToLogin),
   },
 ];
 
