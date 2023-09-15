@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -13,7 +14,8 @@ export class EditMemberComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { profileData: any },
-    private dialogRef: MatDialogRef<EditMemberComponent>
+    private dialogRef: MatDialogRef<EditMemberComponent>,
+    private firestore: AngularFirestore
   ) {}
 
   ngOnInit() {
@@ -24,5 +26,18 @@ export class EditMemberComponent implements OnInit {
 
   closeDialog() {
     this.dialogRef.close();
+  }
+
+  editUser() {
+    this.firestore
+      .collection('users')
+      .doc(this.data.profileData.uid)
+      .update({
+        displayName: this.fullName,
+        email: this.email,
+      })
+      .then(() => {
+        this.dialogRef.close();
+      });
   }
 }
