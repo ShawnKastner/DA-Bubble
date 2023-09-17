@@ -8,6 +8,7 @@ import { AddMemberDialogComponent } from '../add-member-dialog/add-member-dialog
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ChannelService } from 'src/app/shared/services/channel.service';
 import { MemberDetailsComponent } from './member-details/member-details.component';
+import { EditMemberComponent } from '../../profile/logout-dialog/profile-dialog/edit-member/edit-member.component';
 
 @Component({
   selector: 'app-members-dialog',
@@ -57,9 +58,16 @@ export class MembersDialogComponent implements OnInit {
 
   openMemberDetails(member: any) {
     this.closeDialog();
-    this.dialog.open(MemberDetailsComponent, {
-      data: { memberData: member },
-      panelClass: 'member-details-dialog',
-    });
+    if (member.displayName === this.authService.userData.displayName) {
+      this.dialog.open(EditMemberComponent, {
+        data: { profileData: member },
+        panelClass: 'edit-member-dialog',
+      });
+    } else {
+      this.dialog.open(MemberDetailsComponent, {
+        data: { memberData: member },
+        panelClass: 'member-details-dialog',
+      });
+    }
   }
 }

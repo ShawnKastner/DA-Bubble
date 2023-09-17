@@ -1,6 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { LogoutDialogComponent } from '../../logout-dialog.component';
 
 @Component({
   selector: 'app-edit-member',
@@ -15,7 +20,8 @@ export class EditMemberComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { profileData: any },
     private dialogRef: MatDialogRef<EditMemberComponent>,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -26,6 +32,16 @@ export class EditMemberComponent implements OnInit {
 
   closeDialog() {
     this.dialogRef.close();
+  }
+
+  cancelEdit() {
+    this.closeDialog();
+    this.dialog.open(LogoutDialogComponent, {
+      panelClass: 'logout-dialog',
+      data: {
+        profileData: this.data.profileData,
+      },
+    });
   }
 
   editUser() {
