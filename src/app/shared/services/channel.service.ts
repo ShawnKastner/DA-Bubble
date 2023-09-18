@@ -50,11 +50,13 @@ export class ChannelService {
    */
   addNewChannel() {
     const channelId = this.firestore.createId();
+    const currentUser = this.authService.userData.displayName;
     const channel = new Channel(
       this.channelName,
       this.description || '',
       channelId,
-      this.createdDate
+      this.createdDate,
+      currentUser,
     );
     this.firestore
       .collection('channels')

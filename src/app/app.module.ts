@@ -44,6 +44,7 @@ import { EditMemberComponent } from './components/profile/logout-dialog/profile-
 import { ProfileComponent } from './components/profile/profile.component';
 import { LogoutDialogComponent } from './components/profile/logout-dialog/logout-dialog.component';
 import { ProfileDialogComponent } from './components/profile/logout-dialog/profile-dialog/profile-dialog.component';
+import { ChannelDetailsDialogComponent } from './components/channel/channel-details-dialog/channel-details-dialog.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { ProfileDialogComponent } from './components/profile/logout-dialog/profi
     ProfileComponent,
     LogoutDialogComponent,
     ProfileDialogComponent,
+    ChannelDetailsDialogComponent,
   ],
   imports: [
     provideFirebaseApp(() => initializeApp(environment.firebase)),

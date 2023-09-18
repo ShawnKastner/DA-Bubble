@@ -24,6 +24,11 @@ body {
   align-items: center;
 }
 
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
 .gap-25 {
   display: flex;
   gap: 25px;
@@ -122,6 +127,18 @@ body {
 
   .mat-mdc-dialog-surface {
     border-radius: 30px 30px 30px 30px !important;
+  }
+}
+
+.channel-details-dialog {
+  width: 872px;
+  height: 616px;
+  position: absolute !important;
+  top: 189px;
+  left: 468px;
+
+  .mat-mdc-dialog-surface {
+    border-radius: 0px 30px 30px 30px !important;
   }
 }
 

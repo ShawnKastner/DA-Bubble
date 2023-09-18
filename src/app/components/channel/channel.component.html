@@ -1,6 +1,6 @@
 <div class="channel-content">
   <div class="header">
-    <div class="headline align-center">
+    <div (click)="openChannelDetails()" class="headline align-center" [class.dialog-opened]="isChannelDetailsDialogOpen">
       <mat-icon>tag</mat-icon><span>{{ currentChannel?.channelName }}</span>
       <mat-icon>keyboard_arrow_down</mat-icon>
     </div>

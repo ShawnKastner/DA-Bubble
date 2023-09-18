@@ -1,0 +1,39 @@
+<div class="channel-details-content">
+  <div class="header">
+    <div class="channel-name">
+      <mat-icon>tag</mat-icon>
+      <h2>{{ this.data.channelDetails.channelName }}</h2>
+    </div>
+    <mat-icon (click)="closeDialog()" class="close-btn">close</mat-icon>
+  </div>
+  <div class="border-box flex-column gap">
+    <div class="space-between">
+      <span class="font-size-and-weight">Channel-Name</span>
+      <span class="edit">Bearbeiten</span>
+    </div>
+    <div class="tag-and-name">
+      <mat-icon>tag</mat-icon
+      ><span>{{ this.data.channelDetails.channelName }}</span>
+    </div>
+    <!-- <input
+      type="text"
+      placeholder="{{ this.data.channelDetails.channelName }}"
+    /> -->
+  </div>
+  <div class="border-box flex-column gap">
+    <div class="space-between">
+      <span class="font-size-and-weight">Beschreibung</span>
+      <span class="edit">Bearbeiten</span>
+    </div>
+    <span class="tag-and-name">{{ this.data.channelDetails.description }}</span>
+    <!-- <input type="text" placeholder="Dein Text hier" /> -->
+    <mat-divider></mat-divider>
+    <div class="created-by">
+      <span class="font-size-and-weight">Erstellt von</span>
+      <span class="creator-name">{{ this.data.channelDetails.createdBy }}</span>
+    </div>
+  </div>
+  <div class="btn-container">
+    <button>Channel verlassen</button>
+  </div>
+</div>

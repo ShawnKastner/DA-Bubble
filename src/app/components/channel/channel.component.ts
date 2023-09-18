@@ -8,6 +8,7 @@ import { AddMemberDialogComponent } from './add-member-dialog/add-member-dialog.
 import { MembersDialogComponent } from './members-dialog/members-dialog.component';
 import { collection } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { ChannelDetailsDialogComponent } from './channel-details-dialog/channel-details-dialog.component';
 
 @Component({
   selector: 'app-channel',
@@ -20,6 +21,7 @@ export class ChannelComponent implements OnInit {
   allMessages!: any;
   memberNumber!: Number;
   isMembersDialogOpen = false;
+  isChannelDetailsDialogOpen = false;
   currentUserAvatar!: string;
 
   constructor(
@@ -27,7 +29,7 @@ export class ChannelComponent implements OnInit {
     private route: ActivatedRoute,
     public authService: AuthService,
     private dialog: MatDialog,
-    private firestore: AngularFirestore,
+    private firestore: AngularFirestore
   ) {}
 
   ngOnInit() {
@@ -36,7 +38,7 @@ export class ChannelComponent implements OnInit {
       this.getCurrentChannel();
       this.getChannelMessages();
       this.getMemberNumber();
-    });    
+    });
   }
 
   /**
@@ -163,6 +165,19 @@ export class ChannelComponent implements OnInit {
 
     this.dialog.afterAllClosed.subscribe(() => {
       this.isMembersDialogOpen = false;
+    });
+  }
+
+  openChannelDetails() {
+    this.dialog.open(ChannelDetailsDialogComponent, {
+      panelClass: 'channel-details-dialog',
+      data: {
+        channelDetails: this.currentChannel,
+      },
+    });
+    this.isChannelDetailsDialogOpen = true;
+    this.dialog.afterAllClosed.subscribe(() => {
+      this.isChannelDetailsDialogOpen = false;
     });
   }
 }
