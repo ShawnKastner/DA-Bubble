@@ -56,7 +56,7 @@ export class ChannelService {
       this.description || '',
       channelId,
       this.createdDate,
-      currentUser,
+      currentUser
     );
     this.firestore
       .collection('channels')
@@ -324,7 +324,7 @@ export class ChannelService {
   /**
    * The above code is defining a function called "getEmailFromUsers" that takes in a parameter called "userName" of type
    * string.
-   * 
+   *
    * @method
    * @name getEmailFromUsers
    * @kind method
@@ -547,5 +547,17 @@ export class ChannelService {
       .subscribe((data: any) => {
         this.allChannelMembers = data;
       });
+  }
+
+  editChannelName(channelID: string, channelName: string) {
+    this.firestore.collection('channels').doc(channelID).update({
+      channelName: channelName,
+    });
+  }
+
+  editChannelDescription(channelID: string, channelDescription: string) {
+    this.firestore.collection('channels').doc(channelID).update({
+      description: channelDescription,
+    });
   }
 }

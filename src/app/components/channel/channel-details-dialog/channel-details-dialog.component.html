@@ -6,27 +6,49 @@
     </div>
     <mat-icon (click)="closeDialog()" class="close-btn">close</mat-icon>
   </div>
-  <div class="border-box flex-column gap">
+  <div [ngClass]="{ 'border-box': !openEditName }" class="flex-column gap">
     <div class="space-between">
       <span class="font-size-and-weight">Channel-Name</span>
-      <span class="edit">Bearbeiten</span>
+      <span
+        *ngIf="openEditName === false"
+        (click)="editChannelName()"
+        class="edit"
+        >Bearbeiten</span
+      >
+      <span (click)="saveChannelName()" *ngIf="openEditName === true" class="edit">Speichern</span>
     </div>
     <div class="tag-and-name">
-      <mat-icon>tag</mat-icon
-      ><span>{{ this.data.channelDetails.channelName }}</span>
+      <mat-icon *ngIf="openEditName === false">tag</mat-icon
+      ><span *ngIf="openEditName === false">{{
+        this.data.channelDetails.channelName
+      }}</span>
     </div>
-    <!-- <input
+    <input [(ngModel)]="channelName"
+      *ngIf="openEditName === true"
       type="text"
       placeholder="{{ this.data.channelDetails.channelName }}"
-    /> -->
+    />
   </div>
-  <div class="border-box flex-column gap">
+  <div
+    [ngClass]="{ 'border-box': !openEditDescription }"
+    class="flex-column gap"
+  >
     <div class="space-between">
       <span class="font-size-and-weight">Beschreibung</span>
-      <span class="edit">Bearbeiten</span>
+      <span
+        *ngIf="openEditDescription === false"
+        (click)="editChannelDescription()"
+        class="edit"
+        >Bearbeiten</span
+      >
+      <span (click)="saveChannelDescription()" *ngIf="openEditDescription === true" class="edit">Speichern</span>
     </div>
     <span class="tag-and-name">{{ this.data.channelDetails.description }}</span>
-    <!-- <input type="text" placeholder="Dein Text hier" /> -->
+    <input [(ngModel)]="channelDescription"
+      *ngIf="openEditDescription === true"
+      type="text"
+      placeholder="Dein Text hier"
+    />
     <mat-divider></mat-divider>
     <div class="created-by">
       <span class="font-size-and-weight">Erstellt von</span>
