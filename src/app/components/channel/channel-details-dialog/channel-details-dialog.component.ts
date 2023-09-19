@@ -19,7 +19,6 @@ export class ChannelDetailsDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<ChannelDetailsDialogComponent>,
     public channelService: ChannelService,
-    private firestore: AngularFirestore
   ) {}
 
   ngOnInit() {

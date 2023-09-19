@@ -48,7 +48,7 @@ export class ChannelService {
    * @memberof ChannelService
    * @returns {void}
    */
-  addNewChannel() {
+  async addNewChannel() {
     const channelId = this.firestore.createId();
     const currentUser = this.authService.userData.displayName;
     const channel = new Channel(
@@ -62,8 +62,22 @@ export class ChannelService {
       .collection('channels')
       .doc(channelId)
       .set(channel.channelToJSON());
+    await this.addCurrentUserToMember(channelId);
     this.openAddUserDialog(channelId);
     this.clearInput();
+  }
+
+  async addCurrentUserToMember(channelID: string) {
+    this.firestore
+      .collection('channels')
+      .doc(channelID)
+      .collection('members')
+      .doc(this.authService.userData.uid)
+      .set({
+        displayName: this.authService.userData.displayName,
+        email: this.authService.userData.email,
+        avatar: await this.getCurrentAvatar(),
+      });
   }
 
   /**
@@ -559,5 +573,9 @@ export class ChannelService {
     this.firestore.collection('channels').doc(channelID).update({
       description: channelDescription,
     });
+  }
+
+  isUserMember(userDisplayName: string): boolean {
+    return this.allChannelMembers.some((member: any) => member.displayName === userDisplayName);
   }
 }

@@ -1,9 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import {
   MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogConfig,
   MatDialogRef,
 } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
@@ -23,7 +20,6 @@ export class AddUsersDialogComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<AddUsersDialogComponent>,
-    private firestore: AngularFirestore,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public channelService: ChannelService,
     private directMessagesService: DirectMessagesService
@@ -33,6 +29,7 @@ export class AddUsersDialogComponent implements OnInit {
     const channelId = this.data.channelId;
     console.log('Channel ID:', channelId);
     this.allUsers = this.directMessagesService.getAllUsers();
+    this.channelService.getAllChannelMembers(channelId);
   }
 
   closeDialog() {

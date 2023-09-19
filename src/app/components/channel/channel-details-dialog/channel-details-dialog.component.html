@@ -43,7 +43,7 @@
       >
       <span (click)="saveChannelDescription()" *ngIf="openEditDescription === true" class="edit">Speichern</span>
     </div>
-    <span class="tag-and-name">{{ this.data.channelDetails.description }}</span>
+    <span *ngIf="openEditDescription === false" class="tag-and-name">{{ this.data.channelDetails.description }}</span>
     <input [(ngModel)]="channelDescription"
       *ngIf="openEditDescription === true"
       type="text"

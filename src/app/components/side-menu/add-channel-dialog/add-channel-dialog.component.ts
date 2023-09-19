@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { AddUsersDialogComponent } from './add-users-dialog/add-users-dialog.component';
 import { DialogRef } from '@angular/cdk/dialog';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ChannelService } from 'src/app/shared/services/channel.service';
 
 @Component({
@@ -23,7 +20,7 @@ export class AddChannelDialogComponent {
   /**
    * The `addChannel()` method is a function that is called when the user wants to add a new channel. It calls the
    * `addNewChannel()` method from the `channelService` to add the new channel and then closes the dialog.
-   * 
+   *
    * @method
    * @name addChannel
    * @kind method

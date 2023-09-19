@@ -15,14 +15,22 @@
     >
   </div>
   <div *ngIf="selectedOption === 'certainPeople'" class="input-container">
-    <input type="text"
+    <input
+      type="text"
       placeholder="Namen eingeben"
       aria-label="Number"
       matInput
-      [ngModel]="channelService.selectedUsers.join(', ')" 
-      [matAutocomplete]="auto">
+      [ngModel]="channelService.selectedUsers.join(', ')"
+      [matAutocomplete]="auto"
+    />
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-      <mat-option [value]="user.displayName" *ngFor="let user of allUsers | async" [value]="user.displayName" (click)="channelService.selectUser(user.displayName)">
+      <mat-option
+        [disabled]="channelService.isUserMember(user.displayName)"
+        [value]="user.displayName"
+        *ngFor="let user of allUsers | async"
+        [value]="user.displayName"
+        (click)="channelService.selectUser(user.displayName)"
+      >
         {{ user.displayName }}
       </mat-option>
     </mat-autocomplete>

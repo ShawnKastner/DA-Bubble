@@ -31,10 +31,6 @@ export class AddMemberDialogComponent implements OnInit {
     this.allUsers = this.directMessageService.getAllUsers();
     this.channelService.getAllChannelMembers(this.currentChannelID);
   }
-
-  isUserMember(userDisplayName: string): boolean {
-    return this.channelService.allChannelMembers.some((member: any) => member.displayName === userDisplayName);
-  }
   
   closeDialog() {
     this.channelService.selectedUsers = [];
