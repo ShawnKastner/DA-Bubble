@@ -17,5 +17,5 @@ export interface privateMessage {
     senderId: string;
     displayName: string;
     avatar: string;
-    sentDate: Date & Timestamp;
+    sentDate: number;
 }

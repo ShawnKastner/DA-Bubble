@@ -6,6 +6,96 @@
     </div>
   </div>
 
+  <div class="message-content">
+    <div class="messages-container">
+      <ng-container *ngIf="messages$ | async as privateMessage">
+        <ng-container *ngIf="privateMessage.length > 0; else noMessages">
+          <div
+            *ngFor="let message of privateMessage; let i = index"
+            class="flex-end"
+            [ngStyle]="{
+              'align-items':
+                message.displayName === authService.userData.displayName
+                  ? 'flex-end'
+                  : 'flex-start'
+            }"
+          >
+            <ng-container
+              *ngIf="i === 0 || isNewDate(privateMessage[i - 1], message)"
+            >
+              <div class="date-divider">
+                <span>{{
+                  channelService.getFormattedDateFromTimestamp(message.sentDate)
+                }}</span>
+              </div>
+            </ng-container>
+
+            <div
+              [ngStyle]="{
+                'flex-direction':
+                  message.displayName === authService.userData.displayName
+                    ? 'row-reverse'
+                    : 'row'
+              }"
+              class="row-reverse"
+            >
+              <div>
+                <img [src]="message.avatar || 'assets/img/81. Profile.png'" />
+              </div>
+              <div>
+                <div
+                  [ngStyle]="{
+                    'flex-direction':
+                      message.displayName !== authService.userData.displayName
+                        ? 'row-reverse'
+                        : 'row'
+                  }"
+                  class="author-with-date"
+                >
+                  <span>{{
+                    channelService.getFormattedTimeFromTimestamp(
+                      message.sentDate
+                    )
+                  }}</span>
+                  <h3>{{ message.displayName }}</h3>
+                </div>
+                <span
+                  class="message"
+                  [ngStyle]="{
+                    'background-color':
+                      message.displayName !== authService.userData.displayName
+                        ? '#eceefe'
+                        : '',
+                    color:
+                      message.displayName !== authService.userData.displayName
+                        ? 'black'
+                        : ''
+                  }"
+                  >{{ message.text }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+    <ng-template #noMessages>
+      <div class="error-template">
+        <div class="empty-msg">
+          <img [src]="currentUserAvatar || 'assets/img/81. Profile.png'" />
+          <span>{{ currentUserName }}</span>
+        </div>
+        <p class="grey-font">
+          Diese Unterhaltung findet nur zwischen
+          <span style="color: rgba(83, 90, 241, 1)"
+            >@{{ currentUserName }}</span
+          >
+          und dir statt.
+        </p>
+      </div>
+    </ng-template>
+  </div>
+
   <div class="text-editor">
     <textarea [(ngModel)]="messageText"></textarea>
     <div class="add-elements">

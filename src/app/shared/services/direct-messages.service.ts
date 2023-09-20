@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthService } from './auth.service';
 import {
   DocumentData,
+  Timestamp,
   addDoc,
   collection,
   collectionData,
@@ -20,7 +21,6 @@ import { PrivateChat, privateMessage } from 'src/app/models/private-chat';
 })
 export class DirectMessagesService {
   message!: string;
-  createdDate = new Date().getTime();
 
   constructor(
     private firestore: AngularFirestore,
@@ -78,7 +78,10 @@ export class DirectMessagesService {
   }
 
   addChatMessage(chatId: string, message: string): Observable<any> {
-    const ref = this.firestore.collection('chats').doc(chatId).collection('messages');
+    const ref = this.firestore
+      .collection('chats')
+      .doc(chatId)
+      .collection('messages');
     const messageId = this.firestore.createId();
     return this.userService.currentUserProfile$.pipe(
       take(1),
@@ -96,7 +99,12 @@ export class DirectMessagesService {
   }
 
   getChatMessages$(chatId: string): Observable<privateMessage[]> {
-    const ref = collection(this.firestore.firestore, 'chats', chatId, 'messages');
+    const ref = collection(
+      this.firestore.firestore,
+      'chats',
+      chatId,
+      'messages'
+    );
     const queryAll = query(ref, orderBy('sentDate', 'asc'));
     return collectionData(queryAll) as Observable<privateMessage[]>;
   }
@@ -115,7 +123,7 @@ export class DirectMessagesService {
             },
             {
               displayName: otherUser.displayName ?? '',
-              avatar: otherUser?.avatar ?? ''
+              avatar: otherUser?.avatar ?? '',
             },
           ],
         })
@@ -152,5 +160,13 @@ export class DirectMessagesService {
     });
 
     return chats;
+  }
+
+  getFormattedTimeFromDateTimestamp(dateTimestamp: Date & Timestamp): string {
+    const timestamp = dateTimestamp.toDate().getTime();
+    const date = new Date(timestamp);
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
   }
 }
