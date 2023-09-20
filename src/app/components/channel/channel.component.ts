@@ -153,6 +153,19 @@ export class ChannelComponent implements OnInit {
       });
   }
 
+  /**
+   * The `openShowMembersDialog()` method is responsible for opening a dialog box that displays the members of the current
+   * channel. It uses the `MatDialog` service from Angular Material to open the dialog. The dialog is an instance of the
+   * `MembersDialogComponent` component and it receives data about the current channel, such as the channel ID and channel
+   * name. The dialog is styled using the `show-members-dialog` CSS class. Additionally, it sets the `isMembersDialogOpen`
+   * property to `true` when the dialog is opened and sets it back to `false` when the dialog is closed.
+   * 
+   * @method
+   * @name openShowMembersDialog
+   * @kind method
+   * @memberof ChannelComponent
+   * @returns {void}
+   */
   openShowMembersDialog() {
     this.dialog.open(MembersDialogComponent, {
       data: {
@@ -168,6 +181,20 @@ export class ChannelComponent implements OnInit {
     });
   }
 
+  /**
+   * The `openChannelDetails()` method is responsible for opening a dialog box that displays the details of the current
+   * channel. It uses the `MatDialog` service from Angular Material to open the dialog. The dialog is an instance of the
+   * `ChannelDetailsDialogComponent` component and it receives data about the current channel, such as the channel details.
+   * The dialog is styled using the `channel-details-dialog` CSS class. Additionally, it sets the
+   * `isChannelDetailsDialogOpen` property to `true` when the dialog is opened and sets it back to `false` when the dialog is
+   * closed.
+   * 
+   * @method
+   * @name openChannelDetails
+   * @kind method
+   * @memberof ChannelComponent
+   * @returns {void}
+   */
   openChannelDetails() {
     this.dialog.open(ChannelDetailsDialogComponent, {
       panelClass: 'channel-details-dialog',

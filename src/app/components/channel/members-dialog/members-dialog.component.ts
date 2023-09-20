@@ -56,6 +56,17 @@ export class MembersDialogComponent implements OnInit {
     });
   }
 
+  /**
+   * The `openMemberDetails(member: any)` method is responsible for opening a dialog box to display the details of a member.
+   * It takes a `member` object as a parameter, which contains the details of the member.
+   * 
+   * @method
+   * @name openMemberDetails
+   * @kind method
+   * @memberof MembersDialogComponent
+   * @param {any} member
+   * @returns {void}
+   */
   openMemberDetails(member: any) {
     this.closeDialog();
     if (member.displayName === this.authService.userData.displayName) {

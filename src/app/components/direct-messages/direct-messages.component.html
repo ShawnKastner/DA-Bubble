@@ -1,8 +1,8 @@
 <div class="direct-message-content">
   <div class="header">
-    <div class="headline align-center">
-      <img [src]="currentUserAvatar || 'assets/img/81. Profile.png'" />
-      <span>{{ currentUserName }}</span>
+    <div *ngIf="currentUserDetails" (click)="openProfileDetailsDialog()" class="headline align-center">
+      <img [src]="currentUserDetails.avatar || 'assets/img/81. Profile.png'" />
+      <span>{{ currentUserDetails.displayName }}</span>
     </div>
   </div>
 
@@ -80,15 +80,15 @@
       </ng-container>
     </div>
     <ng-template #noMessages>
-      <div class="error-template">
+      <div *ngIf="currentUserDetails" class="error-template">
         <div class="empty-msg">
-          <img [src]="currentUserAvatar || 'assets/img/81. Profile.png'" />
-          <span>{{ currentUserName }}</span>
+          <img [src]="currentUserDetails.avatar || 'assets/img/81. Profile.png'" />
+          <span>{{ currentUserDetails.displayName }}</span>
         </div>
         <p class="grey-font">
           Diese Unterhaltung findet nur zwischen
           <span style="color: rgba(83, 90, 241, 1)"
-            >@{{ currentUserName }}</span
+            >@{{ currentUserDetails.displayName }}</span
           >
           und dir statt.
         </p>

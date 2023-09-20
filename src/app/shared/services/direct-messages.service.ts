@@ -21,6 +21,7 @@ import { PrivateChat, privateMessage } from 'src/app/models/private-chat';
 })
 export class DirectMessagesService {
   message!: string;
+  currentUserDetails: any;
 
   constructor(
     private firestore: AngularFirestore,
@@ -28,6 +29,17 @@ export class DirectMessagesService {
     private userService: UsersService
   ) {}
 
+  /**
+   * The `get myChats$(): Observable<PrivateChat[]>` is a getter method that returns an Observable of type `PrivateChat[]`.
+   * It retrieves the private chats of the current user by querying the Firestore collection named 'chats' and filtering the
+   * chats based on the user's ID. It then maps the retrieved chats to add the chat name and profile picture for each chat.
+   * 
+   * @method
+   * @name (get) myChats$
+   * @kind property
+   * @memberof DirectMessagesService
+   * @returns {$: Observable<PrivateChat[]>}
+   */
   get myChats$(): Observable<PrivateChat[]> {
     const ref = collection(this.firestore.firestore, 'chats');
     return this.userService.currentUserProfile$.pipe(
@@ -77,6 +89,19 @@ export class DirectMessagesService {
     return this.firestore.collection('users').doc(uid).valueChanges();
   }
 
+  /**
+   * The `addChatMessage` method is responsible for adding a new message to a specific chat. It takes two parameters:
+   * `chatId`, which is the ID of the chat where the message will be added, and `message`, which is the content of the
+   * message.
+   * 
+   * @method
+   * @name addChatMessage
+   * @kind method
+   * @memberof DirectMessagesService
+   * @param {string} chatId
+   * @param {string} message
+   * @returns {Observable<any>}
+   */
   addChatMessage(chatId: string, message: string): Observable<any> {
     const ref = this.firestore
       .collection('chats')
@@ -98,6 +123,11 @@ export class DirectMessagesService {
     );
   }
 
+  /**
+   * The `getChatMessages$` method is retrieving the chat messages for a specific chat ID. It takes the `chatId` parameter of
+   * type `string`, which represents the ID of the chat.
+   * 
+   */
   getChatMessages$(chatId: string): Observable<privateMessage[]> {
     const ref = collection(
       this.firestore.firestore,
@@ -109,6 +139,17 @@ export class DirectMessagesService {
     return collectionData(queryAll) as Observable<privateMessage[]>;
   }
 
+  /**
+   * The `createChat` method is responsible for creating a new chat between the current user and another user. It takes the
+   * `otherUser` parameter of type `User`, which represents the other user involved in the chat.
+   * 
+   * @method
+   * @name createChat
+   * @kind method
+   * @memberof DirectMessagesService
+   * @param {User} otherUser
+   * @returns {Observable<string>}
+   */
   createChat(otherUser: User): Observable<string> {
     const ref = collection(this.firestore.firestore, 'chats'); // Verwende .firestore, um auf die native Firestore-Instanz zuzugreifen
     return this.userService.currentUserProfile$.pipe(
@@ -132,6 +173,18 @@ export class DirectMessagesService {
     );
   }
 
+  /**
+   * The `isExistingChat` method is checking if there is an existing chat between the current user and another user with the
+   * given `otherUserId`. It returns an Observable that emits either the chat ID if an existing chat is found, or `null` if
+   * no existing chat is found.
+   * 
+   * @method
+   * @name isExistingChat
+   * @kind method
+   * @memberof DirectMessagesService
+   * @param {string} otherUserId
+   * @returns {Observable<string | null>}
+   */
   isExistingChat(otherUserId: string): Observable<string | null> {
     return this.myChats$.pipe(
       take(1),
@@ -147,6 +200,18 @@ export class DirectMessagesService {
     );
   }
 
+  /**
+   * The `addChatNameAndPic(` method is responsible for adding the chat name and profile picture to each private chat in the
+   * array of chats. It takes the current user's ID and the array of private chats as parameters.
+   * 
+   * @method
+   * @name addChatNameAndPic
+   * @kind method
+   * @memberof DirectMessagesService
+   * @param {string | undefined} currentUserId
+   * @param {PrivateChat[]} chats
+   * @returns {PrivateChat[]}
+   */
   addChatNameAndPic(
     currentUserId: string | undefined,
     chats: PrivateChat[]
@@ -160,13 +225,5 @@ export class DirectMessagesService {
     });
 
     return chats;
-  }
-
-  getFormattedTimeFromDateTimestamp(dateTimestamp: Date & Timestamp): string {
-    const timestamp = dateTimestamp.toDate().getTime();
-    const date = new Date(timestamp);
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    return `${hours}:${minutes}`;
   }
 }
