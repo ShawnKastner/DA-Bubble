@@ -627,4 +627,23 @@ export class ChannelService {
       (member: any) => member.displayName === userDisplayName
     );
   }
+
+  leaveChannel(channelId: string) {
+    const displayNameToDelete = this.authService.userData.displayName;
+
+    this.firestore
+      .collection('channels')
+      .doc(channelId)
+      .collection('members', (ref) =>
+        ref.where('displayName', '==', displayNameToDelete)
+      )
+      .get()
+      .subscribe((querySnapshot) => {
+        if (!querySnapshot.empty) {
+          querySnapshot.forEach((doc) => {
+            doc.ref.delete();
+          });
+        }
+      });
+  }
 }

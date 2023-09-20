@@ -18,7 +18,7 @@ export class ChannelDetailsDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<ChannelDetailsDialogComponent>,
-    public channelService: ChannelService,
+    public channelService: ChannelService
   ) {}
 
   ngOnInit() {
@@ -54,5 +54,10 @@ export class ChannelDetailsDialogComponent implements OnInit {
     );
     this.data.channelDetails.description = this.channelDescription;
     this.openEditDescription = !this.openEditDescription;
+  }
+
+  leaveChannel() {
+    this.channelService.leaveChannel(this.data.channelDetails.id);
+    this.closeDialog();
   }
 }
