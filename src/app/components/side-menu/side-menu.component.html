@@ -55,19 +55,27 @@
           </div>
         </div>
       </div>
-      <div
-        *ngFor="let user of allUsers | async"
-        class="direct-messages-users"
-        [ngClass]="{ hide: hideUsers == true }"
+      <mat-selection-list
+        [formControl]="chatListControlService.chatListControl"
       >
-        <img [src]="user.avatar || 'assets/img/81. Profile.png'" />
-        <span
-          >{{ user.displayName
-          }}{{
-            user.displayName === authService.userData.displayName ? " (Du)" : ""
-          }}</span
+        <div
+          (click)="createChat(user)"
+          [routerLink]="'chat/' + user.uid"
+          *ngFor="let user of allUsers | async"
+          class="direct-messages-users"
+          [ngClass]="{ hide: hideUsers == true }"
         >
-      </div>
+          <img [src]="user.avatar || 'assets/img/81. Profile.png'" />
+          <span
+            >{{ user.displayName
+            }}{{
+              user.displayName === authService.userData.displayName
+                ? " (Du)"
+                : ""
+            }}</span
+          >
+        </div>
+      </mat-selection-list>
     </div>
   </div>
 </div>

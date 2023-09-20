@@ -9,8 +9,6 @@ import { Message } from 'src/app/models/message.model';
 import { AuthService } from './auth.service';
 import { AddUsersDialogComponent } from 'src/app/components/side-menu/add-channel-dialog/add-users-dialog/add-users-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogRef } from '@angular/cdk/dialog';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -67,6 +65,19 @@ export class ChannelService {
     this.clearInput();
   }
 
+  /**
+   * The above code is defining an asynchronous function called "addCurrentUserToMember" that takes a parameter called
+   * "channelID" of type string. This function is used to set the current user who created the channel in the members collection of
+   * this channel
+   *
+   * @async
+   * @method
+   * @name addCurrentUserToMember
+   * @kind method
+   * @memberof ChannelService
+   * @param {string} channelID
+   * @returns {Promise<void>}
+   */
   async addCurrentUserToMember(channelID: string) {
     this.firestore
       .collection('channels')
@@ -563,19 +574,57 @@ export class ChannelService {
       });
   }
 
+  /**
+   * The above code is defining a function called `editChannelName` that takes two parameters: `channelID` (a string) and
+   * `channelName` (a string). The purpose of this function is to edit the name of a channel identified by its `channelID`.
+   *
+   * @method
+   * @name editChannelName
+   * @kind method
+   * @memberof ChannelService
+   * @param {string} channelID
+   * @param {string} channelName
+   * @returns {void}
+   */
   editChannelName(channelID: string, channelName: string) {
     this.firestore.collection('channels').doc(channelID).update({
       channelName: channelName,
     });
   }
 
+  /**
+   * The above code is defining a function called `editChannelDescription` that takes two parameters: `channelID` (a string)
+   * and `channelDescription` (also a string). The purpose of this function is to update the description of a channel
+   * identified by its `channelID` with the provided `channelDescription`.
+   *
+   * @method
+   * @name editChannelDescription
+   * @kind method
+   * @memberof ChannelService
+   * @param {string} channelID
+   * @param {string} channelDescription
+   * @returns {void}
+   */
   editChannelDescription(channelID: string, channelDescription: string) {
     this.firestore.collection('channels').doc(channelID).update({
       description: channelDescription,
     });
   }
 
+  /**
+   * The above code is defining a function called `isUserMember` that takes a parameter `userDisplayName` of type string and
+   * returns a boolean value.
+   *
+   * @method
+   * @name isUserMember
+   * @kind method
+   * @memberof ChannelService
+   * @param {string} userDisplayName
+   * @returns {boolean}
+   */
   isUserMember(userDisplayName: string): boolean {
-    return this.allChannelMembers.some((member: any) => member.displayName === userDisplayName);
+    return this.allChannelMembers.some(
+      (member: any) => member.displayName === userDisplayName
+    );
   }
 }

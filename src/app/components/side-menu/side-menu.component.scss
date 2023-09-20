@@ -151,3 +151,9 @@
 .hide {
   display: none;
 }
+
+mat-selection-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

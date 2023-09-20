@@ -1,0 +1,19 @@
+<div class="direct-message-content">
+  <div class="header">
+    <div class="headline align-center">
+      <img [src]="currentUserAvatar || 'assets/img/81. Profile.png'" />
+      <span>{{ currentUserName }}</span>
+    </div>
+  </div>
+
+  <div class="text-editor">
+    <textarea [(ngModel)]="messageText"></textarea>
+    <div class="add-elements">
+      <mat-icon>add</mat-icon>
+      <div class="divider"></div>
+      <mat-icon>sentiment_satisfied</mat-icon>
+      <mat-icon>alternate_email</mat-icon>
+    </div>
+    <mat-icon class="send-btn" (click)="sendMessage()">send</mat-icon>
+  </div>
+</div>

@@ -1,0 +1,108 @@
+.direct-message-content {
+  height: 100%;
+  border-radius: 30px;
+  background-color: #ffff;
+  position: relative;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 45px;
+  box-shadow: 0px 4px 2px -2px rgba(0, 0, 0, 0.08);
+
+  .headline {
+    display: flex;
+    gap: 10px;
+    padding: 6px 10px;
+    border-radius: 100px;
+    transition: ease-in-out 125ms;
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 100%;
+      object-fit: cover;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: #eceefe;
+      color: #535af1;
+      border-radius: 30px;
+      transition: ease-in-out 125ms;
+    }
+
+    span {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+  }
+}
+
+.text-editor {
+  position: absolute;
+  bottom: 20px;
+  right: 25px;
+  left: 25px;
+
+  textarea {
+    font-family: "Nunito", sans-serif;
+    height: 145px;
+    border-radius: 20px;
+    border: 1px solid #adb0d9;
+    width: 100%;
+    resize: none;
+    font-size: 1.125rem;
+    padding: 20px;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .send-btn {
+    color: #444df2;
+    position: absolute;
+    bottom: 25px;
+    right: 15px;
+
+    &:hover {
+      cursor: pointer;
+      opacity: 0.7;
+    }
+  }
+}
+
+.add-elements {
+  display: flex;
+  position: absolute;
+  bottom: 25px;
+  left: 15px;
+  gap: 5px;
+  transition: ease-in-out 125ms;
+
+  mat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    color: #686868;
+
+    &:hover {
+      cursor: pointer;
+      color: #444df2;
+      background-color: #eceefe;
+      border-radius: 100%;
+      transition: ease-in-out 125ms;
+    }
+  }
+
+  .divider {
+    height: 40px;
+    border: 1px solid #adb0d9;
+  }
+}

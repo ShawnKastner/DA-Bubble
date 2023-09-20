@@ -14,6 +14,7 @@ import {
   redirectUnauthorizedTo,
   redirectLoggedInTo,
 } from '@angular/fire/auth-guard';
+import { DirectMessagesComponent } from './components/direct-messages/direct-messages.component';
 
 const redirectToLogin = () => redirectUnauthorizedTo(['']);
 const redirectToHome = () => redirectLoggedInTo(['home']);
@@ -32,6 +33,10 @@ const routes: Routes = [
       {
         path: ':id',
         component: ChannelComponent,
+      },
+      {
+        path: 'chat/:id',
+        component: DirectMessagesComponent,
       },
     ],
     ...canActivate(redirectToLogin),

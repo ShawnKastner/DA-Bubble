@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddChannelDialogComponent } from './add-channel-dialog/add-channel-dialog.component';
 import { ChannelService } from 'src/app/shared/services/channel.service';
-import { Observable } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { Channel } from 'src/app/models/channel.model';
 import { DirectMessagesService } from 'src/app/shared/services/direct-messages.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { User } from 'src/app/shared/services/user';
+import { ChatListControlService } from 'src/app/shared/services/chat-list-control.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -18,12 +20,14 @@ export class SideMenuComponent implements OnInit {
   allUsers!: Observable<any[]>;
   hideChannels = false;
   hideUsers = false;
-  
+
   constructor(
     private dialog: MatDialog,
     public channelService: ChannelService,
     public directMessagesService: DirectMessagesService,
     public authService: AuthService,
+    private directMessageService: DirectMessagesService,
+    public chatListControlService: ChatListControlService
   ) {}
 
   ngOnInit() {
@@ -52,7 +56,7 @@ export class SideMenuComponent implements OnInit {
    * The `hideChannel()` method is a toggle function that changes the value of the `hideChannels` property. If `hideChannels`
    * is currently `false`, it will be set to `true`, and if it is currently `true`, it will be set to `false`. This method is
    * used to control the visibility of the channels in the side menu.
-   * 
+   *
    * @method
    * @name hideChannel
    * @kind method
@@ -71,7 +75,7 @@ export class SideMenuComponent implements OnInit {
    * The `hideUser()` method is a toggle function that changes the value of the `hideUsers` property. If `hideUsers` is
    * currently `false`, it will be set to `true`, and if it is currently `true`, it will be set to `false`. This method is
    * used to control the visibility of the users in the side menu.
-   * 
+   *
    * @method
    * @name hideUser
    * @kind method
@@ -84,5 +88,23 @@ export class SideMenuComponent implements OnInit {
     } else {
       this.hideUsers = false;
     }
-  }  
+  }
+
+  createChat(user: User) {
+    this.directMessageService
+      .isExistingChat(user.uid)
+      .pipe(
+        switchMap((chatId) => {
+          if (!chatId) {
+            return this.directMessageService.createChat(user);
+          } else {
+            return of(chatId);
+          }
+        })
+      )
+      .subscribe((chatId) => {
+        this.chatListControlService.chatListControl.setValue([chatId]);
+        localStorage.setItem('currentChatId', chatId);
+      });
+  }
 }

@@ -7,16 +7,21 @@ import {
 import * as auth from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { Auth, authState } from '@angular/fire/auth';
+import { take } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   userData: any; // Save logged in user data
+  currentUser$ = authState(this.auth);
+  
   constructor(
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
-    public ngZone: NgZone // NgZone service to remove outside scope warning
+    public ngZone: NgZone, // NgZone service to remove outside scope warning
+    private auth: Auth
   ) {
     /* Saving user data in localstorage when 
     logged in and setting up null when logged out */
@@ -96,14 +101,21 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
-    const userData: User = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      emailVerified: user.emailVerified,
-    };
-    return userRef.set(userData, {
-      merge: true,
+    userRef
+    .valueChanges()
+    .pipe(take(1))
+    .subscribe((existingUserData) => {
+      // Erstelle ein neues UserData-Objekt, das die bestehenden Daten zusammenführt
+      const userData: User = {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        emailVerified: user.emailVerified,
+        avatar: existingUserData?.avatar || '', // Behalte den vorhandenen Avatar oder setze ein leeres String, falls keiner vorhanden ist
+      };
+
+      // Führe das Update aus
+      userRef.set(userData, { merge: true });
     });
   }
   // Sign out

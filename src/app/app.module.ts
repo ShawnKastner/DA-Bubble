@@ -1,8 +1,10 @@
 import { environment } from '../environments/environment';
 
+//Angular
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //Firebase
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -13,15 +15,16 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 
-//Imports
+//Material Design
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatListModule } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 //Components
 import { AppRoutingModule } from './app-routing.module';
@@ -45,6 +48,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { LogoutDialogComponent } from './components/profile/logout-dialog/logout-dialog.component';
 import { ProfileDialogComponent } from './components/profile/logout-dialog/profile-dialog/profile-dialog.component';
 import { ChannelDetailsDialogComponent } from './components/channel/channel-details-dialog/channel-details-dialog.component';
+import { DirectMessagesComponent } from './components/direct-messages/direct-messages.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +72,7 @@ import { ChannelDetailsDialogComponent } from './components/channel/channel-deta
     LogoutDialogComponent,
     ProfileDialogComponent,
     ChannelDetailsDialogComponent,
+    DirectMessagesComponent,
   ],
   imports: [
     provideFirebaseApp(() => initializeApp(environment.firebase)),
@@ -84,10 +89,13 @@ import { ChannelDetailsDialogComponent } from './components/channel/channel-deta
     MatDividerModule,
     MatIconModule,
     FormsModule,
+    ReactiveFormsModule,
     MatDialogModule,
     MatCheckboxModule,
     MatRadioModule,
     MatAutocompleteModule,
+    MatListModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent],
