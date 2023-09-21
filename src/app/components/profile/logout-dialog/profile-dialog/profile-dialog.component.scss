@@ -23,9 +23,12 @@
 .name-and-active-status {
   .edit {
     color: rgba(83, 90, 241, 1);
+    transition: ease-in-out 75ms;
 
     &:hover {
       cursor: pointer;
+      color: rgba(38, 48, 255, 1);
+      transition: ease-in-out 75ms;
     }
   }
 
@@ -68,6 +71,13 @@
 
     a {
       text-decoration: none;
+      transition: ease-in-out 75ms;
+
+      &:hover {
+        cursor: pointer;
+        color: rgba(38, 48, 255, 1);
+        transition: ease-in-out 75ms;
+      }
 
       &:focus {
         outline: none;

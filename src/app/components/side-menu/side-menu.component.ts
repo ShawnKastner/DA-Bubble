@@ -15,11 +15,11 @@ import { ChatListControlService } from 'src/app/shared/services/chat-list-contro
   styleUrls: ['./side-menu.component.scss'],
 })
 export class SideMenuComponent implements OnInit {
-  allChannels!: any[];
   channels: Observable<Channel[]> | undefined;
   allUsers!: Observable<any[]>;
   hideChannels = false;
   hideUsers = false;
+  userIsMemberMap: { [channelId: string]: boolean } = {};
 
   constructor(
     private dialog: MatDialog,
@@ -33,6 +33,15 @@ export class SideMenuComponent implements OnInit {
   ngOnInit() {
     this.channels = this.channelService.getAllChannels();
     this.allUsers = this.directMessagesService.getAllUsers();
+    this.channels.subscribe((channelList) => {
+      channelList.forEach((channel) => {
+        this.channelService
+          .checkIfLoggedUserInChannel(channel.id)
+          .subscribe((isMember) => {
+            this.userIsMemberMap[channel.id] = isMember;
+          });
+      });
+    });
   }
 
   /**
@@ -90,6 +99,17 @@ export class SideMenuComponent implements OnInit {
     }
   }
 
+  /**
+   * The `createChat(user: User)` method is responsible for creating a new chat with a user. It takes a `User` object as a
+   * parameter, which represents the user with whom the chat will be created.
+   * 
+   * @method
+   * @name createChat
+   * @kind method
+   * @memberof SideMenuComponent
+   * @param {User} user
+   * @returns {void}
+   */
   createChat(user: User) {
     this.directMessageService
       .isExistingChat(user.uid)

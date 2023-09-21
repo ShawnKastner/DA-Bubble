@@ -27,14 +27,15 @@
         [ngClass]="{ hide: hideChannels == true }"
         class="gap-25 flex-column"
       >
-        <div
-          *ngFor="let channel of channels | async"
-          class="align-center channel-names"
-          [routerLink]="channel.id"
-        >
-          <mat-icon>tag</mat-icon><span>{{ channel.channelName }}</span>
-        </div>
-
+        <ng-container *ngFor="let channel of channels | async">
+          <div
+            *ngIf="userIsMemberMap[channel.id]"
+            class="align-center channel-names"
+            [routerLink]="channel.id"
+          >
+            <mat-icon>tag</mat-icon><span>{{ channel.channelName }}</span>
+          </div>
+        </ng-container>
         <div (click)="openAddChannelDialog()" class="align-center add-channel">
           <mat-icon>add_circle</mat-icon><span>Channel hinzufügen</span>
         </div>

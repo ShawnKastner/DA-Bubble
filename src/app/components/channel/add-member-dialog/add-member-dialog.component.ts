@@ -62,7 +62,7 @@ export class AddMemberDialogComponent implements OnInit {
         .collection('members')
         .add(userData);
     });
-
+    this.channelService.checkIfLoggedUserInChannel(currentChannelID);
     this.closeDialog();
   }
 }

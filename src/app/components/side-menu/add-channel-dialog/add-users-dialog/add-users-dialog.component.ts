@@ -54,6 +54,7 @@ export class AddUsersDialogComponent implements OnInit {
       const channelId = this.data.channelId;
       this.channelService.addSelectedUsersToChannel(channelId);
     }
+    this.channelService.checkIfLoggedUserInChannel(this.data.channelId)
     this.closeDialog();
   }
 

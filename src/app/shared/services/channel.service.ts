@@ -3,7 +3,7 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
-import { Observable, map, take } from 'rxjs';
+import { Observable, map, take, tap } from 'rxjs';
 import { Channel } from 'src/app/models/channel.model';
 import { Message } from 'src/app/models/message.model';
 import { AuthService } from './auth.service';
@@ -408,6 +408,7 @@ export class ChannelService {
         this.commitBatchAndCloseDialog(userName, batch);
       });
     });
+    this.selectedUsers = [];
   }
 
   /**
@@ -628,9 +629,19 @@ export class ChannelService {
     );
   }
 
+  /**
+   * The above code is defining a function called `leaveChannel` that takes a parameter `channelId` of type string.
+   * The function is used to delete the logged user from channel
+   *
+   * @method
+   * @name leaveChannel
+   * @kind method
+   * @memberof ChannelService
+   * @param {string} channelId
+   * @returns {void}
+   */
   leaveChannel(channelId: string) {
     const displayNameToDelete = this.authService.userData.displayName;
-
     this.firestore
       .collection('channels')
       .doc(channelId)
@@ -645,5 +656,31 @@ export class ChannelService {
           });
         }
       });
+  }
+
+  /**
+   * The above code is defining a function called `checkIfLoggedUserInChannel` that takes a `channelId` parameter of type
+   * string. The function returns an Observable<boolean>. This function is used for checked all channels and members collection
+   * if the logged user is in the Channel
+   * 
+   * @method
+   * @name checkIfLoggedUserInChannel
+   * @kind method
+   * @memberof ChannelService
+   * @param {string} channelId
+   * @returns {Observable<boolean>}
+   */
+  checkIfLoggedUserInChannel(channelId: string): Observable<boolean> {
+    const displayNameToCheck = this.authService.userData.displayName;
+    return this.firestore
+      .collection('channels')
+      .doc(channelId)
+      .collection('members')
+      .valueChanges()
+      .pipe(
+        map((members: any[]) =>
+          members.some((member) => member.displayName === displayNameToCheck)
+        )
+      );
   }
 }
