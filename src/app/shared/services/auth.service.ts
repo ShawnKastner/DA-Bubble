@@ -84,6 +84,7 @@ export class AuthService {
       .sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
         window.alert('Password reset email sent, check your inbox.');
+        this.router.navigate(['/']);
       })
       .catch((error) => {
         window.alert(error);

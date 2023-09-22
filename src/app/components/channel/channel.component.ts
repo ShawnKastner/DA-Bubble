@@ -6,8 +6,6 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { ChannelService } from 'src/app/shared/services/channel.service';
 import { AddMemberDialogComponent } from './add-member-dialog/add-member-dialog.component';
 import { MembersDialogComponent } from './members-dialog/members-dialog.component';
-import { collection } from '@angular/fire/firestore';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ChannelDetailsDialogComponent } from './channel-details-dialog/channel-details-dialog.component';
 
 @Component({
@@ -23,13 +21,15 @@ export class ChannelComponent implements OnInit {
   isMembersDialogOpen = false;
   isChannelDetailsDialogOpen = false;
   currentUserAvatar!: string;
+  showUserList: boolean = false;
+  userList: any[] = []; // Hier sollte die Liste der Benutzer stehen
 
   constructor(
     public channelService: ChannelService,
     private route: ActivatedRoute,
     public authService: AuthService,
     private dialog: MatDialog,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
   ) {}
 
   ngOnInit() {
@@ -38,7 +38,12 @@ export class ChannelComponent implements OnInit {
       this.getCurrentChannel();
       this.getChannelMessages();
       this.getMemberNumber();
+      this.channelService.getAllChannelMembers(this.currentChannelID);
     });
+  }
+
+  formatMessage(message: string): string {
+    return message.replace(/@(\w+\s\w+)/g, '<span class="blue-text">@$1</span>');
   }
 
   /**
@@ -159,7 +164,7 @@ export class ChannelComponent implements OnInit {
    * `MembersDialogComponent` component and it receives data about the current channel, such as the channel ID and channel
    * name. The dialog is styled using the `show-members-dialog` CSS class. Additionally, it sets the `isMembersDialogOpen`
    * property to `true` when the dialog is opened and sets it back to `false` when the dialog is closed.
-   * 
+   *
    * @method
    * @name openShowMembersDialog
    * @kind method
@@ -188,7 +193,7 @@ export class ChannelComponent implements OnInit {
    * The dialog is styled using the `channel-details-dialog` CSS class. Additionally, it sets the
    * `isChannelDetailsDialogOpen` property to `true` when the dialog is opened and sets it back to `false` when the dialog is
    * closed.
-   * 
+   *
    * @method
    * @name openChannelDetails
    * @kind method
@@ -206,5 +211,32 @@ export class ChannelComponent implements OnInit {
     this.dialog.afterAllClosed.subscribe(() => {
       this.isChannelDetailsDialogOpen = false;
     });
+  }
+
+  toggleUserList() {
+    this.showUserList = !this.showUserList;
+  }
+
+  insertAtCursor(text: string) {
+    const textarea = document.querySelector(
+      '.text-editor textarea'
+    ) as HTMLTextAreaElement;
+    const startPos = textarea.selectionStart;
+    const endPos = textarea.selectionEnd;
+    const textBeforeCursor = textarea.value.substring(0, startPos);
+    const textAfterCursor = textarea.value.substring(
+      endPos,
+      textarea.value.length
+    );
+
+    textarea.value = textBeforeCursor + text + textAfterCursor;
+    textarea.selectionStart = startPos + text.length;
+    textarea.selectionEnd = startPos + text.length;
+    textarea.focus();
+  }
+
+  addUserToMessage(username: string) {
+    this.insertAtCursor(`@${username}`);
+    this.showUserList = false;
   }
 }

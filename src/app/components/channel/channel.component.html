@@ -1,11 +1,19 @@
 <div class="channel-content">
   <div class="header">
-    <div (click)="openChannelDetails()" class="headline align-center" [class.dialog-opened]="isChannelDetailsDialogOpen">
+    <div
+      (click)="openChannelDetails()"
+      class="headline align-center"
+      [class.dialog-opened]="isChannelDetailsDialogOpen"
+    >
       <mat-icon>tag</mat-icon><span>{{ currentChannel?.channelName }}</span>
       <mat-icon>keyboard_arrow_down</mat-icon>
     </div>
     <div class="add-members">
-      <div (click)="openShowMembersDialog()" class="members-preview" [class.dialog-opened]="isMembersDialogOpen">
+      <div
+        (click)="openShowMembersDialog()"
+        class="members-preview"
+        [class.dialog-opened]="isMembersDialogOpen"
+      >
         <img src="assets/img/Members preview.png" />
         <span>{{ memberNumber }}</span>
       </div>
@@ -38,25 +46,22 @@
           </ng-container>
 
           <div
-            [ngStyle]="{
-              'flex-direction':
-                message.messagedAuthor === authService.userData.displayName
-                  ? 'row-reverse'
-                  : 'row'
-            }"
-            class="row-reverse"
+          class="messages-main-chat"
+          [ngClass]="{
+            'row-reverse': message.messagedAuthor === authService.userData.displayName,
+            'row': message.messagedAuthor !== authService.userData.displayName,
+          }"
+   
           >
             <div>
-              <img [src]="message.avatar || 'assets/img/81. Profile.png'"  />
+              <img [src]="message.avatar || 'assets/img/81. Profile.png'" />
             </div>
             <div>
               <div
-                [ngStyle]="{
-                  'flex-direction':
-                    message.messagedAuthor !== authService.userData.displayName
-                      ? 'row-reverse'
-                      : 'row'
-                }"
+              [ngClass]="{
+                'row-reverse': message.messagedAuthor === authService.userData.displayName,
+                'row': message.messagedAuthor !== authService.userData.displayName
+              }"
                 class="author-with-date"
               >
                 <span>{{
@@ -66,19 +71,14 @@
                 }}</span>
                 <h3>{{ message.messagedAuthor }}</h3>
               </div>
-              <span
-                class="message"
-                [ngStyle]="{
-                  'background-color':
+              <span 
+                [ngClass]="{
+                  'message-right':
+                    message.messagedAuthor === authService.userData.displayName,
+                  'message-left':
                     message.messagedAuthor !== authService.userData.displayName
-                      ? '#eceefe'
-                      : '',
-                  color:
-                    message.messagedAuthor !== authService.userData.displayName
-                      ? 'black'
-                      : ''
-                }"
-                >{{ message.channelMessage }}</span
+                }"  [innerHTML]="formatMessage(message.channelMessage)"
+                ></span
               >
             </div>
           </div>
@@ -96,7 +96,7 @@
       <mat-icon>add</mat-icon>
       <div class="divider"></div>
       <mat-icon>sentiment_satisfied</mat-icon>
-      <mat-icon>alternate_email</mat-icon>
+      <mat-icon (click)="toggleUserList()">alternate_email</mat-icon>
     </div>
     <mat-icon
       class="send-btn"
@@ -105,5 +105,12 @@
       "
       >send</mat-icon
     >
+  </div>
+  <div class="user-list" *ngIf="showUserList">
+    <ul>
+      <li *ngFor="let username of channelService.allChannelMembers" (click)="addUserToMessage(username.displayName)">
+        @{{ username.displayName }}
+      </li>
+    </ul>
   </div>
 </div>

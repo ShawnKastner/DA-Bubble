@@ -9,13 +9,13 @@
     <span>Bitte geben Sie ihre E-Mail-Adresse ein.</span>
     <mat-card-content>
       <div class="login-form">
-        <input placeholder="beispielname@email.com" type="email" />
+        <input #email placeholder="beispielname@email.com" type="email" [(ngModel)]="emailValue"/>
         <mat-card-subtitle class="text-center"
           >Wir senden Ihnen eine E-Mail, über die <br />
           Sie ihr Passwort ändern können.</mat-card-subtitle
         >
         <div class="reset-password-container">
-          <button>E-Mail senden</button>
+          <button [disabled]="!emailValue" (click)="authService.ForgotPassword(email.value)">E-Mail senden</button>
         </div>
       </div>
     </mat-card-content>
