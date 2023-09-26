@@ -662,7 +662,7 @@ export class ChannelService {
    * The above code is defining a function called `checkIfLoggedUserInChannel` that takes a `channelId` parameter of type
    * string. The function returns an Observable<boolean>. This function is used for checked all channels and members collection
    * if the logged user is in the Channel
-   * 
+   *
    * @method
    * @name checkIfLoggedUserInChannel
    * @kind method

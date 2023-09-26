@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
@@ -15,6 +15,7 @@ import {
   redirectLoggedInTo,
 } from '@angular/fire/auth-guard';
 import { DirectMessagesComponent } from './components/direct-messages/direct-messages.component';
+import { ThreadsComponent } from './components/channel/threads/threads.component';
 
 const redirectToLogin = () => redirectUnauthorizedTo(['']);
 const redirectToHome = () => redirectLoggedInTo(['home']);
@@ -33,6 +34,12 @@ const routes: Routes = [
       {
         path: ':id',
         component: ChannelComponent,
+        children: [
+          {
+            path: 'thread/:id',
+            component: ThreadsComponent,
+          },
+        ],
       },
       {
         path: 'chat/:id',

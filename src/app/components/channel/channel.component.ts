@@ -7,6 +7,7 @@ import { ChannelService } from 'src/app/shared/services/channel.service';
 import { AddMemberDialogComponent } from './add-member-dialog/add-member-dialog.component';
 import { MembersDialogComponent } from './members-dialog/members-dialog.component';
 import { ChannelDetailsDialogComponent } from './channel-details-dialog/channel-details-dialog.component';
+import { ThreadService } from 'src/app/shared/services/thread.service';
 
 @Component({
   selector: 'app-channel',
@@ -22,7 +23,8 @@ export class ChannelComponent implements OnInit {
   isChannelDetailsDialogOpen = false;
   currentUserAvatar!: string;
   showUserList: boolean = false;
-  userList: any[] = []; // Hier sollte die Liste der Benutzer stehen
+  userList: any[] = [];
+  showElements: boolean = false;
 
   constructor(
     public channelService: ChannelService,
@@ -30,6 +32,7 @@ export class ChannelComponent implements OnInit {
     public authService: AuthService,
     private dialog: MatDialog,
     private firestore: AngularFirestore,
+    public threadService: ThreadService
   ) {}
 
   ngOnInit() {
@@ -42,8 +45,29 @@ export class ChannelComponent implements OnInit {
     });
   }
 
+  toggleShowElements(message: any) {
+    message.showElements = !message.showElements;
+  }
+
+  /**
+   * The `formatMessage(message: string): string` method is a helper method that takes a message as input and returns a
+   * formatted version of the message. It replaces any occurrences of `@username` with `<span
+   * class="blue-text">@username</span>`, where `username` is a word followed by a space and another word. This formatting is
+   * done using regular expressions. The purpose of this method is to highlight mentions of users in the message by applying
+   * a CSS class to them.
+   *
+   * @method
+   * @name formatMessage
+   * @kind method
+   * @memberof ChannelComponent
+   * @param {string} message
+   * @returns {string}
+   */
   formatMessage(message: string): string {
-    return message.replace(/@(\w+\s\w+)/g, '<span class="blue-text">@$1</span>');
+    return message.replace(
+      /@(\w+\s\w+)/g,
+      '<span class="blue-text">@$1</span>'
+    );
   }
 
   /**

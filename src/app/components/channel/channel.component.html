@@ -46,22 +46,50 @@
           </ng-container>
 
           <div
-          class="messages-main-chat"
-          [ngClass]="{
+            (mouseenter)="toggleShowElements(message)"
+            (mouseleave)="toggleShowElements(message)"
+            class="messages-main-chat"
+            [ngClass]="{
             'row-reverse': message.messagedAuthor === authService.userData.displayName,
             'row': message.messagedAuthor !== authService.userData.displayName,
           }"
-   
           >
+            <div
+              class="reaction-elements"
+              *ngIf="message.showElements"
+              [ngClass]="{
+                'reaction-elements-left':
+                  message.messagedAuthor === authService.userData.displayName,
+                'reaction-elements-right':
+                  message.messagedAuthor !== authService.userData.displayName
+              }"
+            >
+              <mat-icon class="close-btn">add_reaction</mat-icon>
+              <mat-icon
+                class="close-btn"
+                (click)="threadService.createThreadChat(currentChannelID, message.messageID)"
+                [routerLink]="'thread/' + message.messageID"
+                >comment</mat-icon
+              >
+              <mat-icon
+                class="close-btn"
+                *ngIf="
+                  message.messagedAuthor === authService.userData.displayName
+                "
+                >more_vert</mat-icon
+              >
+            </div>
             <div>
               <img [src]="message.avatar || 'assets/img/81. Profile.png'" />
             </div>
             <div>
               <div
-              [ngClass]="{
-                'row-reverse': message.messagedAuthor === authService.userData.displayName,
-                'row': message.messagedAuthor !== authService.userData.displayName
-              }"
+                [ngClass]="{
+                  'row-reverse':
+                    message.messagedAuthor === authService.userData.displayName,
+                  row:
+                    message.messagedAuthor !== authService.userData.displayName
+                }"
                 class="author-with-date"
               >
                 <span>{{
@@ -71,15 +99,15 @@
                 }}</span>
                 <h3>{{ message.messagedAuthor }}</h3>
               </div>
-              <span 
+              <span
                 [ngClass]="{
                   'message-right':
                     message.messagedAuthor === authService.userData.displayName,
                   'message-left':
                     message.messagedAuthor !== authService.userData.displayName
-                }"  [innerHTML]="formatMessage(message.channelMessage)"
-                ></span
-              >
+                }"
+                [innerHTML]="formatMessage(message.channelMessage)"
+              ></span>
             </div>
           </div>
         </ng-container>
@@ -108,7 +136,10 @@
   </div>
   <div class="user-list" *ngIf="showUserList">
     <ul>
-      <li *ngFor="let username of channelService.allChannelMembers" (click)="addUserToMessage(username.displayName)">
+      <li
+        *ngFor="let username of channelService.allChannelMembers"
+        (click)="addUserToMessage(username.displayName)"
+      >
         @{{ username.displayName }}
       </li>
     </ul>

@@ -100,7 +100,8 @@
 
 .messages-main-chat {
   padding: 10px 45px;
-  width: 100%;
+  width: calc(100% - 90px);
+  position: relative;
 
   &:hover {
     background-color: #eceefe;
@@ -286,7 +287,24 @@
   background-color: #f0f0f0;
 }
 
-.blue-text {
-  color: blue;
-  cursor: pointer;
+.reaction-elements {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  position: absolute;
+  top: 0;
+  border-radius: 25px 25px 0px 25px;
+  width: 210px;
+  height: 46px;
+  border: 1px solid rgba(173, 176, 217, 1);
+  background-color: #ffff;
+}
+
+.reaction-elements-left {
+  left: 25px;
+}
+
+.reaction-elements-right {
+  right: 25px;
 }

@@ -49,6 +49,7 @@ import { LogoutDialogComponent } from './components/profile/logout-dialog/logout
 import { ProfileDialogComponent } from './components/profile/logout-dialog/profile-dialog/profile-dialog.component';
 import { ChannelDetailsDialogComponent } from './components/channel/channel-details-dialog/channel-details-dialog.component';
 import { DirectMessagesComponent } from './components/direct-messages/direct-messages.component';
+import { ThreadsComponent } from './components/channel/threads/threads.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { DirectMessagesComponent } from './components/direct-messages/direct-mes
     ProfileDialogComponent,
     ChannelDetailsDialogComponent,
     DirectMessagesComponent,
+    ThreadsComponent,
   ],
   imports: [
     provideFirebaseApp(() => initializeApp(environment.firebase)),
