@@ -9,8 +9,8 @@
     <app-side-menu></app-side-menu>
   </div>
 
-  <div class="router-outlet">
+  <div class="router-outlet" [class.gap-25]="isThreadRouteActive()">
     <router-outlet></router-outlet>
-    <app-threads ></app-threads>
+    <app-threads *ngIf="isThreadRouteActive()"></app-threads>
   </div>
 </div>

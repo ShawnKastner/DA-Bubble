@@ -5,7 +5,7 @@
       class="headline align-center"
       [class.dialog-opened]="isChannelDetailsDialogOpen"
     >
-      <mat-icon>tag</mat-icon><span>{{ currentChannel?.channelName }}</span>
+      <mat-icon>tag</mat-icon><span>{{ this.channelService.currentChannel?.channelName }}</span>
       <mat-icon>keyboard_arrow_down</mat-icon>
     </div>
     <div class="add-members">
@@ -118,7 +118,7 @@
   <div class="text-editor">
     <textarea
       [(ngModel)]="channelService.message"
-      placeholder="Nachricht an #{{ currentChannel?.channelName }}"
+      placeholder="Nachricht an #{{ this.channelService.currentChannel?.channelName }}"
     ></textarea>
     <div class="add-elements">
       <mat-icon>add</mat-icon>

@@ -16,7 +16,6 @@ import { ThreadService } from 'src/app/shared/services/thread.service';
 })
 export class ChannelComponent implements OnInit {
   currentChannelID!: string;
-  currentChannel!: any;
   allMessages!: any;
   memberNumber!: Number;
   isMembersDialogOpen = false;
@@ -27,11 +26,11 @@ export class ChannelComponent implements OnInit {
   showElements: boolean = false;
 
   constructor(
-    public channelService: ChannelService,
     private route: ActivatedRoute,
-    public authService: AuthService,
     private dialog: MatDialog,
     private firestore: AngularFirestore,
+    public authService: AuthService,
+    public channelService: ChannelService,
     public threadService: ThreadService
   ) {}
 
@@ -85,7 +84,7 @@ export class ChannelComponent implements OnInit {
     this.channelService
       .getCurrentChannel(this.currentChannelID)
       .subscribe((data) => {
-        this.currentChannel = data;
+        this.channelService.currentChannel = data;
       });
   }
 
@@ -153,7 +152,7 @@ export class ChannelComponent implements OnInit {
     this.dialog.open(AddMemberDialogComponent, {
       data: {
         channelID: this.currentChannelID,
-        channelName: this.currentChannel.channelName,
+        channelName: this.channelService.currentChannel.channelName,
       },
       panelClass: 'add-member-dialog',
     });
@@ -199,7 +198,7 @@ export class ChannelComponent implements OnInit {
     this.dialog.open(MembersDialogComponent, {
       data: {
         channelID: this.currentChannelID,
-        channelName: this.currentChannel.channelName,
+        channelName: this.channelService.currentChannel.channelName,
       },
       panelClass: 'show-members-dialog',
     });
@@ -228,7 +227,7 @@ export class ChannelComponent implements OnInit {
     this.dialog.open(ChannelDetailsDialogComponent, {
       panelClass: 'channel-details-dialog',
       data: {
-        channelDetails: this.currentChannel,
+        channelDetails: this.channelService.currentChannel,
       },
     });
     this.isChannelDetailsDialogOpen = true;

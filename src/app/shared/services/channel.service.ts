@@ -24,6 +24,7 @@ export class ChannelService {
   userAvatars: { [userName: string]: string } = {};
   userEmails: { [userName: string]: string } = {};
   allChannelMembers!: any;
+  currentChannel!: any;
 
   constructor(
     private firestore: AngularFirestore,

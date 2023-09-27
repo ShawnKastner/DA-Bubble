@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { collection } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThreadService {
   currentMessage!: any;
+  message!: string;
 
   constructor(private firestore: AngularFirestore) {}
 
   /**
    * The `async createThreadChat(currentChannelId: string, messageId: string)` method is responsible for creating a thread
    * chat for a specific message in a channel.
-   * 
+   *
    * @async
    * @method
    * @name createThreadChat
@@ -23,6 +25,7 @@ export class ThreadService {
    * @returns {Promise<void>}
    */
   async createThreadChat(currentChannelId: string, messageId: string) {
+    localStorage.setItem('threadId', messageId);
     const threadExists = await this.checkIfThreadExists(
       currentChannelId,
       messageId
@@ -56,7 +59,7 @@ export class ThreadService {
    * The `async checkIfThreadExists(` method is responsible for checking if a thread exists for a specific message in a
    * channel. It takes in the `currentChannelId` and `messageId` as parameters and returns a promise that resolves to a
    * boolean value indicating whether the thread exists or not.
-   * 
+   *
    * @async
    * @method
    * @name checkIfThreadExists
@@ -98,7 +101,7 @@ export class ThreadService {
    * message. It first retrieves the document snapshot of the message using the `get()` method, and then checks if the
    * snapshot exists. If it exists, it returns the data of the message. If it doesn't exist, it throws an error indicating
    * that the message does not exist.
-   * 
+   *
    * @async
    * @method
    * @name getCurrentMessage
@@ -130,5 +133,14 @@ export class ThreadService {
       console.error('Fehler beim Abrufen der Nachricht:', error);
       throw error;
     }
+  }
+
+  getThreadMessages(currentChannelId: string, currentThreadId: string) {
+    return this.firestore
+      .collection('channels')
+      .doc(currentChannelId)
+      .collection('messages')
+      .doc(currentThreadId)
+      .valueChanges();
   }
 }

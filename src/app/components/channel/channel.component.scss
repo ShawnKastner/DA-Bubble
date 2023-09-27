@@ -117,7 +117,6 @@
 
 .message-content {
   height: 500px;
-  // padding: 30px 32px;
   display: flex;
   flex-direction: column-reverse;
   overflow-y: auto;
@@ -153,7 +152,6 @@
 
 .author-with-date {
   display: flex;
-  justify-content: flex-end;
   align-items: center;
   gap: 20px;
 
