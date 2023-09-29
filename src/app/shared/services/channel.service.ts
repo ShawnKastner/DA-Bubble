@@ -172,12 +172,15 @@ export class ChannelService {
       messagedAuthor,
       avatar
     );
-    this.firestore
-      .collection('channels')
-      .doc(channelId)
-      .collection('messages')
-      .doc(messageID)
-      .set(channelMessage.messageToJSON());
+    if (this.message) {
+      this.firestore
+        .collection('channels')
+        .doc(channelId)
+        .collection('messages')
+        .doc(messageID)
+        .set(channelMessage.messageToJSON());
+    }
+
     this.message = '';
   }
 
@@ -198,17 +201,17 @@ export class ChannelService {
         .collection('users')
         .doc(uid)
         .valueChanges()
-        .pipe(take(1)) // Das Abo nach einem Wert beenden
+        .pipe(take(1))
         .toPromise();
 
       if (userData && userData.avatar) {
         return userData.avatar;
       } else {
-        return ''; // Defaultwert, wenn kein Avatar gefunden wurde
+        return '';
       }
     } catch (error) {
       console.error('Error getting current avatar:', error);
-      return ''; // Defaultwert bei Fehler
+      return '';
     }
   }
 

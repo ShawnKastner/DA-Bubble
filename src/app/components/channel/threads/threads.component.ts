@@ -13,33 +13,52 @@ export class ThreadsComponent implements OnInit, OnDestroy {
   currentChannelId!: string;
   currentThreadId!: any;
   currentMessage!: any;
-  allThreadMessages!: any;
+  allThreadAnswers!: any;
 
   constructor(
     private route: Router,
     public channelService: ChannelService,
     public threadService: ThreadService,
     public authService: AuthService
-  ) {}
+  ) {
+    this.currentThreadId = localStorage.getItem('threadId');
+  }
 
   ngOnDestroy() {
     localStorage.removeItem('threadId');
   }
 
   ngOnInit() {
-    if (this.channelService.currentChannel) {
+    if (this.channelService.currentChannel && this.currentThreadId) {
       this.currentChannelId = this.channelService.currentChannel.id;
-      console.log('current channel ID is:', this.currentChannelId);
+      this.getCurrentThreadMessage();
     }
-    this.currentThreadId = localStorage.getItem('threadId');
-    this.getAllThreadMessages();
   }
 
-  getAllThreadMessages() {
+  getCurrentThreadMessage() {
     this.threadService
-      .getThreadMessages(this.currentChannelId, this.currentThreadId)
+      .getClickedThreadMessage(this.currentChannelId, this.currentThreadId)
       .subscribe((data) => {
         this.currentMessage = [data];
+        this.getAllThreadAnswers();
+      });
+  }
+
+  sendMessage() {
+    if (this.threadService.message) {
+      this.threadService.sendMessageToThread(
+        this.currentChannelId,
+        this.currentThreadId
+      );
+    }
+  }
+
+  getAllThreadAnswers() {
+    this.threadService
+      .getThreadAnswers(this.currentChannelId, this.currentThreadId)
+      .subscribe((data) => {
+        this.allThreadAnswers = data;
+        console.log(this.allThreadAnswers);
       });
   }
 

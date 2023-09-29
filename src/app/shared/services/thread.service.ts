@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { collection } from '@angular/fire/firestore';
+import { AuthService } from './auth.service';
+import { take } from 'rxjs';
+import { Message } from 'src/app/models/message.model';
+import { ChannelService } from './channel.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +13,11 @@ export class ThreadService {
   currentMessage!: any;
   message!: string;
 
-  constructor(private firestore: AngularFirestore) {}
+  constructor(
+    private firestore: AngularFirestore,
+    private authService: AuthService,
+    private channelService: ChannelService
+  ) {}
 
   /**
    * The `async createThreadChat(currentChannelId: string, messageId: string)` method is responsible for creating a thread
@@ -135,12 +143,75 @@ export class ThreadService {
     }
   }
 
-  getThreadMessages(currentChannelId: string, currentThreadId: string) {
+  /**
+   * The `getThreadMessages` method is responsible for retrieving the thread messages for a specific thread in a channel. It
+   * takes in the `currentChannelId` and `currentThreadId` as parameters and returns an Observable that emits the value of
+   * the thread messages whenever there is a change in the Firestore database.
+   *
+   * @method
+   * @name getThreadMessages
+   * @kind method
+   * @memberof ThreadService
+   * @param {string} currentChannelId
+   * @param {string} currentThreadId
+   * @returns {Observable<firebase.firestore.DocumentData | undefined>}
+   */
+  getClickedThreadMessage(currentChannelId: string, currentThreadId: string) {
     return this.firestore
       .collection('channels')
       .doc(currentChannelId)
       .collection('messages')
       .doc(currentThreadId)
+      .valueChanges();
+  }
+
+  /**
+   * The `sendMessageToThread` method is responsible for sending a message to a specific thread in a channel. It takes in the
+   * `currentChannelId` and `currentThreadId` as parameters.
+   *
+   * @async
+   * @method
+   * @name sendMessageToThread
+   * @kind method
+   * @memberof ThreadService
+   * @param {string} currentChannelId
+   * @param {string} currentThreadId
+   * @returns {Promise<void>}
+   */
+  async sendMessageToThread(currentChannelId: string, currentThreadId: string) {
+    const messageID = this.firestore.createId();
+    const messagedAuthor = this.authService.userData.displayName;
+    const avatar = await this.channelService.getCurrentAvatar();
+    const createdDate = new Date().getTime();
+    const channelMessage = new Message(
+      this.message,
+      messageID,
+      createdDate,
+      messagedAuthor,
+      avatar
+    );
+    this.firestore
+      .collection('channels')
+      .doc(currentChannelId)
+      .collection('messages')
+      .doc(currentThreadId)
+      .collection('threads')
+      .doc(currentThreadId)
+      .collection('answers')
+      .doc(messageID)
+      .set(channelMessage.messageToJSON());
+    this.message = '';
+  }
+
+  getThreadAnswers(currentChannelId: string, currentThreadId: string) {
+    return this.firestore
+      .collection('channels')
+      .doc(currentChannelId)
+      .collection('messages')
+      .doc(currentThreadId)
+      .collection('threads')
+      .doc(currentThreadId)
+      .collection('answers', (ref) => ref.orderBy('createdDate'))
       .valueChanges();
   }
 }

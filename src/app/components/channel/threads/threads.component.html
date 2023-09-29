@@ -4,7 +4,7 @@
       <h2>Thread</h2>
       <div class="channelName-tag align-center">
         <mat-icon>tag</mat-icon>
-        <span>Entwicklerteam</span>
+        <span>{{ channelService.currentChannel.channelName }}</span>
       </div>
     </div>
     <mat-icon (click)="closeThread()" class="close-btn">close</mat-icon>
@@ -21,13 +21,6 @@
               : 'flex-start'
         }"
       >
-        <!-- <ng-container>
-          <div class="answer-divider">
-            <span>{{
-              channelService.getFormattedDateFromTimestamp(message.createdDate)
-            }}</span>
-          </div>
-        </ng-container> -->
         <div
           class="messages-main-chat"
           [ngClass]="{
@@ -65,23 +58,76 @@
             >
           </div>
         </div>
+        <div class="divider-container">
+          <span>{{ allThreadAnswers.length }} Antworten</span>
+          <div class="answer-divider"></div>
+        </div>
+        <div
+          *ngFor="let answer of allThreadAnswers"
+          class="flex-end width-100"
+          [ngStyle]="{
+            'align-items':
+              answer.messagedAuthor === authService.userData.displayName
+                ? 'flex-end'
+                : 'flex-start'
+          }"
+        >
+          <div
+            class="messages-main-chat"
+            [ngClass]="{
+                'row-reverse': answer.messagedAuthor === authService.userData.displayName,
+                'row': answer.messagedAuthor !== authService.userData.displayName,
+              }"
+          >
+            <div>
+              <img [src]="answer.avatar || 'assets/img/81. Profile.png'" />
+            </div>
+            <div>
+              <div
+                [ngClass]="{
+                  'row-reverse':
+                    answer.messagedAuthor !== authService.userData.displayName,
+                  row:
+                    answer.messagedAuthor === authService.userData.displayName
+                }"
+                class="author-with-date"
+              >
+                <span>{{
+                  channelService.getFormattedTimeFromTimestamp(
+                    answer.createdDate
+                  )
+                }}</span>
+                <h3>{{ answer.messagedAuthor }}</h3>
+              </div>
+              <span
+                [ngClass]="{
+                  'message-right':
+                    answer.messagedAuthor === authService.userData.displayName,
+                  'message-left':
+                    answer.messagedAuthor !== authService.userData.displayName
+                }"
+                >{{ answer.channelMessage }}</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-editor">
+        <textarea
+          [(ngModel)]="threadService.message"
+          placeholder="Nachricht an #{{
+            this.channelService.currentChannel?.channelName
+          }}"
+        ></textarea>
+        <div class="add-elements">
+          <mat-icon>add</mat-icon>
+          <div class="divider"></div>
+          <mat-icon>sentiment_satisfied</mat-icon>
+          <mat-icon>alternate_email</mat-icon>
+        </div>
+        <mat-icon (click)="sendMessage()" class="send-btn">send</mat-icon>
       </div>
     </div>
-  </div>
-
-  <div class="text-editor">
-    <textarea
-      [(ngModel)]="threadService.message"
-      placeholder="Nachricht an #{{
-        this.channelService.currentChannel?.channelName
-      }}"
-    ></textarea>
-    <div class="add-elements">
-      <mat-icon>add</mat-icon>
-      <div class="divider"></div>
-      <mat-icon>sentiment_satisfied</mat-icon>
-      <mat-icon>alternate_email</mat-icon>
-    </div>
-    <mat-icon class="send-btn">send</mat-icon>
   </div>
 </div>

@@ -190,3 +190,17 @@
     border: 1px solid #adb0d9;
   }
 }
+
+.divider-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  color: rgba(173, 176, 217, 1);
+
+  .answer-divider {
+    border: 1px solid rgba(173, 176, 217, 1);
+    width: 60%;
+  }
+}
