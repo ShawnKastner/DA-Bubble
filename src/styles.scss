@@ -1,3 +1,5 @@
+@import '@ctrl/ngx-emoji-mart/picker';
+
 html,
 body {
   height: 100%;
@@ -161,4 +163,10 @@ body {
 
 .width-100 {
   width: 100% !important;
+}
+
+.emoji-picker {
+  position: absolute;
+  bottom: 65px;
+  left: 75px;
 }

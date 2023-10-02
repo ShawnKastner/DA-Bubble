@@ -11,7 +11,7 @@ import { ChannelService } from './channel.service';
 })
 export class ThreadService {
   currentMessage!: any;
-  message!: string;
+  message: string = '';
 
   constructor(
     private firestore: AngularFirestore,

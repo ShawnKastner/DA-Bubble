@@ -10,7 +10,7 @@ import { ChatListControlService } from 'src/app/shared/services/chat-list-contro
 import { DirectMessagesService } from 'src/app/shared/services/direct-messages.service';
 import { UsersService } from 'src/app/shared/services/users.service';
 import { MemberDetailsComponent } from '../channel/members-dialog/member-details/member-details.component';
-import { EditMemberComponent } from '../profile/logout-dialog/profile-dialog/edit-member/edit-member.component';
+import { ProfileDialogComponent } from '../profile/logout-dialog/profile-dialog/profile-dialog.component';
 
 @Component({
   selector: 'app-direct-messages',
@@ -22,12 +22,13 @@ export class DirectMessagesComponent implements OnInit, OnDestroy {
   currentUserId!: string;
   currentUserAvatar!: string;
   currentUserDetails!: any;
-  messageText!: string;
+  messageText: string = '';
   myChats$ = this.directMessageService.myChats$;
   messageControl = new FormControl('');
   messages$: Observable<privateMessage[]> | undefined;
   user$ = this.usersService.currentUserProfile$;
   chatId: string = '';
+  pickEmoji: boolean = false;
 
   constructor(
     public directMessageService: DirectMessagesService,
@@ -145,7 +146,7 @@ export class DirectMessagesComponent implements OnInit, OnDestroy {
    * is used as the content of the dialog, and the `data` property is set to pass the `currentUserDetails` as the memberData
    * to the dialog component. The `panelClass` property is used to apply a custom CSS class to the dialog for styling
    * purposes.
-   * 
+   *
    * @method
    * @name openProfileDetailsDialog
    * @kind method
@@ -153,9 +154,28 @@ export class DirectMessagesComponent implements OnInit, OnDestroy {
    * @returns {void}
    */
   openProfileDetailsDialog() {
-    this.dialog.open(MemberDetailsComponent, {
-      data: { memberData: this.currentUserDetails },
-      panelClass: 'member-details-dialog',
-    });
+    if (
+      this.currentUserDetails.displayName ===
+      this.authService.userData.displayName
+    ) {
+      this.dialog.open(ProfileDialogComponent, {
+        data: { profileData: this.currentUserDetails },
+        panelClass: 'edit-member-dialog',
+      });
+    } else {
+      this.dialog.open(MemberDetailsComponent, {
+        data: { memberData: this.currentUserDetails },
+        panelClass: 'member-details-dialog',
+      });
+    }
+  }
+
+  selectEmoji() {
+    this.pickEmoji = !this.pickEmoji;
+  }
+
+  addEmoji(event: any) {
+    this.messageText = `${this.messageText}${event.emoji.native}`;
+    this.pickEmoji = false;
   }
 }

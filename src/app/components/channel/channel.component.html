@@ -5,7 +5,8 @@
       class="headline align-center"
       [class.dialog-opened]="isChannelDetailsDialogOpen"
     >
-      <mat-icon>tag</mat-icon><span>{{ this.channelService.currentChannel?.channelName }}</span>
+      <mat-icon>tag</mat-icon
+      ><span>{{ this.channelService.currentChannel?.channelName }}</span>
       <mat-icon>keyboard_arrow_down</mat-icon>
     </div>
     <div class="add-members">
@@ -67,7 +68,12 @@
               <mat-icon class="close-btn">add_reaction</mat-icon>
               <mat-icon
                 class="close-btn"
-                (click)="threadService.createThreadChat(currentChannelID, message.messageID)"
+                (click)="
+                  threadService.createThreadChat(
+                    currentChannelID,
+                    message.messageID
+                  )
+                "
                 [routerLink]="'thread/' + message.messageID"
                 >comment</mat-icon
               >
@@ -118,12 +124,14 @@
   <div class="text-editor">
     <textarea
       [(ngModel)]="channelService.message"
-      placeholder="Nachricht an #{{ this.channelService.currentChannel?.channelName }}"
+      placeholder="Nachricht an #{{
+        this.channelService.currentChannel?.channelName
+      }}"
     ></textarea>
     <div class="add-elements">
       <mat-icon>add</mat-icon>
       <div class="divider"></div>
-      <mat-icon>sentiment_satisfied</mat-icon>
+      <mat-icon (click)="selectEmoji()">sentiment_satisfied</mat-icon>
       <mat-icon (click)="toggleUserList()">alternate_email</mat-icon>
     </div>
     <mat-icon
@@ -133,6 +141,14 @@
       "
       >send</mat-icon
     >
+    <emoji-mart
+      [isNative]="true"
+      (emojiSelect)="addEmoji($event)"
+      class="emoji-picker"
+      *ngIf="pickEmoji"
+      emoji="point_up"
+      [darkMode]="false"
+    ></emoji-mart>
   </div>
   <div class="user-list" *ngIf="showUserList">
     <ul>

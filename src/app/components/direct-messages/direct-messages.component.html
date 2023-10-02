@@ -1,6 +1,10 @@
 <div class="direct-message-content">
   <div class="header">
-    <div *ngIf="currentUserDetails" (click)="openProfileDetailsDialog()" class="headline align-center">
+    <div
+      *ngIf="currentUserDetails"
+      (click)="openProfileDetailsDialog()"
+      class="headline align-center"
+    >
       <img [src]="currentUserDetails.avatar || 'assets/img/81. Profile.png'" />
       <span>{{ currentUserDetails.displayName }}</span>
     </div>
@@ -82,7 +86,9 @@
     <ng-template #noMessages>
       <div *ngIf="currentUserDetails" class="error-template">
         <div class="empty-msg">
-          <img [src]="currentUserDetails.avatar || 'assets/img/81. Profile.png'" />
+          <img
+            [src]="currentUserDetails.avatar || 'assets/img/81. Profile.png'"
+          />
           <span>{{ currentUserDetails.displayName }}</span>
         </div>
         <p class="grey-font">
@@ -101,9 +107,17 @@
     <div class="add-elements">
       <mat-icon>add</mat-icon>
       <div class="divider"></div>
-      <mat-icon>sentiment_satisfied</mat-icon>
+      <mat-icon (click)="selectEmoji()">sentiment_satisfied</mat-icon>
       <mat-icon>alternate_email</mat-icon>
     </div>
     <mat-icon class="send-btn" (click)="sendMessage()">send</mat-icon>
+    <emoji-mart
+      [isNative]="true"
+      (emojiSelect)="addEmoji($event)"
+      class="emoji-picker"
+      *ngIf="pickEmoji"
+      emoji="point_up"
+      [darkMode]="false"
+    ></emoji-mart>
   </div>
 </div>

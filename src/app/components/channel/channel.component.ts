@@ -24,6 +24,7 @@ export class ChannelComponent implements OnInit {
   showUserList: boolean = false;
   userList: any[] = [];
   showElements: boolean = false;
+  pickEmoji: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -261,5 +262,14 @@ export class ChannelComponent implements OnInit {
   addUserToMessage(username: string) {
     this.insertAtCursor(`@${username}`);
     this.showUserList = false;
+  }
+
+  selectEmoji() {
+    this.pickEmoji = !this.pickEmoji;
+  }
+
+  addEmoji(event: any) {
+    this.channelService.message = `${this.channelService.message}${event.emoji.native}`;
+    this.pickEmoji = false;
   }
 }

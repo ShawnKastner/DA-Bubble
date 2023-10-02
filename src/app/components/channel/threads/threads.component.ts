@@ -14,6 +14,7 @@ export class ThreadsComponent implements OnInit, OnDestroy {
   currentThreadId!: any;
   currentMessage!: any;
   allThreadAnswers!: any;
+  pickEmoji: boolean = false;
 
   constructor(
     private route: Router,
@@ -64,5 +65,14 @@ export class ThreadsComponent implements OnInit, OnDestroy {
 
   closeThread() {
     this.route.navigateByUrl('/home/' + this.channelService.currentChannel.id);
+  }
+
+  selectEmoji() {
+    this.pickEmoji = !this.pickEmoji;
+  }
+
+  addEmoji(event: any) {
+    this.threadService.message = `${this.threadService.message}${event.emoji.native}`;
+    this.pickEmoji = false;
   }
 }

@@ -18,7 +18,7 @@ export class ChannelService {
   description!: string;
   channelsCollection!: AngularFirestoreCollection<Channel>;
   createdDate = new Date().getTime();
-  message!: string;
+  message: string = '';
   selectedUsers: string[] = [];
   currentUserAvatar!: string;
   userAvatars: { [userName: string]: string } = {};

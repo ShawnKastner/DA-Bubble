@@ -50,6 +50,7 @@ import { ProfileDialogComponent } from './components/profile/logout-dialog/profi
 import { ChannelDetailsDialogComponent } from './components/channel/channel-details-dialog/channel-details-dialog.component';
 import { DirectMessagesComponent } from './components/direct-messages/direct-messages.component';
 import { ThreadsComponent } from './components/channel/threads/threads.component';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { ThreadsComponent } from './components/channel/threads/threads.component
     MatRadioModule,
     MatAutocompleteModule,
     MatListModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    PickerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
