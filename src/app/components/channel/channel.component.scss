@@ -92,10 +92,6 @@
   display: flex;
   flex-direction: row;
   gap: 20px;
-
-  &:hover {
-    cursor: pointer;
-  }
 }
 
 .messages-main-chat {
@@ -305,4 +301,25 @@
 
 .reaction-elements-right {
   right: 25px;
+}
+
+.answer-count-container {
+  display: flex;
+  gap: 20px;
+
+  .answer-count {
+    font-size: 1.125rem;
+    color: #535af1;
+
+    &:hover {
+      cursor: pointer;
+      color: #444df2;
+      font-weight: 700;
+    }
+  }
+
+  .last-answer {
+    font-size: 0.875rem;
+    color: rgba(104, 104, 104, 1);
+  }
 }

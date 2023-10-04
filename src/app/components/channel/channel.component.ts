@@ -100,11 +100,11 @@ export class ChannelComponent implements OnInit {
    * @memberof ChannelComponent
    * @returns {void}
    */
-  getChannelMessages() {
+  async getChannelMessages() {
     this.channelService
       .getAllMessages(this.currentChannelID)
-      .subscribe((data) => {
-        this.allMessages = data;
+      .subscribe(async (messages) => {
+        this.allMessages = messages;
       });
   }
 

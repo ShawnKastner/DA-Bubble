@@ -114,6 +114,26 @@
                 }"
                 [innerHTML]="formatMessage(message.channelMessage)"
               ></span>
+              <div class="answer-count-container" *ngIf="message.answerCount">
+                <span
+                  (click)="
+                    threadService.createThreadChat(
+                      currentChannelID,
+                      message.messageID
+                    )
+                  "
+                  [routerLink]="'thread/' + message.messageID"
+                  class="answer-count"
+                  >{{ message.answerCount }} Antworten</span
+                ><span class="last-answer"
+                  >Letzte Antwort
+                  {{
+                    channelService.getFormattedTimeFromTimestamp(
+                      message.lastAnswer
+                    )
+                  }}</span
+                >
+              </div>
             </div>
           </div>
         </ng-container>

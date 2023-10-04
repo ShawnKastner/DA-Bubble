@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { collection } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
-import { take } from 'rxjs';
 import { Message } from 'src/app/models/message.model';
 import { ChannelService } from './channel.service';
 
@@ -201,6 +199,7 @@ export class ThreadService {
       .doc(messageID)
       .set(channelMessage.messageToJSON());
     this.message = '';
+    this.updateAnswerCount(currentChannelId, currentThreadId);
   }
 
   getThreadAnswers(currentChannelId: string, currentThreadId: string) {
@@ -213,5 +212,21 @@ export class ThreadService {
       .doc(currentThreadId)
       .collection('answers', (ref) => ref.orderBy('createdDate'))
       .valueChanges();
+  }
+
+  updateAnswerCount(currentChannelId: string, currentThreadId: string) {
+    const messageRef = this.firestore
+      .collection('channels')
+      .doc(currentChannelId)
+      .collection('messages')
+      .doc(currentThreadId);
+
+    messageRef.get().subscribe((messageDoc) => {
+      if (messageDoc.exists) {
+        const currentAnswerCount = messageDoc.data()?.['answerCount'] || 0;
+        const newAnswerCount = currentAnswerCount + 1;
+        messageRef.update({ answerCount: newAnswerCount, lastAnswer: new Date().getTime() });
+      }
+    });
   }
 }

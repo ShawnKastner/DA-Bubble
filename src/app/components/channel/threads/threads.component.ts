@@ -15,6 +15,7 @@ export class ThreadsComponent implements OnInit, OnDestroy {
   currentMessage!: any;
   allThreadAnswers!: any;
   pickEmoji: boolean = false;
+  answerCount!: number;
 
   constructor(
     private route: Router,
@@ -59,7 +60,7 @@ export class ThreadsComponent implements OnInit, OnDestroy {
       .getThreadAnswers(this.currentChannelId, this.currentThreadId)
       .subscribe((data) => {
         this.allThreadAnswers = data;
-        console.log(this.allThreadAnswers);
+        this.answerCount = this.allThreadAnswers.length;
       });
   }
 
