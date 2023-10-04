@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ChannelService } from 'src/app/shared/services/channel.service';
 import { ThreadService } from 'src/app/shared/services/thread.service';
@@ -17,6 +18,8 @@ export class ThreadsComponent implements OnInit, OnDestroy {
   pickEmoji: boolean = false;
   answerCount!: number;
 
+  private routerSubscription: Subscription | undefined;
+
   constructor(
     private route: Router,
     public channelService: ChannelService,
@@ -28,11 +31,15 @@ export class ThreadsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     localStorage.removeItem('threadId');
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
   }
 
   ngOnInit() {
     if (this.channelService.currentChannel && this.currentThreadId) {
       this.currentChannelId = this.channelService.currentChannel.id;
+      this.subscribeToRouterEvents();
       this.getCurrentThreadMessage();
     }
   }
@@ -75,5 +82,20 @@ export class ThreadsComponent implements OnInit, OnDestroy {
   addEmoji(event: any) {
     this.threadService.message = `${this.threadService.message}${event.emoji.native}`;
     this.pickEmoji = false;
+  }
+
+  private subscribeToRouterEvents() {
+    this.routerSubscription = this.route.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.handleRouterNavigation();
+      }
+    });
+  }
+
+  private handleRouterNavigation() {
+    this.currentThreadId = localStorage.getItem('threadId');
+    if (this.currentThreadId) {
+      this.getCurrentThreadMessage();
+    }
   }
 }
