@@ -25,6 +25,9 @@ export class ChannelComponent implements OnInit {
   userList: any[] = [];
   showElements: boolean = false;
   pickEmoji: boolean = false;
+  pickEmojiReaction: boolean = false;
+  showEditMessage: boolean = false;
+  editMsg: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,10 +46,6 @@ export class ChannelComponent implements OnInit {
       this.getMemberNumber();
       this.channelService.getAllChannelMembers(this.currentChannelID);
     });
-  }
-
-  toggleShowElements(message: any) {
-    message.showElements = !message.showElements;
   }
 
   /**
@@ -271,5 +270,30 @@ export class ChannelComponent implements OnInit {
   addEmoji(event: any) {
     this.channelService.message = `${this.channelService.message}${event.emoji.native}`;
     this.pickEmoji = false;
+  }
+
+  toggleShowElements(message: any) {
+    message.showElements = !message.showElements;
+  }
+
+  toggleEditMessage(message: any) {
+    message.showEditMessage = !message.showEditMessage;
+  }
+
+  editMessage(message: any) {
+    message.editMsg = !message.editMsg;
+    message.showEditMessage = false;
+  }
+
+  addReaction(message: any) {
+    this.pickEmojiReaction = !this.pickEmojiReaction;
+  }
+
+  cancelEdit(message: any) {
+    message.editMsg = false;
+  }
+
+  editMsgInFirestore(messageId: string, message: string) {
+    this.channelService.editMessage(this.currentChannelID, messageId, message);
   }
 }

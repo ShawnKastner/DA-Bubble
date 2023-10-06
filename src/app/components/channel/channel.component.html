@@ -54,6 +54,7 @@
             'row-reverse': message.messagedAuthor === authService.userData.displayName,
             'row': message.messagedAuthor !== authService.userData.displayName,
           }"
+          [ngStyle]="{'height.px': message.editMsg ? 131 : 'auto'}"
           >
             <div
               class="reaction-elements"
@@ -65,7 +66,9 @@
                   message.messagedAuthor !== authService.userData.displayName
               }"
             >
-              <mat-icon class="close-btn">add_reaction</mat-icon>
+              <mat-icon (click)="addReaction(message)" class="close-btn"
+                >add_reaction</mat-icon
+              >
               <mat-icon
                 class="close-btn"
                 (click)="
@@ -78,12 +81,19 @@
                 >comment</mat-icon
               >
               <mat-icon
-                class="close-btn"
+                (click)="toggleEditMessage(message)"
+                mat-icon-button
                 *ngIf="
                   message.messagedAuthor === authService.userData.displayName
                 "
+                class="close-btn"
                 >more_vert</mat-icon
               >
+              <div class="edit-message" *ngIf="message.showEditMessage">
+                <button (click)="editMessage(message)">
+                  Nachricht bearbeiten
+                </button>
+              </div>
             </div>
             <div>
               <img [src]="message.avatar || 'assets/img/81. Profile.png'" />
@@ -94,7 +104,8 @@
                   'row-reverse':
                     message.messagedAuthor === authService.userData.displayName,
                   row:
-                    message.messagedAuthor !== authService.userData.displayName
+                    message.messagedAuthor !== authService.userData.displayName,
+                  'd-none': message.editMsg
                 }"
                 class="author-with-date"
               >
@@ -110,11 +121,29 @@
                   'message-right':
                     message.messagedAuthor === authService.userData.displayName,
                   'message-left':
-                    message.messagedAuthor !== authService.userData.displayName
+                    message.messagedAuthor !== authService.userData.displayName,
+                  'd-none': message.editMsg
                 }"
                 [innerHTML]="formatMessage(message.channelMessage)"
               ></span>
-              <div class="answer-count-container" *ngIf="message.answerCount">
+              <div *ngIf="message.editMsg" class="text-editor-edit-msg">
+                <textarea [(ngModel)]="message.channelMessage"></textarea>
+                <div class="edit-btn-container">
+                  <button (click)="cancelEdit(message)" class="cancel-btn">Abbrechen</button
+                  ><button (click)="editMsgInFirestore(message.messageID, message.channelMessage)" class="save-btn">Speichern</button>
+                </div>
+                <div class="add-elements">
+                  <mat-icon (click)="selectEmoji()"
+                    >sentiment_satisfied</mat-icon
+                  >
+                </div>
+              </div>
+
+              <div
+                [ngClass]="{ 'd-none': message.editMsg }"
+                class="answer-count-container"
+                *ngIf="message.answerCount"
+              >
                 <span
                   (click)="
                     threadService.createThreadChat(

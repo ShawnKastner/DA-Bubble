@@ -687,4 +687,15 @@ export class ChannelService {
         )
       );
   }
+
+  editMessage(currentChannelID: string, messageId: string, messageText: string) {
+    this.firestore
+      .collection('channels')
+      .doc(currentChannelID)
+      .collection('messages')
+      .doc(messageId)
+      .update({
+        channelMessage: messageText,
+      });
+  }
 }
