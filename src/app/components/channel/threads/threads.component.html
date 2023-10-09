@@ -106,14 +106,16 @@
                   'message-left':
                     answer.messagedAuthor !== authService.userData.displayName
                 }"
-                >{{ answer.channelMessage }}</span
-              >
+                [innerHTML]="
+                  channelService.formatMessage(answer.channelMessage)
+                "
+              ></span>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="text-editor">
+      <div class="text-editor-thread">
         <textarea
           [(ngModel)]="threadService.message"
           placeholder="Nachricht an #{{
@@ -123,19 +125,33 @@
         <div class="add-elements">
           <mat-icon>add</mat-icon>
           <div class="divider"></div>
-          <mat-icon (click)="selectEmoji()">sentiment_satisfied</mat-icon>
-          <mat-icon>alternate_email</mat-icon>
+          <mat-icon (click)="textEditorService.selectEmojiThread()"
+            >sentiment_satisfied</mat-icon
+          >
+          <mat-icon (click)="textEditorService.toggleUserListThread()"
+            >alternate_email</mat-icon
+          >
         </div>
         <mat-icon (click)="sendMessage()" class="send-btn">send</mat-icon>
         <emoji-mart
           [isNative]="true"
-          (emojiSelect)="addEmoji($event)"
+          (emojiSelect)="textEditorService.addEmojiThread($event)"
           class="emoji-picker"
-          *ngIf="pickEmoji"
+          *ngIf="textEditorService.pickEmojiThread"
           emoji="point_up"
           [darkMode]="false"
         ></emoji-mart>
       </div>
     </div>
+  </div>
+  <div class="user-list" *ngIf="textEditorService.showUserListThread">
+    <ul>
+      <li
+        *ngFor="let username of channelService.allChannelMembers"
+        (click)="textEditorService.addUserToMessageThread(username.displayName)"
+      >
+        @{{ username.displayName }}
+      </li>
+    </ul>
   </div>
 </div>

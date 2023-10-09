@@ -124,7 +124,7 @@
                     message.messagedAuthor !== authService.userData.displayName,
                   'd-none': message.editMsg
                 }"
-                [innerHTML]="formatMessage(message.channelMessage)"
+                [innerHTML]="channelService.formatMessage(message.channelMessage)"
               ></span>
               <div *ngIf="message.editMsg" class="text-editor-edit-msg">
                 <textarea [(ngModel)]="message.channelMessage"></textarea>

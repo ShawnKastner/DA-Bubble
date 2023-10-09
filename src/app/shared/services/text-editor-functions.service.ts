@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
 import { ChannelService } from './channel.service';
+import { ThreadService } from './thread.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TextEditorFunctionsService {
   pickEmoji: boolean = false;
+  pickEmojiThread: boolean = false;
   pickEmojiEditMsg: boolean = false;
   showUserList: boolean = false;
+  showUserListThread: boolean = false;
   editMsgText: string = '';
 
-  constructor(private channelService: ChannelService) {}
+  constructor(private channelService: ChannelService, private threadService: ThreadService) {}
 
   /**
    * The `toggleUserList()` method is toggling the value of the `showUserList` property. If `showUserList` is currently
@@ -24,6 +27,10 @@ export class TextEditorFunctionsService {
    */
   toggleUserList() {
     this.showUserList = !this.showUserList;
+  }
+
+  toggleUserListThread() {
+    this.showUserListThread = !this.showUserListThread;
   }
 
   /**
@@ -54,6 +61,24 @@ export class TextEditorFunctionsService {
     textarea.focus();
   }
 
+  insertAtCursorThread(text: string) {
+    const textareaThread = document.querySelector(
+      '.text-editor-thread textarea'
+    ) as HTMLTextAreaElement;
+    const startPos = textareaThread.selectionStart;
+    const endPos = textareaThread.selectionEnd;
+    const textBeforeCursor = textareaThread.value.substring(0, startPos);
+    const textAfterCursor = textareaThread.value.substring(
+      endPos,
+      textareaThread.value.length
+    );
+
+    textareaThread.value = textBeforeCursor + text + textAfterCursor;
+    textareaThread.selectionStart = startPos + text.length;
+    textareaThread.selectionEnd = startPos + text.length;
+    textareaThread.focus();
+  }
+
   /**
    * The `addUserToMessage(username: string)` method is used to add a username to the message being edited in the text
    * editor. It takes a `username` parameter as input.
@@ -68,6 +93,11 @@ export class TextEditorFunctionsService {
   addUserToMessage(username: string) {
     this.insertAtCursor(`@${username}`);
     this.showUserList = false;
+  }
+
+  addUserToMessageThread(username: string) {
+    this.insertAtCursorThread(`@${username}`);
+    this.showUserListThread = false;
   }
 
   /**
@@ -134,12 +164,45 @@ export class TextEditorFunctionsService {
     message.editMsg = false;
   }
 
+  /**
+   * The `selectEmojiEditMsg()` method is toggling the value of the `pickEmojiEditMsg` property. If `pickEmojiEditMsg` is
+   * currently `false`, it will be set to `true`, and vice versa. This method is used to control the visibility of the emoji
+   * picker for editing messages in the text editor.
+   * 
+   * @method
+   * @name selectEmojiEditMsg
+   * @kind method
+   * @memberof TextEditorFunctionsService
+   * @returns {void}
+   */
   selectEmojiEditMsg() {
     this.pickEmojiEditMsg = !this.pickEmojiEditMsg;
   }
 
+  /**
+   * The `addEmojiEditMsg(event: any, message: any)` method is used to add an emoji to the message being edited in the text
+   * editor. It takes two parameters: `event`, which contains information about the selected emoji, and `message`, which
+   * represents the message being edited.
+   * 
+   * @method
+   * @name addEmojiEditMsg
+   * @kind method
+   * @memberof TextEditorFunctionsService
+   * @param {any} event
+   * @param {any} message
+   * @returns {void}
+   */
   addEmojiEditMsg(event: any, message: any) {
     message.channelMessage = `${message.channelMessage}${event.emoji.native}`;
     this.pickEmojiEditMsg = false;
+  }
+
+  selectEmojiThread() {
+    this.pickEmojiThread = !this.pickEmojiThread;
+  }
+
+  addEmojiThread(event: any) {
+    this.threadService.message = `${this.threadService.message}${event.emoji.native}`;
+    this.pickEmojiThread = false;
   }
 }

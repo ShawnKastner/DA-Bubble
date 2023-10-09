@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ChannelService } from 'src/app/shared/services/channel.service';
+import { TextEditorFunctionsService } from 'src/app/shared/services/text-editor-functions.service';
 import { ThreadService } from 'src/app/shared/services/thread.service';
 
 @Component({
@@ -15,7 +16,6 @@ export class ThreadsComponent implements OnInit, OnDestroy {
   currentThreadId!: any;
   currentMessage!: any;
   allThreadAnswers!: any;
-  pickEmoji: boolean = false;
   answerCount!: number;
 
   private routerSubscription: Subscription | undefined;
@@ -24,7 +24,8 @@ export class ThreadsComponent implements OnInit, OnDestroy {
     private route: Router,
     public channelService: ChannelService,
     public threadService: ThreadService,
-    public authService: AuthService
+    public authService: AuthService,
+    public textEditorService: TextEditorFunctionsService
   ) {
     this.currentThreadId = localStorage.getItem('threadId');
   }
@@ -75,14 +76,7 @@ export class ThreadsComponent implements OnInit, OnDestroy {
     this.route.navigateByUrl('/home/' + this.channelService.currentChannel.id);
   }
 
-  selectEmoji() {
-    this.pickEmoji = !this.pickEmoji;
-  }
 
-  addEmoji(event: any) {
-    this.threadService.message = `${this.threadService.message}${event.emoji.native}`;
-    this.pickEmoji = false;
-  }
 
   private subscribeToRouterEvents() {
     this.routerSubscription = this.route.events.subscribe((event) => {

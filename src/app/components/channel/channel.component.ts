@@ -48,27 +48,6 @@ export class ChannelComponent implements OnInit {
   }
 
   /**
-   * The `formatMessage(message: string): string` method is a helper method that takes a message as input and returns a
-   * formatted version of the message. It replaces any occurrences of `@username` with `<span
-   * class="blue-text">@username</span>`, where `username` is a word followed by a space and another word. This formatting is
-   * done using regular expressions. The purpose of this method is to highlight mentions of users in the message by applying
-   * a CSS class to them.
-   *
-   * @method
-   * @name formatMessage
-   * @kind method
-   * @memberof ChannelComponent
-   * @param {string} message
-   * @returns {string}
-   */
-  formatMessage(message: string): string {
-    return message.replace(
-      /@(\w+\s\w+)/g,
-      '<span class="blue-text">@$1</span>'
-    );
-  }
-
-  /**
    * The `getCurrentChannel()` method is retrieving the current channel based on the `currentChannelID` property. It is using
    * the `channelService` to make a request to get the current channel data from the server. Once the data is received, it is
    * assigned to the `currentChannel` property of the component.
