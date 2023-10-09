@@ -54,7 +54,7 @@
             'row-reverse': message.messagedAuthor === authService.userData.displayName,
             'row': message.messagedAuthor !== authService.userData.displayName,
           }"
-          [ngStyle]="{'height.px': message.editMsg ? 131 : 'auto'}"
+            [ngStyle]="{ 'height.px': message.editMsg ? 131 : 'auto' }"
           >
             <div
               class="reaction-elements"
@@ -90,7 +90,7 @@
                 >more_vert</mat-icon
               >
               <div class="edit-message" *ngIf="message.showEditMessage">
-                <button (click)="editMessage(message)">
+                <button (click)="textEditorService.editMessage(message)">
                   Nachricht bearbeiten
                 </button>
               </div>
@@ -129,14 +129,36 @@
               <div *ngIf="message.editMsg" class="text-editor-edit-msg">
                 <textarea [(ngModel)]="message.channelMessage"></textarea>
                 <div class="edit-btn-container">
-                  <button (click)="cancelEdit(message)" class="cancel-btn">Abbrechen</button
-                  ><button (click)="editMsgInFirestore(message.messageID, message.channelMessage)" class="save-btn">Speichern</button>
+                  <button
+                    (click)="textEditorService.cancelEdit(message)"
+                    class="cancel-btn"
+                  >
+                    Abbrechen</button
+                  ><button
+                    (click)="
+                      editMsgInFirestore(
+                        message.messageID,
+                        message.channelMessage
+                      )
+                    "
+                    class="save-btn"
+                  >
+                    Speichern
+                  </button>
                 </div>
                 <div class="add-elements">
-                  <mat-icon (click)="selectEmoji()"
+                  <mat-icon (click)="textEditorService.selectEmojiEditMsg()"
                     >sentiment_satisfied</mat-icon
                   >
                 </div>
+                <emoji-mart
+                  [isNative]="true"
+                  (emojiSelect)="textEditorService.addEmojiEditMsg($event, message)"
+                  class="emoji-picker"
+                  *ngIf="textEditorService.pickEmojiEditMsg"
+                  emoji="point_up"
+                  [darkMode]="false"
+                ></emoji-mart>
               </div>
 
               <div
@@ -180,8 +202,12 @@
     <div class="add-elements">
       <mat-icon>add</mat-icon>
       <div class="divider"></div>
-      <mat-icon (click)="selectEmoji()">sentiment_satisfied</mat-icon>
-      <mat-icon (click)="toggleUserList()">alternate_email</mat-icon>
+      <mat-icon (click)="textEditorService.selectEmoji()"
+        >sentiment_satisfied</mat-icon
+      >
+      <mat-icon (click)="textEditorService.toggleUserList()"
+        >alternate_email</mat-icon
+      >
     </div>
     <mat-icon
       class="send-btn"
@@ -192,18 +218,18 @@
     >
     <emoji-mart
       [isNative]="true"
-      (emojiSelect)="addEmoji($event)"
+      (emojiSelect)="textEditorService.addEmoji($event)"
       class="emoji-picker"
-      *ngIf="pickEmoji"
+      *ngIf="textEditorService.pickEmoji"
       emoji="point_up"
       [darkMode]="false"
     ></emoji-mart>
   </div>
-  <div class="user-list" *ngIf="showUserList">
+  <div class="user-list" *ngIf="textEditorService.showUserList">
     <ul>
       <li
         *ngFor="let username of channelService.allChannelMembers"
-        (click)="addUserToMessage(username.displayName)"
+        (click)="textEditorService.addUserToMessage(username.displayName)"
       >
         @{{ username.displayName }}
       </li>

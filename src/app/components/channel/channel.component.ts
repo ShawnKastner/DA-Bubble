@@ -8,6 +8,7 @@ import { AddMemberDialogComponent } from './add-member-dialog/add-member-dialog.
 import { MembersDialogComponent } from './members-dialog/members-dialog.component';
 import { ChannelDetailsDialogComponent } from './channel-details-dialog/channel-details-dialog.component';
 import { ThreadService } from 'src/app/shared/services/thread.service';
+import { TextEditorFunctionsService } from 'src/app/shared/services/text-editor-functions.service';
 
 @Component({
   selector: 'app-channel',
@@ -21,10 +22,7 @@ export class ChannelComponent implements OnInit {
   isMembersDialogOpen = false;
   isChannelDetailsDialogOpen = false;
   currentUserAvatar!: string;
-  showUserList: boolean = false;
-  userList: any[] = [];
   showElements: boolean = false;
-  pickEmoji: boolean = false;
   pickEmojiReaction: boolean = false;
   showEditMessage: boolean = false;
   editMsg: boolean = false;
@@ -35,7 +33,8 @@ export class ChannelComponent implements OnInit {
     private firestore: AngularFirestore,
     public authService: AuthService,
     public channelService: ChannelService,
-    public threadService: ThreadService
+    public threadService: ThreadService,
+    public textEditorService: TextEditorFunctionsService
   ) {}
 
   ngOnInit() {
@@ -236,64 +235,55 @@ export class ChannelComponent implements OnInit {
     });
   }
 
-  toggleUserList() {
-    this.showUserList = !this.showUserList;
-  }
-
-  insertAtCursor(text: string) {
-    const textarea = document.querySelector(
-      '.text-editor textarea'
-    ) as HTMLTextAreaElement;
-    const startPos = textarea.selectionStart;
-    const endPos = textarea.selectionEnd;
-    const textBeforeCursor = textarea.value.substring(0, startPos);
-    const textAfterCursor = textarea.value.substring(
-      endPos,
-      textarea.value.length
-    );
-
-    textarea.value = textBeforeCursor + text + textAfterCursor;
-    textarea.selectionStart = startPos + text.length;
-    textarea.selectionEnd = startPos + text.length;
-    textarea.focus();
-  }
-
-  addUserToMessage(username: string) {
-    this.insertAtCursor(`@${username}`);
-    this.showUserList = false;
-  }
-
-  selectEmoji() {
-    this.pickEmoji = !this.pickEmoji;
-  }
-
-  addEmoji(event: any) {
-    this.channelService.message = `${this.channelService.message}${event.emoji.native}`;
-    this.pickEmoji = false;
-  }
-
+  /**
+   * The `toggleShowElements(message: any)` method is a function that toggles the visibility of elements in a message. It
+   * takes a `message` object as a parameter, which represents a specific message in the channel.
+   * 
+   * @method
+   * @name toggleShowElements
+   * @kind method
+   * @memberof ChannelComponent
+   * @param {any} message
+   * @returns {void}
+   */
   toggleShowElements(message: any) {
     message.showElements = !message.showElements;
   }
 
+  /**
+   * The `toggleEditMessage(message: any)` method is a function that toggles the visibility of the edit message feature for a
+   * specific message in the channel. It takes a `message` object as a parameter, which represents a specific message in the
+   * channel.
+   * 
+   * @method
+   * @name toggleEditMessage
+   * @kind method
+   * @memberof ChannelComponent
+   * @param {any} message
+   * @returns {void}
+   */
   toggleEditMessage(message: any) {
     message.showEditMessage = !message.showEditMessage;
   }
 
-  editMessage(message: any) {
-    message.editMsg = !message.editMsg;
-    message.showEditMessage = false;
+  /**
+   * The `editMsgInFirestore(messageId: string, message: string)` method is responsible for updating a message in the
+   * Firestore database. It takes two parameters: `messageId`, which is the ID of the message to be edited, and `message`,
+   * which is the updated message content.
+   * 
+   * @method
+   * @name editMsgInFirestore
+   * @kind method
+   * @memberof ChannelComponent
+   * @param {string} messageId
+   * @param {string} message
+   * @returns {void}
+   */
+  editMsgInFirestore(messageId: string, message: string) {
+    this.channelService.editMessage(this.currentChannelID, messageId, message);
   }
 
   addReaction(message: any) {
     this.pickEmojiReaction = !this.pickEmojiReaction;
-  }
-
-  cancelEdit(message: any) {
-    message.editMsg = false;
-  }
-
-  editMsgInFirestore(messageId: string, message: string) {
-    this.channelService.editMessage(this.currentChannelID, messageId, message);
   }
 }
