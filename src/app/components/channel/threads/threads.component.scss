@@ -126,10 +126,13 @@
 }
 
 .text-editor-thread {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   bottom: 20px;
   right: 25px;
   left: 25px;
+  gap: 25px;
 
   textarea {
     font-family: "Nunito", sans-serif;
@@ -231,4 +234,30 @@
 
 .user-list li:hover {
   background-color: #f0f0f0;
+}
+
+.selected-image-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #adb0d9;
+  background-color: #ffff;
+  border-radius: 30px;
+  padding: 12px;
+
+  img {
+    height: 32px;
+    width: 32px;
+  }
+
+  &:hover {
+    border: 1px solid #535af1;
+    transform: scale(1.01);
+  }
+}
+
+.channel-image {
+  border-radius: 20px !important;
+  height: 100px !important;
+  width: auto !important;
 }

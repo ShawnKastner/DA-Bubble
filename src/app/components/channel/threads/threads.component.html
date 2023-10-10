@@ -54,8 +54,20 @@
                 'message-left':
                   message.messagedAuthor !== authService.userData.displayName
               }"
-              >{{ message.channelMessage }}</span
-            >
+              ><ng-container *ngIf="message.imageUrl">
+                <img
+                  class="channel-image"
+                  [src]="message.imageUrl"
+                  alt="Bild"
+                />
+              </ng-container>
+              <ng-container *ngIf="message.channelMessage">
+                <span
+                  [innerHTML]="
+                    channelService.formatMessage(message.channelMessage)
+                  "
+                ></span> </ng-container
+            ></span>
           </div>
         </div>
         <div class="divider-container">
@@ -106,16 +118,42 @@
                   'message-left':
                     answer.messagedAuthor !== authService.userData.displayName
                 }"
-                [innerHTML]="
-                  channelService.formatMessage(answer.channelMessage)
-                "
+                ><ng-container *ngIf="answer.imageUrl">
+                  <img
+                    class="channel-image"
+                    [src]="answer.imageUrl"
+                    alt="Bild"
+                  />
+                </ng-container>
+                <ng-container *ngIf="answer.channelMessage">
+                  <span
+                    [innerHTML]="
+                      channelService.formatMessage(answer.channelMessage)
+                    "
+                  ></span> </ng-container
               ></span>
             </div>
           </div>
         </div>
       </div>
-
+      <input
+        style="display: none"
+        #fileInputThread
+        type="file"
+        accept="image/*"
+        (change)="threadService.onFileSelected($event)"
+      />
       <div class="text-editor-thread">
+        <div
+          class="selected-image-banner"
+          *ngIf="threadService.selectedFileThreads"
+        >
+          <img src="assets/img/jpg-32.png" />
+          {{ threadService.selectedFileThreads.name }}
+          <mat-icon (click)="threadService.cancelFile()" class="close-btn"
+            >close</mat-icon
+          >
+        </div>
         <textarea
           [(ngModel)]="threadService.message"
           placeholder="Nachricht an #{{
@@ -123,7 +161,7 @@
           }}"
         ></textarea>
         <div class="add-elements">
-          <mat-icon>add</mat-icon>
+          <mat-icon (click)="fileInputThread.click()">add</mat-icon>
           <div class="divider"></div>
           <mat-icon (click)="textEditorService.selectEmojiThread()"
             >sentiment_satisfied</mat-icon

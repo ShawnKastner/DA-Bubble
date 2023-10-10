@@ -124,8 +124,21 @@
                     message.messagedAuthor !== authService.userData.displayName,
                   'd-none': message.editMsg
                 }"
-                [innerHTML]="channelService.formatMessage(message.channelMessage)"
-              ></span>
+                ><ng-container *ngIf="message.imageUrl">
+                  <img
+                    class="channel-image"
+                    [src]="message.imageUrl"
+                    alt="Bild"
+                  />
+                </ng-container>
+                <ng-container *ngIf="message.channelMessage">
+                  <span
+                    [innerHTML]="
+                      channelService.formatMessage(message.channelMessage)
+                    "
+                  ></span>
+                </ng-container>
+              </span>
               <div *ngIf="message.editMsg" class="text-editor-edit-msg">
                 <textarea [(ngModel)]="message.channelMessage"></textarea>
                 <div class="edit-btn-container">
@@ -153,7 +166,9 @@
                 </div>
                 <emoji-mart
                   [isNative]="true"
-                  (emojiSelect)="textEditorService.addEmojiEditMsg($event, message)"
+                  (emojiSelect)="
+                    textEditorService.addEmojiEditMsg($event, message)
+                  "
                   class="emoji-picker"
                   *ngIf="textEditorService.pickEmojiEditMsg"
                   emoji="point_up"
@@ -191,8 +206,21 @@
       </div>
     </div>
   </div>
-
+  <input
+    style="display: none"
+    #fileInput
+    type="file"
+    accept="image/*"
+    (change)="channelService.onFileSelected($event)"
+  />
   <div class="text-editor">
+    <div class="selected-image-banner" *ngIf="channelService.selectedFile">
+      <img src="assets/img/jpg-32.png" />
+      {{ channelService.selectedFile.name }}
+      <mat-icon (click)="channelService.cancelFile()" class="close-btn"
+        >close</mat-icon
+      >
+    </div>
     <textarea
       [(ngModel)]="channelService.message"
       placeholder="Nachricht an #{{
@@ -200,7 +228,7 @@
       }}"
     ></textarea>
     <div class="add-elements">
-      <mat-icon>add</mat-icon>
+      <mat-icon (click)="fileInput.click()">add</mat-icon>
       <div class="divider"></div>
       <mat-icon (click)="textEditorService.selectEmoji()"
         >sentiment_satisfied</mat-icon

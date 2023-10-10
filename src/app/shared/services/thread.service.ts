@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthService } from './auth.service';
 import { Message } from 'src/app/models/message.model';
 import { ChannelService } from './channel.service';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -10,11 +11,14 @@ import { ChannelService } from './channel.service';
 export class ThreadService {
   currentMessage!: any;
   message: string = '';
+  imageUrl = null;
+  selectedFileThreads: File | null = null;
 
   constructor(
     private firestore: AngularFirestore,
     private authService: AuthService,
-    private channelService: ChannelService
+    private channelService: ChannelService,
+    private storage: AngularFireStorage
   ) {}
 
   /**
@@ -181,13 +185,18 @@ export class ThreadService {
     const messagedAuthor = this.authService.userData.displayName;
     const avatar = await this.channelService.getCurrentAvatar();
     const createdDate = new Date().getTime();
+
+    await this.ifSelectedFileThreads();
+
     const channelMessage = new Message(
       this.message,
       messageID,
       createdDate,
       messagedAuthor,
-      avatar
+      avatar,
+      this.imageUrl
     );
+
     this.firestore
       .collection('channels')
       .doc(currentChannelId)
@@ -199,7 +208,24 @@ export class ThreadService {
       .doc(messageID)
       .set(channelMessage.messageToJSON());
     this.message = '';
+    this.selectedFileThreads = null;
     this.updateAnswerCount(currentChannelId, currentThreadId);
+  }
+
+  async ifSelectedFileThreads() {
+    if (this.selectedFileThreads) {
+      const filePath = `images/threadImages/${this.selectedFileThreads.name}`;
+      const uploadTask = this.storage.upload(
+        filePath,
+        this.selectedFileThreads
+      );
+
+      await uploadTask.then(
+        async (snapshot: { ref: { getDownloadURL: () => any } }) => {
+          this.imageUrl = await snapshot.ref.getDownloadURL();
+        }
+      );
+    }
   }
 
   getThreadAnswers(currentChannelId: string, currentThreadId: string) {
@@ -225,8 +251,19 @@ export class ThreadService {
       if (messageDoc.exists) {
         const currentAnswerCount = messageDoc.data()?.['answerCount'] || 0;
         const newAnswerCount = currentAnswerCount + 1;
-        messageRef.update({ answerCount: newAnswerCount, lastAnswer: new Date().getTime() });
+        messageRef.update({
+          answerCount: newAnswerCount,
+          lastAnswer: new Date().getTime(),
+        });
       }
     });
+  }
+
+  onFileSelected(event: any) {
+    this.selectedFileThreads = event.target.files[0];
+  }
+
+  cancelFile() {
+    this.selectedFileThreads = null;
   }
 }

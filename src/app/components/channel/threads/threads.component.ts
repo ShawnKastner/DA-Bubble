@@ -55,7 +55,7 @@ export class ThreadsComponent implements OnInit, OnDestroy {
   }
 
   sendMessage() {
-    if (this.threadService.message) {
+    if (this.threadService.message || this.threadService.selectedFileThreads) {
       this.threadService.sendMessageToThread(
         this.currentChannelId,
         this.currentThreadId

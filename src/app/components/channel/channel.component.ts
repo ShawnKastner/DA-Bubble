@@ -217,7 +217,7 @@ export class ChannelComponent implements OnInit {
   /**
    * The `toggleShowElements(message: any)` method is a function that toggles the visibility of elements in a message. It
    * takes a `message` object as a parameter, which represents a specific message in the channel.
-   * 
+   *
    * @method
    * @name toggleShowElements
    * @kind method
@@ -233,7 +233,7 @@ export class ChannelComponent implements OnInit {
    * The `toggleEditMessage(message: any)` method is a function that toggles the visibility of the edit message feature for a
    * specific message in the channel. It takes a `message` object as a parameter, which represents a specific message in the
    * channel.
-   * 
+   *
    * @method
    * @name toggleEditMessage
    * @kind method
@@ -249,7 +249,7 @@ export class ChannelComponent implements OnInit {
    * The `editMsgInFirestore(messageId: string, message: string)` method is responsible for updating a message in the
    * Firestore database. It takes two parameters: `messageId`, which is the ID of the message to be edited, and `message`,
    * which is the updated message content.
-   * 
+   *
    * @method
    * @name editMsgInFirestore
    * @kind method

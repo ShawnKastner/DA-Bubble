@@ -9,6 +9,7 @@ import { Message } from 'src/app/models/message.model';
 import { AuthService } from './auth.service';
 import { AddUsersDialogComponent } from 'src/app/components/side-menu/add-channel-dialog/add-users-dialog/add-users-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -25,16 +26,19 @@ export class ChannelService {
   userEmails: { [userName: string]: string } = {};
   allChannelMembers!: any;
   currentChannel!: any;
+  imageUrl = null;
+  selectedFile: File | null = null;
 
   constructor(
     private firestore: AngularFirestore,
     private authService: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private storage: AngularFireStorage
   ) {
     this.channelsCollection = this.firestore.collection<Channel>('channels');
   }
 
-    /**
+  /**
    * The `formatMessage(message: string): string` method is a helper method that takes a message as input and returns a
    * formatted version of the message. It replaces any occurrences of `@username` with `<span
    * class="blue-text">@username</span>`, where `username` is a word followed by a space and another word. This formatting is
@@ -48,12 +52,12 @@ export class ChannelService {
    * @param {string} message
    * @returns {string}
    */
-    formatMessage(message: string): string {
-      return message.replace(
-        /@(\w+\s\w+)/g,
-        '<span class="blue-text">@$1</span>'
-      );
-    }
+  formatMessage(message: string): string {
+    return message.replace(
+      /@(\w+\s\w+)/g,
+      '<span class="blue-text">@$1</span>'
+    );
+  }
 
   /**
    * The `addNewChannel()` method is responsible for creating a new channel in the Firestore database. It generates a unique
@@ -167,42 +171,44 @@ export class ChannelService {
     return this.firestore.collection('channels').doc(channelId).valueChanges();
   }
 
-  /**
-   * Description
-   * The `sendMessage` method in the `ChannelService` class is responsible for sending a message to a specific channel in the
-   * Firestore database. It takes two parameters: `message` (the content of the message) and `channelId` (the unique
-   * identifier of the channel).
-   * @async
-   * @method
-   * @name sendMessage
-   * @kind method
-   * @memberof ChannelService
-   * @param {string} message
-   * @param {string} channelId
-   * @returns {Promise<void>}
-   */
   async sendMessage(message: string, channelId: string) {
     const messageID = this.firestore.createId();
     const messagedAuthor = this.authService.userData.displayName;
     const avatar = await this.getCurrentAvatar();
     const createdDate = new Date().getTime();
+
+    await this.ifSelectedFile();
+
     const channelMessage = new Message(
       message,
       messageID,
       createdDate,
       messagedAuthor,
-      avatar
+      avatar,
+      this.imageUrl
     );
-    if (this.message) {
-      this.firestore
-        .collection('channels')
-        .doc(channelId)
-        .collection('messages')
-        .doc(messageID)
-        .set(channelMessage.messageToJSON());
-    }
 
+    this.firestore
+      .collection('channels')
+      .doc(channelId)
+      .collection('messages')
+      .doc(messageID)
+      .set(channelMessage.messageToJSON());
+    this.selectedFile = null;
     this.message = '';
+  }
+
+  async ifSelectedFile() {
+    if (this.selectedFile) {
+      const filePath = `images/channelImages/${this.selectedFile.name}`;
+      const uploadTask = this.storage.upload(filePath, this.selectedFile);
+
+      await uploadTask.then(
+        async (snapshot: { ref: { getDownloadURL: () => any } }) => {
+          this.imageUrl = await snapshot.ref.getDownloadURL();
+        }
+      );
+    }
   }
 
   /**
@@ -722,5 +728,13 @@ export class ChannelService {
       .update({
         channelMessage: messageText,
       });
+  }
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
+
+  cancelFile() {
+    this.selectedFile = null;
   }
 }

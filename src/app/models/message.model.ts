@@ -4,19 +4,22 @@ export class Message {
   createdDate!: Number;
   messagedAuthor!: string;
   avatar: string;
+  imageUrl!: any;
 
   constructor(
     channelMessage: string,
     messageID: string,
     createdDate: Number,
     messagedAuthor: string,
-    avatar: string
+    avatar: string,
+    imageUrl: any
   ) {
     this.channelMessage = channelMessage;
     this.messageID = messageID;
     this.createdDate = createdDate;
     this.messagedAuthor = messagedAuthor;
     this.avatar = avatar;
+    this.imageUrl = imageUrl;
   }
 
   public messageToJSON() {
@@ -25,7 +28,8 @@ export class Message {
       messageID: this.messageID,
       createdDate: this.createdDate,
       messagedAuthor: this.messagedAuthor,
-      avatar: this.avatar
+      avatar: this.avatar,
+      imageUrl: this.imageUrl
     };
   }
 }
