@@ -9,6 +9,7 @@ import { MembersDialogComponent } from './members-dialog/members-dialog.componen
 import { ChannelDetailsDialogComponent } from './channel-details-dialog/channel-details-dialog.component';
 import { ThreadService } from 'src/app/shared/services/thread.service';
 import { TextEditorFunctionsService } from 'src/app/shared/services/text-editor-functions.service';
+import { EmojiService } from 'src/app/shared/services/emoji.service';
 
 @Component({
   selector: 'app-channel',
@@ -23,7 +24,6 @@ export class ChannelComponent implements OnInit {
   isChannelDetailsDialogOpen = false;
   currentUserAvatar!: string;
   showElements: boolean = false;
-  pickEmojiReaction: boolean = false;
   showEditMessage: boolean = false;
   editMsg: boolean = false;
 
@@ -34,7 +34,8 @@ export class ChannelComponent implements OnInit {
     public authService: AuthService,
     public channelService: ChannelService,
     public threadService: ThreadService,
-    public textEditorService: TextEditorFunctionsService
+    public textEditorService: TextEditorFunctionsService,
+    public emojiService: EmojiService
   ) {}
 
   ngOnInit() {
@@ -215,37 +216,6 @@ export class ChannelComponent implements OnInit {
   }
 
   /**
-   * The `toggleShowElements(message: any)` method is a function that toggles the visibility of elements in a message. It
-   * takes a `message` object as a parameter, which represents a specific message in the channel.
-   *
-   * @method
-   * @name toggleShowElements
-   * @kind method
-   * @memberof ChannelComponent
-   * @param {any} message
-   * @returns {void}
-   */
-  toggleShowElements(message: any) {
-    message.showElements = !message.showElements;
-  }
-
-  /**
-   * The `toggleEditMessage(message: any)` method is a function that toggles the visibility of the edit message feature for a
-   * specific message in the channel. It takes a `message` object as a parameter, which represents a specific message in the
-   * channel.
-   *
-   * @method
-   * @name toggleEditMessage
-   * @kind method
-   * @memberof ChannelComponent
-   * @param {any} message
-   * @returns {void}
-   */
-  toggleEditMessage(message: any) {
-    message.showEditMessage = !message.showEditMessage;
-  }
-
-  /**
    * The `editMsgInFirestore(messageId: string, message: string)` method is responsible for updating a message in the
    * Firestore database. It takes two parameters: `messageId`, which is the ID of the message to be edited, and `message`,
    * which is the updated message content.
@@ -262,7 +232,16 @@ export class ChannelComponent implements OnInit {
     this.channelService.editMessage(this.currentChannelID, messageId, message);
   }
 
-  addReaction(message: any) {
-    this.pickEmojiReaction = !this.pickEmojiReaction;
+  toggleShowElements(message: any) {
+    message.showElements = !message.showElements;
   }
+
+  toggleEditMessage(message: any) {
+    message.showEditMessage = !message.showEditMessage;
+  }
+
+  toggleReactionPicker() {
+    this.emojiService.pickEmojiReaction = !this.emojiService.pickEmojiReaction;
+  }
+
 }

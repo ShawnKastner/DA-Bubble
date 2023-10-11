@@ -66,7 +66,7 @@
                   message.messagedAuthor !== authService.userData.displayName
               }"
             >
-              <mat-icon (click)="addReaction(message)" class="close-btn"
+              <mat-icon (click)="toggleReactionPicker()" class="close-btn"
                 >add_reaction</mat-icon
               >
               <mat-icon
@@ -94,6 +94,20 @@
                   Nachricht bearbeiten
                 </button>
               </div>
+              <emoji-mart
+                [isNative]="true"
+                (emojiClick)="
+                  emojiService.addReaction(
+                    $event,
+                    this.currentChannelID,
+                    message.messageID
+                  )
+                "
+                class="emoji-reaction-picker"
+                *ngIf="emojiService.pickEmojiReaction"
+                emoji="point_up"
+                [darkMode]="false"
+              ></emoji-mart>
             </div>
             <div>
               <img [src]="message.avatar || 'assets/img/81. Profile.png'" />
@@ -174,6 +188,26 @@
                   emoji="point_up"
                   [darkMode]="false"
                 ></emoji-mart>
+              </div>
+              <div *ngIf="message.reactions">
+                <div
+                  [ngClass]="{
+                    'bubble-end':
+                      message.messagedAuthor ===
+                      authService.userData.displayName,
+                    'bubble-start':
+                      message.messagedAuthor !==
+                      authService.userData.displayName
+                  }"
+                  class="reactions-container"
+                >
+                  <div
+                    *ngFor="let reaction of message.reactions"
+                    class="reaction-bubble"
+                  >
+                    {{ reaction.emoji }} {{ reaction.count }}
+                  </div>
+                </div>
               </div>
 
               <div

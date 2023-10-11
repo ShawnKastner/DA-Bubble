@@ -207,9 +207,9 @@
     padding: 20px;
     box-sizing: border-box;
 
-&:hover {
-  border: 1px solid #535af1;
-}
+    &:hover {
+      border: 1px solid #535af1;
+    }
 
     &:focus {
       outline: none;
@@ -292,7 +292,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
+  gap: 5px;
   position: absolute;
   top: 0;
   border-radius: 25px 25px 0px 25px;
@@ -300,6 +300,27 @@
   height: 46px;
   border: 1px solid rgba(173, 176, 217, 1);
   background-color: #ffff;
+
+  .image-border {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #eceefe;
+      color: #535af1;
+      border-radius: 100%;
+      transition: ease-in-out 125ms;
+    }
+  }
+
+  img {
+    height: 25px;
+    width: 25px;
+  }
 }
 
 .reaction-elements-left {
@@ -312,6 +333,7 @@
 
 .answer-count-container {
   display: flex;
+  justify-content: flex-end;
   gap: 20px;
 
   .answer-count {
@@ -444,8 +466,33 @@
   width: auto !important;
 }
 
-// .emoji-reaction {
-//   position: absolute;
-//   top: 0;
-//   right: 0;
-// }
+.emoji-reaction-picker {
+  position: absolute;
+  bottom: 45px;
+  left: 0;
+}
+
+.reactions-container {
+  display: flex;
+  gap: 5px;
+  margin-top: 5px;
+
+  .reaction-bubble {
+    border-radius: 20px;
+    border: 1px solid #adb0d9;
+    padding: 5px 10px;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #ffff;
+    }
+  }
+}
+
+.bubble-start {
+  justify-content: flex-start;
+}
+
+.bubble-end {
+  justify-content: flex-end;
+}

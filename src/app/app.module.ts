@@ -28,6 +28,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 //Components
 import { AppRoutingModule } from './app-routing.module';
@@ -104,6 +105,7 @@ import { ThreadsComponent } from './components/channel/threads/threads.component
     PickerModule,
     MatMenuModule,
     MatButtonModule,
+    MatTooltipModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
