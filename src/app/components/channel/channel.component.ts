@@ -26,6 +26,7 @@ export class ChannelComponent implements OnInit {
   showElements: boolean = false;
   showEditMessage: boolean = false;
   editMsg: boolean = false;
+  showReactionUsers: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -244,4 +245,7 @@ export class ChannelComponent implements OnInit {
     this.emojiService.pickEmojiReaction = !this.emojiService.pickEmojiReaction;
   }
 
+  showUsersWhoReacted(reaction: any) {
+    reaction.showUsers = !reaction.showUsers;
+  }
 }

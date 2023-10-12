@@ -66,6 +66,30 @@
                   message.messagedAuthor !== authService.userData.displayName
               }"
             >
+              <span
+                style="font-size: 20px"
+                class="close-btn"
+                (click)="
+                  emojiService.addReaction(
+                    emojiService.checkMarkManualEvent,
+                    this.currentChannelID,
+                    message.messageID
+                  )
+                "
+                >{{ emojiService.checkMarkManualEvent.emoji.native }}</span
+              >
+              <span
+                style="font-size: 20px"
+                class="close-btn"
+                (click)="
+                  emojiService.addReaction(
+                    emojiService.raisedHandsManualEvent,
+                    this.currentChannelID,
+                    message.messageID
+                  )
+                "
+                >{{ emojiService.raisedHandsManualEvent.emoji.native }}</span
+              >
               <mat-icon (click)="toggleReactionPicker()" class="close-btn"
                 >add_reaction</mat-icon
               >
@@ -189,23 +213,52 @@
                   [darkMode]="false"
                 ></emoji-mart>
               </div>
-              <div *ngIf="message.reactions">
+              <div
+                style="display: flex"
+                *ngIf="message.reactions"
+                [ngClass]="{
+                  'bubble-end':
+                    message.messagedAuthor === authService.userData.displayName,
+                  'bubble-start':
+                    message.messagedAuthor !== authService.userData.displayName
+                }"
+              >
                 <div
-                  [ngClass]="{
-                    'bubble-end':
-                      message.messagedAuthor ===
-                      authService.userData.displayName,
-                    'bubble-start':
-                      message.messagedAuthor !==
-                      authService.userData.displayName
-                  }"
+                  *ngFor="let reaction of message.reactions"
                   class="reactions-container"
                 >
                   <div
-                    *ngFor="let reaction of message.reactions"
+                    (mouseenter)="showUsersWhoReacted(reaction)"
+                    (mouseleave)="showUsersWhoReacted(reaction)"
                     class="reaction-bubble"
                   >
                     {{ reaction.emoji }} {{ reaction.count }}
+                  </div>
+                  <div
+                    *ngIf="reaction.showUsers"
+                    class="reacted-users-container flex-column"
+                  >
+                    <div class="emoji">{{ reaction.emoji }}</div>
+                    <span class="user-name">
+                      {{
+                        reaction.users
+                          ? emojiService.formatUserNames(reaction.users)
+                          : ""
+                      }}</span
+                    >
+                    <span>
+                      {{
+                        reaction.users
+                          ? reaction.users.length === 1
+                            ? reaction.users[0] ===
+                              authService.userData.displayName
+                              ? "hast"
+                              : "hat"
+                            : "haben"
+                          : ""
+                      }}
+                      reagiert
+                    </span>
                   </div>
                 </div>
               </div>
