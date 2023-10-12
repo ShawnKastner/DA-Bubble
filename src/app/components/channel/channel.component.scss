@@ -469,7 +469,14 @@
 .emoji-reaction-picker {
   position: absolute;
   bottom: 45px;
+}
+
+.emoji-reaction-picker-left {
   left: 0;
+}
+
+.emoji-reaction-picker-right {
+  right: 0;
 }
 
 .reactions-container {

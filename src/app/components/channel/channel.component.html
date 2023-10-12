@@ -90,7 +90,7 @@
                 "
                 >{{ emojiService.raisedHandsManualEvent.emoji.native }}</span
               >
-              <mat-icon (click)="toggleReactionPicker()" class="close-btn"
+              <mat-icon (click)="toggleReactionPicker(message)" class="close-btn"
                 >add_reaction</mat-icon
               >
               <mat-icon
@@ -128,7 +128,13 @@
                   )
                 "
                 class="emoji-reaction-picker"
-                *ngIf="emojiService.pickEmojiReaction"
+                [ngClass]="{
+                  'emoji-reaction-picker-left':
+                    message.messagedAuthor === authService.userData.displayName,
+                  'emoji-reaction-picker-right':
+                    message.messagedAuthor !== authService.userData.displayName
+                }"
+                *ngIf="message.pickEmojiReaction"
                 emoji="point_up"
                 [darkMode]="false"
               ></emoji-mart>
@@ -214,7 +220,7 @@
                 ></emoji-mart>
               </div>
               <div
-                style="display: flex"
+                style="display: flex; gap: 5px"
                 *ngIf="message.reactions"
                 [ngClass]="{
                   'bubble-end':

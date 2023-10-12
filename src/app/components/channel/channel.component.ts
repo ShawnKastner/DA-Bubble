@@ -241,8 +241,8 @@ export class ChannelComponent implements OnInit {
     message.showEditMessage = !message.showEditMessage;
   }
 
-  toggleReactionPicker() {
-    this.emojiService.pickEmojiReaction = !this.emojiService.pickEmojiReaction;
+  toggleReactionPicker(message: any) {
+    message.pickEmojiReaction = !message.pickEmojiReaction;
   }
 
   showUsersWhoReacted(reaction: any) {
