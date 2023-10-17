@@ -31,13 +31,13 @@ export class DirectMessagesComponent implements OnInit, OnDestroy {
   pickEmoji: boolean = false;
 
   constructor(
-    public directMessageService: DirectMessagesService,
+    private dialog: MatDialog,
     private route: ActivatedRoute,
     private chatListControlService: ChatListControlService,
     private usersService: UsersService,
+    public directMessageService: DirectMessagesService,
     public authService: AuthService,
-    public channelService: ChannelService,
-    private dialog: MatDialog
+    public channelService: ChannelService
   ) {}
 
   ngOnDestroy() {

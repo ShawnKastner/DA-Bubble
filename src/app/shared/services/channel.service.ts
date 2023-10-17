@@ -3,7 +3,7 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
-import { Observable, map, take, tap } from 'rxjs';
+import { Observable, map, take } from 'rxjs';
 import { Channel } from 'src/app/models/channel.model';
 import { Message } from 'src/app/models/message.model';
 import { AuthService } from './auth.service';

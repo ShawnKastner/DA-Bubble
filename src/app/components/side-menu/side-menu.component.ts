@@ -100,9 +100,9 @@ export class SideMenuComponent implements OnInit {
   }
 
   /**
-   * The `createChat(user: User)` method is responsible for creating a new chat with a user. It takes a `User` object as a
-   * parameter, which represents the user with whom the chat will be created.
-   * 
+   * The `createChat(user: User)` method is responsible for creating a chat with a user. It takes a `User` object as a
+   * parameter, representing the user with whom the chat will be created.
+   *
    * @method
    * @name createChat
    * @kind method
@@ -111,20 +111,62 @@ export class SideMenuComponent implements OnInit {
    * @returns {void}
    */
   createChat(user: User) {
-    this.directMessageService
-      .isExistingChat(user.uid)
-      .pipe(
-        switchMap((chatId) => {
-          if (!chatId) {
-            return this.directMessageService.createChat(user);
-          } else {
-            return of(chatId);
-          }
-        })
-      )
-      .subscribe((chatId) => {
-        this.chatListControlService.chatListControl.setValue([chatId]);
-        localStorage.setItem('currentChatId', chatId);
-      });
+    const currentUser = this.authService.userData;
+
+    if (user.uid === currentUser.uid) {
+      this.createPrivateChatForCurrentUser(currentUser);
+    } else {
+      this.directMessageService
+        .isExistingChat(user.uid)
+        .pipe(
+          switchMap((chatId) => {
+            if (!chatId) {
+              return this.directMessageService.createChat(user);
+            } else {
+              return of(chatId);
+            }
+          })
+        )
+        .subscribe((chatId) => {
+          this.chatListControlService.chatListControl.setValue([chatId]);
+          localStorage.setItem('currentChatId', chatId);
+        });
+    }
+  }
+
+  /**
+   * The `createPrivateChatForCurrentUser(currentUser: User)` method is responsible for creating a private chat for the
+   * current user.
+   *
+   * @method
+   * @name createPrivateChatForCurrentUser
+   * @kind method
+   * @memberof SideMenuComponent
+   * @param {User} currentUser
+   * @returns {void}
+   */
+  createPrivateChatForCurrentUser(currentUser: User) {
+    const currentUserData: User = {
+      uid: currentUser.uid,
+      displayName: currentUser.displayName || '',
+      avatar: currentUser.avatar || '',
+      email: '',
+      emailVerified: false,
+    };
+
+    const existingChatId = localStorage.getItem('privateChatId');
+
+    if (existingChatId) {
+      this.chatListControlService.chatListControl.setValue([existingChatId]);
+      localStorage.setItem('currentChatId', existingChatId);
+    } else {
+      this.directMessageService
+        .createChat(currentUserData)
+        .subscribe((chatId) => {
+          this.chatListControlService.chatListControl.setValue([chatId]);
+          localStorage.setItem('currentChatId', chatId);
+          localStorage.setItem('privateChatId', chatId);
+        });
+    }
   }
 }

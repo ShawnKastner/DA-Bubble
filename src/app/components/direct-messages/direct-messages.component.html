@@ -89,14 +89,44 @@
           <img
             [src]="currentUserDetails.avatar || 'assets/img/81. Profile.png'"
           />
-          <span>{{ currentUserDetails.displayName }}</span>
+          <span
+            >{{ currentUserDetails.displayName }}
+            <span
+              *ngIf="
+                currentUserDetails.displayName ===
+                authService.userData.displayName
+              "
+              >{{
+                currentUserDetails.displayName ===
+                authService.userData.displayName
+                  ? "(Du)"
+                  : ""
+              }}</span
+            ></span
+          >
         </div>
-        <p class="grey-font">
+        <p
+          *ngIf="
+            currentUserDetails.displayName !== authService.userData.displayName
+          "
+          class="grey-font"
+        >
           Diese Unterhaltung findet nur zwischen
           <span (click)="openProfileDetailsDialog()" class="blue-font"
             >@{{ currentUserDetails.displayName }}</span
           >
           und dir statt.
+        </p>
+        <p
+          class="grey-font"
+          *ngIf="
+            currentUserDetails.displayName === authService.userData.displayName
+          "
+        >
+          <span style="font-weight: 700">Dieser Raum ist nur für dich da.</span>
+          Mache dir Notizen, liste deine To-dos auf oder bewahre links und
+          Dateien griffbereit auf. Du kannst hier auch gerne Dinge mit dir
+          selbst besprechen.
         </p>
       </div>
     </ng-template>

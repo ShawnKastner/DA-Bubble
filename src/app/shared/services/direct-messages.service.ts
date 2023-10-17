@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { AuthService } from './auth.service';
 import {
   DocumentData,
-  Timestamp,
   addDoc,
   collection,
   collectionData,
@@ -25,15 +23,14 @@ export class DirectMessagesService {
 
   constructor(
     private firestore: AngularFirestore,
-    private authService: AuthService,
-    private userService: UsersService
+    private userService: UsersService,
   ) {}
 
   /**
    * The `get myChats$(): Observable<PrivateChat[]>` is a getter method that returns an Observable of type `PrivateChat[]`.
    * It retrieves the private chats of the current user by querying the Firestore collection named 'chats' and filtering the
    * chats based on the user's ID. It then maps the retrieved chats to add the chat name and profile picture for each chat.
-   * 
+   *
    * @method
    * @name (get) myChats$
    * @kind property
@@ -93,7 +90,7 @@ export class DirectMessagesService {
    * The `addChatMessage` method is responsible for adding a new message to a specific chat. It takes two parameters:
    * `chatId`, which is the ID of the chat where the message will be added, and `message`, which is the content of the
    * message.
-   * 
+   *
    * @method
    * @name addChatMessage
    * @kind method
@@ -126,7 +123,7 @@ export class DirectMessagesService {
   /**
    * The `getChatMessages$` method is retrieving the chat messages for a specific chat ID. It takes the `chatId` parameter of
    * type `string`, which represents the ID of the chat.
-   * 
+   *
    */
   getChatMessages$(chatId: string): Observable<privateMessage[]> {
     const ref = collection(
@@ -142,7 +139,7 @@ export class DirectMessagesService {
   /**
    * The `createChat` method is responsible for creating a new chat between the current user and another user. It takes the
    * `otherUser` parameter of type `User`, which represents the other user involved in the chat.
-   * 
+   *
    * @method
    * @name createChat
    * @kind method
@@ -151,7 +148,7 @@ export class DirectMessagesService {
    * @returns {Observable<string>}
    */
   createChat(otherUser: User): Observable<string> {
-    const ref = collection(this.firestore.firestore, 'chats'); // Verwende .firestore, um auf die native Firestore-Instanz zuzugreifen
+    const ref = collection(this.firestore.firestore, 'chats');
     return this.userService.currentUserProfile$.pipe(
       take(1),
       concatMap((user) =>
@@ -177,7 +174,7 @@ export class DirectMessagesService {
    * The `isExistingChat` method is checking if there is an existing chat between the current user and another user with the
    * given `otherUserId`. It returns an Observable that emits either the chat ID if an existing chat is found, or `null` if
    * no existing chat is found.
-   * 
+   *
    * @method
    * @name isExistingChat
    * @kind method
@@ -203,7 +200,7 @@ export class DirectMessagesService {
   /**
    * The `addChatNameAndPic(` method is responsible for adding the chat name and profile picture to each private chat in the
    * array of chats. It takes the current user's ID and the array of private chats as parameters.
-   * 
+   *
    * @method
    * @name addChatNameAndPic
    * @kind method
