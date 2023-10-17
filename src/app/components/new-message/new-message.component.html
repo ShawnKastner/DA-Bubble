@@ -4,7 +4,20 @@
     <input
       placeholder="An: #channel, oder @jemand oder E-Mail Adresse"
       type="text"
+      [matAutocomplete]="auto"
+      (input)="searchChannels($event)"
     />
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option
+        *ngFor="let channel of channelNames$ | async"
+        [value]="channel"
+      >
+        #{{ channel }}
+      </mat-option>
+      <mat-option *ngFor="let user of userNames$ | async" [value]="user">
+        @{{ user }}
+      </mat-option>
+    </mat-autocomplete>
   </div>
   <div class="text-editor">
     <textarea placeholder="Starte eine neue Nachricht"></textarea>
