@@ -16,6 +16,7 @@ import {
 } from '@angular/fire/auth-guard';
 import { DirectMessagesComponent } from './components/direct-messages/direct-messages.component';
 import { ThreadsComponent } from './components/channel/threads/threads.component';
+import { NewMessageComponent } from './components/new-message/new-message.component';
 
 const redirectToLogin = () => redirectUnauthorizedTo(['']);
 const redirectToHome = () => redirectLoggedInTo(['home']);
@@ -31,6 +32,10 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     children: [
+      {
+        path: 'newMessage',
+        component: NewMessageComponent
+      },
       {
         path: ':id',
         component: ChannelComponent,

@@ -1,0 +1,26 @@
+<div class="new-message-container">
+  <div class="header">
+    <h2>Neue Nachricht</h2>
+    <input
+      placeholder="An: #channel, oder @jemand oder E-Mail Adresse"
+      type="text"
+    />
+  </div>
+  <div class="text-editor">
+    <textarea placeholder="Starte eine neue Nachricht"></textarea>
+    <div class="add-elements">
+      <mat-icon>add</mat-icon>
+      <div class="divider"></div>
+      <mat-icon>sentiment_satisfied</mat-icon>
+      <mat-icon>alternate_email</mat-icon>
+    </div>
+    <mat-icon class="send-btn">send</mat-icon>
+    <emoji-mart
+      [isNative]="true"
+      class="emoji-picker"
+      *ngIf="pickEmoji"
+      emoji="point_up"
+      [darkMode]="false"
+    ></emoji-mart>
+  </div>
+</div>

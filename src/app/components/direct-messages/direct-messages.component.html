@@ -133,7 +133,7 @@
   </div>
 
   <div class="text-editor">
-    <textarea [(ngModel)]="messageText"></textarea>
+    <textarea placeholder="Nachricht an {{ currentUserDetails?.displayName }}" [(ngModel)]="messageText"></textarea>
     <div class="add-elements">
       <mat-icon>add</mat-icon>
       <div class="divider"></div>

@@ -54,6 +54,7 @@ import { ProfileDialogComponent } from './components/profile/logout-dialog/profi
 import { ChannelDetailsDialogComponent } from './components/channel/channel-details-dialog/channel-details-dialog.component';
 import { DirectMessagesComponent } from './components/direct-messages/direct-messages.component';
 import { ThreadsComponent } from './components/channel/threads/threads.component';
+import { NewMessageComponent } from './components/new-message/new-message.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { ThreadsComponent } from './components/channel/threads/threads.component
     ChannelDetailsDialogComponent,
     DirectMessagesComponent,
     ThreadsComponent,
+    NewMessageComponent,
   ],
   imports: [
     provideFirebaseApp(() => initializeApp(environment.firebase)),
