@@ -9,25 +9,35 @@
     />
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option
+        (click)="newMessageService.selectChannel(channel)"
         *ngFor="let channel of channelNames$ | async"
-        [value]="channel"
+        [value]="'#' + channel"
       >
         #{{ channel }}
       </mat-option>
-      <mat-option *ngFor="let user of userNames$ | async" [value]="user">
+      <mat-option
+        (click)="newMessageService.selectName(user)"
+        *ngFor="let user of userNames$ | async"
+        [value]="'@' + user"
+      >
         @{{ user }}
       </mat-option>
     </mat-autocomplete>
   </div>
   <div class="text-editor">
-    <textarea placeholder="Starte eine neue Nachricht"></textarea>
+    <textarea
+      placeholder="Starte eine neue Nachricht"
+      [(ngModel)]="newMessageService.newMessageText"
+    ></textarea>
     <div class="add-elements">
       <mat-icon>add</mat-icon>
       <div class="divider"></div>
       <mat-icon>sentiment_satisfied</mat-icon>
       <mat-icon>alternate_email</mat-icon>
     </div>
-    <mat-icon class="send-btn">send</mat-icon>
+    <mat-icon (click)="newMessageService.sendMessage()" class="send-btn"
+      >send</mat-icon
+    >
     <emoji-mart
       [isNative]="true"
       class="emoji-picker"

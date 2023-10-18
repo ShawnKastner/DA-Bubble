@@ -1,25 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable, map } from 'rxjs';
+import { NewMessageService } from 'src/app/shared/services/new-message.service';
 
 @Component({
   selector: 'app-new-message',
   templateUrl: './new-message.component.html',
   styleUrls: ['./new-message.component.scss'],
 })
-export class NewMessageComponent {
+export class NewMessageComponent implements OnDestroy {
   pickEmoji: boolean = false;
   channelNames$: Observable<string[]>;
   userNames$: Observable<string[]>;
+  newMessageText: string = '';
+  selectedChannel: string = '';
 
-  constructor(private firestore: AngularFirestore) {
-    // Initialisiere das Observable mit einer leeren Liste
+  constructor(
+    private firestore: AngularFirestore,
+    public newMessageService: NewMessageService
+  ) {
     this.channelNames$ = new Observable<string[]>((observer) => {
       observer.next([]);
     });
     this.userNames$ = new Observable<string[]>((observer) => {
       observer.next([]);
     });
+  }
+
+  ngOnDestroy() {
+    localStorage.removeItem('currentChatId');
   }
 
   searchChannels(event: any) {
