@@ -1,4 +1,21 @@
 <div class="search-bar">
-    <input placeholder="Code learning durchsuchen">
-    <mat-icon>search</mat-icon>
+  <input
+    [(ngModel)]="searchText"
+    (input)="search()"
+    placeholder="Code learning durchsuchen"
+  />
+  <div *ngIf="searchText" class="search-result-container flex-column">
+    <span
+      (click)="clearSearchInput()"
+      *ngFor="let result of searchResults"
+      [routerLink]="'/home/' + result.channelID"
+    >
+      Von: {{ result.messagedAuthor }}: {{ result.channelMessage }}<br />in:
+      {{ result.channelName }}
+    </span>
+    <span *ngIf="!searchResults || searchResults.length === 0"
+      >Keine Übereinstimmung gefunden!</span
+    >
+  </div>
+  <mat-icon>search</mat-icon>
 </div>

@@ -20,3 +20,29 @@
     color: #686868;
   }
 }
+
+.search-result-container {
+  position: absolute;
+  overflow: auto;
+  background-color: #fff;
+  border: 1px solid #adb0d9;
+  top: 68px;
+  border-radius: 30px;
+  max-height: 250px;
+  width: calc(100% - 20px);
+  z-index: 999;
+  padding: 20px 10px;
+
+  span {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-radius: 30px;
+    font-size: 1.125rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #eceefe;
+    }
+  }
+}
