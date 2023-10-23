@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-} from '@angular/fire/compat/firestore';
-import { Channel } from 'src/app/models/channel.model';
-import { Message } from 'src/app/models/message.model';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { SearchService } from 'src/app/shared/services/search.service';
+import { EditMemberComponent } from '../profile/logout-dialog/profile-dialog/edit-member/edit-member.component';
+import { MemberDetailsComponent } from '../channel/members-dialog/member-details/member-details.component';
 
 @Component({
   selector: 'app-search',
@@ -12,52 +11,33 @@ import { Message } from 'src/app/models/message.model';
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent {
-  searchText: string = '';
-  searchResults: any[] = [];
-
-  constructor(private firestore: AngularFirestore) {}
+  constructor(
+    public searchService: SearchService,
+    private dialog: MatDialog,
+    private authService: AuthService
+  ) {}
 
   search() {
-    const searchTerm = this.searchText.toLowerCase();
-
-    this.searchResults = [];
-
-    this.firestore
-      .collection('channels')
-      .get()
-      .subscribe((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const channelData = doc.data() as Channel;
-          const channelName = channelData.channelName;
-          const channelID = channelData.id;
-
-          if (channelName.toLowerCase().includes(searchTerm)) {
-            this.searchResults.push({ channelName, channelID });
-          }
-
-          this.firestore
-            .collection(`channels/${doc.id}/messages`)
-            .get()
-            .subscribe((messageQuerySnapshot) => {
-              messageQuerySnapshot.forEach((messageDoc) => {
-                const messageData = messageDoc.data() as Message;
-                const channelMessage = messageData.channelMessage.toLowerCase();
-
-                if (channelMessage.includes(searchTerm)) {
-                  this.searchResults.push({
-                    channelName,
-                    channelID,
-                    messagedAuthor: messageData.messagedAuthor,
-                    channelMessage: messageData.channelMessage,
-                  });
-                }
-              });
-            });
-        });
-      });
+    this.searchService.search();
   }
 
   clearSearchInput() {
-    this.searchText = '';
+    this.searchService.searchText = '';
   }
+
+  openUserDetails(member: any) {
+    if (member.displayName === this.authService.userData.displayName) {
+      this.dialog.open(EditMemberComponent, {
+        data: { profileData: member },
+        panelClass: 'edit-member-dialog',
+      });
+    } else {
+      this.dialog.open(MemberDetailsComponent, {
+        data: { memberData: member },
+        panelClass: 'member-details-dialog',
+      });
+    }
+  }
+
+
 }

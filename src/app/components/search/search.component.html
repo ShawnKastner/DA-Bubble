@@ -1,19 +1,34 @@
 <div class="search-bar">
   <input
-    [(ngModel)]="searchText"
+    [(ngModel)]="searchService.searchText"
     (input)="search()"
     placeholder="Code learning durchsuchen"
   />
-  <div *ngIf="searchText" class="search-result-container flex-column">
+  <div
+    *ngIf="searchService.searchText"
+    class="search-result-container flex-column"
+  >
     <span
-      (click)="clearSearchInput()"
-      *ngFor="let result of searchResults"
-      [routerLink]="'/home/' + result.channelID"
+      class="span-result"
+      *ngFor="let result of searchService.searchResults"
     >
-      Von: {{ result.messagedAuthor }}: {{ result.channelMessage }}<br />in:
-      {{ result.channelName }}
+      <ng-container *ngIf="result.displayName">
+        <span (click)="openUserDetails(result)">
+          Benutzer: <span style="color: blue">{{ result.displayName }}</span></span
+        >
+      </ng-container>
+      <ng-container *ngIf="result.channelMessage">
+        <span
+          (click)="clearSearchInput()"
+          [routerLink]="'/home/' + result.channelID"
+        >
+          Von: <span style="color: blue">{{ result.messagedAuthor }}:</span>
+          {{ result.channelMessage }}<br />
+          in: <span style="color: blue">{{ result.channelName }}</span>
+        </span>
+      </ng-container>
     </span>
-    <span *ngIf="!searchResults || searchResults.length === 0"
+    <span *ngIf="searchService.searchResults.length === 0"
       >Keine Übereinstimmung gefunden!</span
     >
   </div>

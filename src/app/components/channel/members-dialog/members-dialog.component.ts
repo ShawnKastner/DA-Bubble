@@ -16,7 +16,6 @@ import { EditMemberComponent } from '../../profile/logout-dialog/profile-dialog/
   styleUrls: ['./members-dialog.component.scss'],
 })
 export class MembersDialogComponent implements OnInit {
-  selectedMember: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
