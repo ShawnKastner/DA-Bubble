@@ -18,4 +18,5 @@ export interface privateMessage {
     displayName: string;
     avatar: string;
     sentDate: number;
+    imageUrl: null;
 }

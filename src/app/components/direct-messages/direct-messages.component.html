@@ -75,7 +75,21 @@
                         ? 'black'
                         : ''
                   }"
-                  >{{ message.text }}</span
+                  >
+                  <ng-container *ngIf="message.imageUrl">
+                    <img
+                      class="message-image"
+                      [src]="message.imageUrl"
+                      alt="Bild"
+                    />
+                  </ng-container>
+                  <ng-container *ngIf="message.text">
+                    <span
+                      [innerHTML]="
+                        channelService.formatMessage(message.text)
+                      "
+                    ></span>
+                  </ng-container></span
                 >
               </div>
             </div>
@@ -132,10 +146,27 @@
     </ng-template>
   </div>
 
+  <input
+    style="display: none"
+    #fileInput
+    type="file"
+    accept="image/*"
+    (change)="directMessageService.onFileSelected($event)"
+  />
   <div class="text-editor">
-    <textarea placeholder="Nachricht an {{ currentUserDetails?.displayName }}" [(ngModel)]="messageText"></textarea>
+    <div class="selected-image-banner" *ngIf="directMessageService.selectedFile">
+      <img src="assets/img/jpg-32.png" />
+      {{ directMessageService.selectedFile.name }}
+      <mat-icon (click)="directMessageService.cancelFile()" class="close-btn"
+        >close</mat-icon
+      >
+    </div>
+    <textarea
+      placeholder="Nachricht an {{ currentUserDetails?.displayName }}"
+      [(ngModel)]="messageText"
+    ></textarea>
     <div class="add-elements">
-      <mat-icon>add</mat-icon>
+      <mat-icon (click)="fileInput.click()">add</mat-icon>
       <div class="divider"></div>
       <mat-icon (click)="selectEmoji()">sentiment_satisfied</mat-icon>
       <mat-icon>alternate_email</mat-icon>

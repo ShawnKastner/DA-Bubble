@@ -13,6 +13,7 @@ import { Observable, concatMap, map, take } from 'rxjs';
 import { User } from './user';
 import { UsersService } from './users.service';
 import { PrivateChat, privateMessage } from 'src/app/models/private-chat';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,7 @@ export class DirectMessagesService {
   constructor(
     private firestore: AngularFirestore,
     private userService: UsersService,
+    private storage: AngularFireStorage
   ) {}
 
   /**
@@ -105,6 +107,7 @@ export class DirectMessagesService {
       .doc(chatId)
       .collection('messages');
     const messageId = this.firestore.createId();
+
     return this.userService.currentUserProfile$.pipe(
       take(1),
       concatMap((user) =>
@@ -115,6 +118,7 @@ export class DirectMessagesService {
           sentDate: new Date().getTime(),
           displayName: user?.['displayName'],
           avatar: user?.['avatar'],
+          imageUrl: this.imageUrl,
         })
       )
     );
@@ -222,5 +226,29 @@ export class DirectMessagesService {
     });
 
     return chats;
+  }
+  imageUrl = null;
+  selectedFile: File | null = null;
+
+  async onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+    await this.ifSelectedFile();
+  }
+
+  async ifSelectedFile() {
+    if (this.selectedFile) {
+      const filePath = `images/directMessageImages/${this.selectedFile.name}`;
+      const uploadTask = this.storage.upload(filePath, this.selectedFile);
+
+      await uploadTask.then(
+        async (snapshot: { ref: { getDownloadURL: () => any } }) => {
+          this.imageUrl = await snapshot.ref.getDownloadURL();
+        }
+      );
+    }
+  }
+
+  cancelFile() {
+    this.selectedFile = null;
   }
 }

@@ -11,6 +11,7 @@ import { DirectMessagesService } from 'src/app/shared/services/direct-messages.s
 import { UsersService } from 'src/app/shared/services/users.service';
 import { MemberDetailsComponent } from '../channel/members-dialog/member-details/member-details.component';
 import { ProfileDialogComponent } from '../profile/logout-dialog/profile-dialog/profile-dialog.component';
+import { TextEditorFunctionsService } from 'src/app/shared/services/text-editor-functions.service';
 
 @Component({
   selector: 'app-direct-messages',
@@ -35,6 +36,7 @@ export class DirectMessagesComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private chatListControlService: ChatListControlService,
     private usersService: UsersService,
+    public editorFunctionService: TextEditorFunctionsService,
     public directMessageService: DirectMessagesService,
     public authService: AuthService,
     public channelService: ChannelService
@@ -108,6 +110,7 @@ export class DirectMessagesComponent implements OnInit, OnDestroy {
         .addChatMessage(selectedChatId, message)
         .subscribe(() => {});
       this.messageText = '';
+      this.directMessageService.selectedFile = null;
     }
   }
 

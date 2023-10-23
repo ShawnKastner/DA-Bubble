@@ -118,10 +118,13 @@
 }
 
 .text-editor {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   bottom: 20px;
   right: 25px;
   left: 25px;
+  gap: 25px;
 
   textarea {
     font-family: "Nunito", sans-serif;
@@ -219,4 +222,25 @@
     color: rgba(38, 48, 255, 1);
     transition: ease-in-out 75ms;
   }
+}
+
+.selected-image-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #adb0d9;
+  background-color: #ffff;
+  border-radius: 30px;
+  padding: 12px;
+
+  &:hover {
+    border: 1px solid #535af1;
+    transform: scale(1.01);
+  }
+}
+
+.message-image {
+  border-radius: 20px !important;
+  height: 100px !important;
+  width: auto !important;
 }
