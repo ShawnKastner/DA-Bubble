@@ -5,6 +5,7 @@
       placeholder="An: #channel, oder @jemand oder E-Mail Adresse"
       type="text"
       [matAutocomplete]="auto"
+      [(ngModel)]="newMessageService.nameInput"
       (input)="searchChannels($event)"
     />
     <mat-autocomplete #auto="matAutocomplete">

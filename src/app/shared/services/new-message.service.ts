@@ -3,9 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ChannelService } from './channel.service';
 import { AuthService } from './auth.service';
 import { Message } from 'src/app/models/message.model';
-import { ref } from '@angular/fire/storage';
-import { take, concatMap, Observable, map, from } from 'rxjs';
-import { UsersService } from './users.service';
+import { Observable, map } from 'rxjs';
 import { DirectMessagesService } from './direct-messages.service';
 
 @Injectable({
@@ -15,12 +13,12 @@ export class NewMessageService {
   newMessageText: string = '';
   selectedChannel: string = '';
   selectedName: string = '';
+  nameInput: string = '';
 
   constructor(
     private firestore: AngularFirestore,
     private authService: AuthService,
     private channelService: ChannelService,
-    private userService: UsersService,
     private directMessageService: DirectMessagesService
   ) {}
 
@@ -43,6 +41,7 @@ export class NewMessageService {
           .addChatMessage(selectedChatId, message)
           .subscribe(() => {});
         this.newMessageText = '';
+        this.nameInput = '';
       }
     }
   }
@@ -79,7 +78,6 @@ export class NewMessageService {
               user1.displayName === displayName ||
               user2.displayName === displayName
             ) {
-              console.log('Chat gefunden: ', change.payload.doc.id);
               return change.payload.doc.id;
             }
           }

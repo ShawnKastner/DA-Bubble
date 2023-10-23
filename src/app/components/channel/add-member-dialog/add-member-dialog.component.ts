@@ -55,6 +55,7 @@ export class AddMemberDialogComponent implements OnInit {
         displayName: userName,
         avatar: this.channelService.userAvatars[userName], 
         email: this.channelService.userEmails[userName],
+        uid:  this.channelService.userIds[userName],
       };
       this.firestore
         .collection('channels')

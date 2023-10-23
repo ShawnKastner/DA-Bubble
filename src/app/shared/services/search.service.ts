@@ -83,7 +83,7 @@ export class SearchService {
           if (userName.includes(searchTerm)) {
             this.searchResults.push({
               displayName: userData.displayName,
-              userID: userData.uid,
+              uid: userData.uid,
               email: userData.email,
               avatar: userData.avatar,
             });

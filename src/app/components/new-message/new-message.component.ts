@@ -12,7 +12,6 @@ export class NewMessageComponent implements OnDestroy {
   pickEmoji: boolean = false;
   channelNames$: Observable<string[]>;
   userNames$: Observable<string[]>;
-  newMessageText: string = '';
   selectedChannel: string = '';
 
   constructor(

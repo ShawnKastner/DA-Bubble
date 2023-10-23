@@ -24,6 +24,7 @@ export class ChannelService {
   currentUserAvatar!: string;
   userAvatars: { [userName: string]: string } = {};
   userEmails: { [userName: string]: string } = {};
+  userIds: { [userName: string]: string } = {};
   allChannelMembers!: any;
   currentChannel!: any;
   imageUrl = null;
@@ -114,6 +115,7 @@ export class ChannelService {
         displayName: this.authService.userData.displayName,
         email: this.authService.userData.email,
         avatar: await this.getCurrentAvatar(),
+        uid: this.authService.userData.uid,
       });
   }
 
@@ -346,6 +348,9 @@ export class ChannelService {
         this.getEmailFromUsers(userName).subscribe((email) => {
           this.userEmails[userName] = email;
         });
+        this.getUidFromUser(userName).subscribe((uid) => {
+          this.userIds[userName] = uid;
+        });
       });
     }
   }
@@ -404,6 +409,22 @@ export class ChannelService {
       );
   }
 
+  getUidFromUser(userName: string) {
+    return this.firestore
+      .collection('users', (ref) => ref.where('displayName', '==', userName))
+      .valueChanges()
+      .pipe(
+        take(1),
+        map((users: any[]) => {
+          if (users && users.length > 0 && users[0].uid) {
+            return users[0].uid;
+          } else {
+            return '';
+          }
+        })
+      );
+  }
+
   /**
    * The `addSelectedUsersToChannel(channelId: string)` method is responsible for adding selected users to a channel. It
    * takes the `channelId` as a parameter and iterates over the `selectedUsers` array. For each selected user, it calls the
@@ -432,6 +453,7 @@ export class ChannelService {
             displayName: user.displayName,
             avatar: this.userAvatars[userName],
             email: this.userEmails[userName],
+            uid: this.userIds[userName],
           };
           const memberRef = channelRef.collection('members').doc(doc.id);
           batch.set(memberRef, member);
@@ -535,6 +557,7 @@ export class ChannelService {
                 displayName: userName,
                 avatar: userAvatar || '',
                 email: userEmail,
+                uid: userDoc.data().uid,
               };
               const memberRef = channelRef.collection('members').doc(doc.id);
               batch.set(memberRef, member);

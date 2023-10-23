@@ -4,11 +4,11 @@
     <mat-icon (click)="closeDialog()" class="close-btn">close</mat-icon>
   </div>
   <div class="img-container">
-    <img [src]=" this.memberDetails.avatar || 'assets/img/81. Profile.png'" />
+    <img [src]="memberDetails.avatar || 'assets/img/81. Profile.png'" />
   </div>
   <div class="name-and-active-status">
     <div class="flex-column gap-15">
-      <span class="name">{{ this.memberDetails.displayName }}</span>
+      <span class="name">{{ memberDetails.displayName }}</span>
       <div class="active-status">
         <div class="green-dot"></div>
         <span>Active</span>
@@ -20,11 +20,11 @@
       <mat-icon>mail</mat-icon>
       <div class="flex-column">
         <span>E-Mail-Adresse</span>
-        <a href="mailto:{{ this.memberDetails.email }}">{{ this.memberDetails.email }}</a>
+        <a href="mailto:{{ memberDetails.email }}">{{ memberDetails.email }}</a>
       </div>
     </div>
   </div>
   <div class="btn-container">
-    <button><mat-icon>mode_comment</mat-icon>Nachricht</button>
+    <button (click)="newMessageToUser(memberDetails.displayName)"><mat-icon>mode_comment</mat-icon>Nachricht</button>
   </div>
 </div>
