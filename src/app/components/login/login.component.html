@@ -1,3 +1,7 @@
+<div class="daBubble-intro">
+  <img src="assets/img/logo-intro.png" />
+</div>
+
 <div class="logo-container">
   <img src="assets/img/daBubble-logo.png" />
 </div>
@@ -47,7 +51,7 @@
     <div class="login-btn-container">
       <button
         (click)="authService.SignIn(userEmail.value, userPassword.value)"
-        [disabled]="!userEmail.valid || !userPassword.valid"    
+        [disabled]="!userEmail.valid || !userPassword.valid"
         class="login-btn"
       >
         Anmelden</button

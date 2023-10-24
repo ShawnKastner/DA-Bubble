@@ -185,3 +185,46 @@ button[disabled] {
   cursor: not-allowed !important;
   opacity: 0.6;
 }
+
+.daBubble-intro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  z-index: 999;
+  background: linear-gradient(rgba(49, 58, 229, 1), rgba(121, 126, 243, 1));
+  animation: intro 1.5s linear forwards;
+
+  img {
+    height: 45px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    animation: intro-img 1.5s linear forwards;
+  }
+}
+
+@keyframes intro {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes intro-img {
+  0% {
+    top: 50%;
+    left: 50%;
+    height: 184px;
+  }
+  100% {
+    top: 25px;
+    left: 25px;
+    height: 45px;
+  }
+}
