@@ -133,6 +133,7 @@ export class AuthService {
           displayName: user.displayName || 'Gast',
           emailVerified: user.emailVerified,
           avatar: existingUserData?.avatar || '',
+          activeState: 'Active',
         };
 
         userRef.set(userData, { merge: true });
@@ -140,9 +141,27 @@ export class AuthService {
   }
   // Sign out
   SignOut() {
-    return this.afAuth.signOut().then(() => {
-      localStorage.removeItem('user');
-      this.router.navigate(['/']);
-    });
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user.uid) {
+      const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+        `users/${user.uid}`
+      );
+      userRef
+        .update({ activeState: 'Offline' })
+        .then(() => {
+          this.afAuth.signOut().then(() => {
+            localStorage.removeItem('user');
+            this.router.navigate(['/']);
+          });
+        })
+        .catch((error) => {
+          console.log('Fehler beim Aktualisieren des activeState:', error);
+        });
+    } else {
+      this.afAuth.signOut().then(() => {
+        localStorage.removeItem('user');
+        this.router.navigate(['/']);
+      });
+    }
   }
 }

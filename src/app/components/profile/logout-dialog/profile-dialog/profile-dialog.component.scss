@@ -41,13 +41,27 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    color: rgba(146, 200, 62, 1);
 
     .green-dot {
       background-color: rgba(146, 200, 62, 1);
       width: 16px;
       height: 16px;
       border-radius: 100%;
+    }
+
+    .grey-dot {
+      background-color: grey;
+      width: 16px;
+      height: 16px;
+      border-radius: 100%;
+    }
+
+    .green-font {
+      color: rgba(146, 200, 62, 1);
+    }
+
+    .grey-font {
+      color: grey;
     }
   }
 }

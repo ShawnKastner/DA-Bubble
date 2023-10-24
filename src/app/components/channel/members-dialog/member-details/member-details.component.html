@@ -10,8 +10,19 @@
     <div class="flex-column gap-15">
       <span class="name">{{ memberDetails.displayName }}</span>
       <div class="active-status">
-        <div class="green-dot"></div>
-        <span>Active</span>
+        <div
+          [ngClass]="{
+            'green-dot': memberDetails.activeState == 'Active',
+            'grey-dot': memberDetails.activeState == 'Offline'
+          }"
+        ></div>
+        <span
+          [ngClass]="{
+            'green-font': memberDetails.activeState == 'Active',
+            'grey-font': memberDetails.activeState == 'Offline'
+          }"
+          >{{ memberDetails.activeState }}</span
+        >
       </div>
     </div>
   </div>
@@ -25,6 +36,8 @@
     </div>
   </div>
   <div class="btn-container">
-    <button (click)="newMessageToUser(memberDetails.displayName)"><mat-icon>mode_comment</mat-icon>Nachricht</button>
+    <button (click)="newMessageToUser(memberDetails.displayName)">
+      <mat-icon>mode_comment</mat-icon>Nachricht
+    </button>
   </div>
 </div>

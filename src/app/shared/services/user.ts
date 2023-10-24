@@ -4,4 +4,5 @@ export interface User {
     displayName: string;
     emailVerified: boolean;
     avatar: string;
+    activeState: string;
  }

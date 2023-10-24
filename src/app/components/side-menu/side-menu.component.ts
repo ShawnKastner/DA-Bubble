@@ -152,6 +152,7 @@ export class SideMenuComponent implements OnInit {
       avatar: currentUser.avatar || '',
       email: '',
       emailVerified: false,
+      activeState: 'Active'
     };
 
     const existingChatId = localStorage.getItem('privateChatId');

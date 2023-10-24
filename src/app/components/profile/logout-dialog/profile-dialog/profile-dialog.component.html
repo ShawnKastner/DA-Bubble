@@ -4,7 +4,7 @@
     <mat-icon (click)="closeDialog()" class="close-btn">close</mat-icon>
   </div>
   <div class="img-container">
-    <img [src]=" profileDetails.avatar ||'assets/img/81. Profile.png'" />
+    <img [src]="profileDetails.avatar || 'assets/img/81. Profile.png'" />
   </div>
   <div class="name-and-active-status">
     <div class="flex-column gap-15">
@@ -14,8 +14,19 @@
       </div>
 
       <div class="active-status">
-        <div class="green-dot"></div>
-        <span>Active</span>
+        <div
+          [ngClass]="{
+            'green-dot': profileDetails.activeState == 'Active',
+            'grey-dot': profileDetails.activeState == 'Offline'
+          }"
+        ></div>
+        <span
+          [ngClass]="{
+            'green-font': profileDetails.activeState == 'Active',
+            'grey-font': profileDetails.activeState == 'Offline'
+          }"
+          >{{ profileDetails.activeState }}</span
+        >
       </div>
     </div>
   </div>
