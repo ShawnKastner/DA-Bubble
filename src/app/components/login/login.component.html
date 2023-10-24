@@ -39,7 +39,7 @@
     </div>
     <div class="login-btn-container">
       <button (click)="authService.SignIn(userEmail.value, userPassword.value)" class="login-btn">Anmelden</button
-      ><button class="guest-btn">Gäste-Login</button>
+      ><button (click)="authService.guestSignIn()" class="guest-btn">Gäste-Login</button>
     </div>
   </mat-card>
 </div>

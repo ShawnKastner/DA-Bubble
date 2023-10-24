@@ -7,7 +7,12 @@ import {
 import * as auth from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
-import { Auth, authState } from '@angular/fire/auth';
+import {
+  Auth,
+  authState,
+  getAuth,
+  signInAnonymously,
+} from '@angular/fire/auth';
 import { take } from 'rxjs';
 @Injectable({
   providedIn: 'root',
@@ -15,7 +20,7 @@ import { take } from 'rxjs';
 export class AuthService {
   userData: any; // Save logged in user data
   currentUser$ = authState(this.auth);
-  
+
   constructor(
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
@@ -49,7 +54,7 @@ export class AuthService {
         });
       })
       .catch((error) => {
-        window.alert(error.message);
+        console.log('Fehler beim Login', error);
       });
   }
   // Sign up with email/password
@@ -65,8 +70,24 @@ export class AuthService {
         this.router.navigate(['chooseAvatar']);
       }
     } catch (error) {
-      window.alert(error);
+      console.log('Fehler beim Registrieren', error);
     }
+  }
+  // Sign In as Guest
+  guestSignIn() {
+    return this.afAuth
+      .signInWithEmailAndPassword('gast@gast.de', 'gast123456')
+      .then((result) => {
+        this.SetUserData(result.user);
+        this.afAuth.authState.subscribe((user) => {
+          if (user) {
+            this.router.navigate(['home']);
+          }
+        });
+      })
+      .catch((error) => {
+        console.log('Fehler:', error);
+      });
   }
 
   // Send email verfificaiton when new user sign up
@@ -103,21 +124,19 @@ export class AuthService {
       `users/${user.uid}`
     );
     userRef
-    .valueChanges()
-    .pipe(take(1))
-    .subscribe((existingUserData) => {
-      // Erstelle ein neues UserData-Objekt, das die bestehenden Daten zusammenführt
-      const userData: User = {
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
-        emailVerified: user.emailVerified,
-        avatar: existingUserData?.avatar || '', // Behalte den vorhandenen Avatar oder setze ein leeres String, falls keiner vorhanden ist
-      };
+      .valueChanges()
+      .pipe(take(1))
+      .subscribe((existingUserData) => {
+        const userData: User = {
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName || 'Gast',
+          emailVerified: user.emailVerified,
+          avatar: existingUserData?.avatar || '',
+        };
 
-      // Führe das Update aus
-      userRef.set(userData, { merge: true });
-    });
+        userRef.set(userData, { merge: true });
+      });
   }
   // Sign out
   SignOut() {
