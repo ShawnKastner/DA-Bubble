@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { DialogSuccessSignUpMessageComponent } from '../dialog-success-sign-up-message/dialog-success-sign-up-message.component';
 
 @Component({
   selector: 'app-choose-avatar',
@@ -49,6 +51,7 @@ export class ChooseAvatarComponent implements OnInit {
     private firestore: AngularFirestore,
     private afAuth: AngularFireAuth,
     private router: Router,
+    private dialog: MatDialog,
     public authService: AuthService
   ) {}
 
@@ -119,7 +122,13 @@ export class ChooseAvatarComponent implements OnInit {
         }
       }
     });
-    this.router.navigateByUrl('/');
+    this.dialog.open(DialogSuccessSignUpMessageComponent, {
+      panelClass: 'signUp-success-dialog',
+    });
+    setTimeout(() => {
+      this.dialog.closeAll();
+      this.router.navigateByUrl('/');
+    }, 2000);
   }
 
   /**
@@ -141,8 +150,6 @@ export class ChooseAvatarComponent implements OnInit {
       reader.onload = (e: any) => {
         this.selectedProfileImage = selectedFile;
         this.showSelectedProfileImage = e.target.result;
-        // Hier können Sie zusätzlichen Code ausführen, um das ausgewählte Bild oben anzuzeigen oder anderweitig zu verarbeiten.
-        // dataURL enthält die Daten-URL, die Sie verwenden können, wenn Sie die Daten-URL-Version des Bildes benötigen.
       };
       reader.readAsDataURL(selectedFile);
     }

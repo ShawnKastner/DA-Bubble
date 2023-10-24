@@ -58,6 +58,7 @@ import { NewMessageComponent } from './components/new-message/new-message.compon
 import { DialogErrorLoginComponent } from './components/dialog-error-login/dialog-error-login.component';
 import { DialogChangeSuccessPasswordComponent } from './components/dialog-change-success-password/dialog-change-success-password.component';
 import { DialogSendResetMailSuccessComponent } from './components/dialog-send-reset-mail-success/dialog-send-reset-mail-success.component';
+import { DialogSuccessSignUpMessageComponent } from './components/dialog-success-sign-up-message/dialog-success-sign-up-message.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { DialogSendResetMailSuccessComponent } from './components/dialog-send-re
     DialogErrorLoginComponent,
     DialogChangeSuccessPasswordComponent,
     DialogSendResetMailSuccessComponent,
+    DialogSuccessSignUpMessageComponent,
   ],
   imports: [
     provideFirebaseApp(() => initializeApp(environment.firebase)),

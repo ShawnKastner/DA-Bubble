@@ -138,7 +138,9 @@ export class AuthService {
       .sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
         this.sendResetMailSuccess('500ms', '500ms');
-        this.router.navigate(['/']);
+        setTimeout(() => {
+          this.router.navigate(['']);
+        }, 2000);
       })
       .catch((error) => {
         console.log('Fehler beim senden der E-mail:', error);
@@ -220,6 +222,7 @@ export class AuthService {
     this.dialog.open(DialogSendResetMailSuccessComponent, {
       enterAnimationDuration,
       exitAnimationDuration,
+      panelClass: 'send-mail-dialog',
     });
   }
 }
