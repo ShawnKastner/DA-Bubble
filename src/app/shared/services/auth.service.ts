@@ -4,16 +4,18 @@ import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
-import * as auth from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import {
   Auth,
+  GoogleAuthProvider,
   authState,
   getAuth,
-  signInAnonymously,
+  signInWithPopup,
 } from '@angular/fire/auth';
 import { take } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogErrorLoginComponent } from 'src/app/components/dialog-error-login/dialog-error-login.component';
 @Injectable({
   providedIn: 'root',
 })
@@ -26,7 +28,8 @@ export class AuthService {
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
     public ngZone: NgZone, // NgZone service to remove outside scope warning
-    private auth: Auth
+    private auth: Auth,
+    private dialog: MatDialog
   ) {
     /* Saving user data in localstorage when 
     logged in and setting up null when logged out */
@@ -42,20 +45,18 @@ export class AuthService {
     });
   }
   // Sign in with email/password
-  SignIn(email: string, password: string) {
-    return this.afAuth
-      .signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        this.SetUserData(result.user);
-        this.afAuth.authState.subscribe((user) => {
-          if (user) {
-            this.router.navigate(['home']);
-          }
-        });
-      })
-      .catch((error) => {
-        console.log('Fehler beim Login', error);
-      });
+  async SignIn(email: string, password: string) {
+    try {
+      const result = await this.afAuth.signInWithEmailAndPassword(
+        email,
+        password
+      );
+      this.SetUserData(result.user);
+      this.router.navigate(['home']);
+    } catch (error) {
+      console.log('Fehler beim Anmelden:', error);
+      this.loginErrorMsg('500ms', '500ms');
+    }
   }
   // Sign up with email/password
   async SignUp(email: string, password: string, displayName: string) {
@@ -66,7 +67,7 @@ export class AuthService {
       );
       if (result.user) {
         await result.user.updateProfile({ displayName: displayName });
-        await this.SetUserData(result.user); // Warte auf die Speicherung der Benutzerdaten
+        this.SetUserData(result.user); // Warte auf die Speicherung der Benutzerdaten
         this.router.navigate(['chooseAvatar']);
       }
     } catch (error) {
@@ -78,15 +79,46 @@ export class AuthService {
     return this.afAuth
       .signInWithEmailAndPassword('gast@gast.de', 'gast123456')
       .then((result) => {
-        this.SetUserData(result.user);
-        this.afAuth.authState.subscribe((user) => {
-          if (user) {
-            this.router.navigate(['home']);
-          }
-        });
+        if (result.user) {
+          const displayName = result.user.displayName || 'Gast';
+
+          result.user.updateProfile({ displayName });
+
+          this.SetUserData(result.user);
+          this.afAuth.authState.subscribe((user) => {
+            if (user) {
+              this.router.navigate(['home']);
+            }
+          });
+        } else {
+          console.log('Benutzerdaten nicht verfügbar.');
+        }
       })
       .catch((error) => {
-        console.log('Fehler:', error);
+        console.log('Fehler beim Login als Gast:', error);
+      });
+  }
+
+  signInWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        if (credential) {
+          this.SetUserData(result.user);
+          this.afAuth.authState.subscribe((user) => {
+            if (user) {
+              this.router.navigate(['home']);
+            }
+          });
+        } else {
+          console.error('Kein Credential gefunden');
+        }
+      })
+      .catch((error) => {
+        console.log('Fehler beim Login mit Google', error);
       });
   }
 
@@ -141,27 +173,36 @@ export class AuthService {
   }
   // Sign out
   SignOut() {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (user.uid) {
-      const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-        `users/${user.uid}`
-      );
-      userRef
-        .update({ activeState: 'Offline' })
-        .then(() => {
-          this.afAuth.signOut().then(() => {
-            localStorage.removeItem('user');
-            this.router.navigate(['/']);
+    return this.afAuth.signOut().then(() => {
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      if (user.uid) {
+        const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+          `users/${user.uid}`
+        );
+        userRef
+          .update({ activeState: 'Offline' })
+          .then(() => {
+            this.afAuth.signOut().then(() => {
+              localStorage.removeItem('user');
+              this.router.navigate(['/']);
+            });
+          })
+          .catch((error) => {
+            console.log('Fehler beim Aktualisieren des activeState:', error);
           });
-        })
-        .catch((error) => {
-          console.log('Fehler beim Aktualisieren des activeState:', error);
-        });
-    } else {
-      this.afAuth.signOut().then(() => {
         localStorage.removeItem('user');
         this.router.navigate(['/']);
-      });
-    }
+      }
+    });
+  }
+
+  loginErrorMsg(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
+    this.dialog.open(DialogErrorLoginComponent, {
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
   }
 }

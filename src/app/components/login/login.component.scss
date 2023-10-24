@@ -180,3 +180,8 @@ mat-card {
     height: 45px;
   }
 }
+
+button[disabled] {
+  cursor: not-allowed !important;
+  opacity: 0.6;
+}

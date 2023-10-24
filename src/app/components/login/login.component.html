@@ -1,5 +1,5 @@
 <div class="logo-container">
-  <img src="assets/img/daBubble-logo.png">
+  <img src="assets/img/daBubble-logo.png" />
 </div>
 
 <div class="sign-up-container">
@@ -20,26 +20,40 @@
           class="background-email"
           placeholder="beispielname@email.com"
           type="email"
-          #userEmail
+          required
+          [(ngModel)]="email"
+          #userEmail="ngModel"
         />
         <input
           class="background-password"
           placeholder="Passwort"
           type="password"
-          #userPassword
+          required
+          [(ngModel)]="password"
+          #userPassword="ngModel"
         />
         <a [routerLink]="'sendResetMail'" href="#">Passwort vergessen?</a>
       </div>
     </mat-card-content>
     <div class="divider">ODER</div>
     <div>
-      <button class="login-with-google-btn">
+      <button
+        (click)="authService.signInWithGoogle()"
+        class="login-with-google-btn"
+      >
         <img src="assets/img/Google.png" />Anmelden mit Google
       </button>
     </div>
     <div class="login-btn-container">
-      <button (click)="authService.SignIn(userEmail.value, userPassword.value)" class="login-btn">Anmelden</button
-      ><button (click)="authService.guestSignIn()" class="guest-btn">Gäste-Login</button>
+      <button
+        (click)="authService.SignIn(userEmail.value, userPassword.value)"
+        [disabled]="!userEmail.valid || !userPassword.valid"    
+        class="login-btn"
+      >
+        Anmelden</button
+      ><button (click)="authService.guestSignIn()" class="guest-btn">
+        Gäste-Login
+      </button>
     </div>
   </mat-card>
 </div>
