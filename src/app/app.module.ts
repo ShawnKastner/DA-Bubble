@@ -56,6 +56,7 @@ import { DirectMessagesComponent } from './components/direct-messages/direct-mes
 import { ThreadsComponent } from './components/channel/threads/threads.component';
 import { NewMessageComponent } from './components/new-message/new-message.component';
 import { DialogErrorLoginComponent } from './components/dialog-error-login/dialog-error-login.component';
+import { DialogChangeSuccessPasswordComponent } from './components/dialog-change-success-password/dialog-change-success-password.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { DialogErrorLoginComponent } from './components/dialog-error-login/dialo
     ThreadsComponent,
     NewMessageComponent,
     DialogErrorLoginComponent,
+    DialogChangeSuccessPasswordComponent,
   ],
   imports: [
     provideFirebaseApp(() => initializeApp(environment.firebase)),

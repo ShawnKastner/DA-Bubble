@@ -131,7 +131,7 @@ export class AuthService {
   //     });
   // }
 
-  // Reset Forggot password
+  // Send forgot password e-mail
   ForgotPassword(passwordResetEmail: string) {
     return this.afAuth
       .sendPasswordResetEmail(passwordResetEmail)
@@ -140,9 +140,14 @@ export class AuthService {
         this.router.navigate(['/']);
       })
       .catch((error) => {
-        window.alert(error);
+        console.log('Fehler beim senden der E-mail:', error);
       });
   }
+
+  changePassword(oobCode: string, newPassword: string): Promise<void> {
+    return this.afAuth.confirmPasswordReset(oobCode, newPassword);
+  }
+
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user')!);
