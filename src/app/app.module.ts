@@ -57,6 +57,7 @@ import { ThreadsComponent } from './components/channel/threads/threads.component
 import { NewMessageComponent } from './components/new-message/new-message.component';
 import { DialogErrorLoginComponent } from './components/dialog-error-login/dialog-error-login.component';
 import { DialogChangeSuccessPasswordComponent } from './components/dialog-change-success-password/dialog-change-success-password.component';
+import { DialogSendResetMailSuccessComponent } from './components/dialog-send-reset-mail-success/dialog-send-reset-mail-success.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { DialogChangeSuccessPasswordComponent } from './components/dialog-change
     NewMessageComponent,
     DialogErrorLoginComponent,
     DialogChangeSuccessPasswordComponent,
+    DialogSendResetMailSuccessComponent,
   ],
   imports: [
     provideFirebaseApp(() => initializeApp(environment.firebase)),

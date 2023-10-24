@@ -16,6 +16,7 @@ import {
 import { take } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogErrorLoginComponent } from 'src/app/components/dialog-error-login/dialog-error-login.component';
+import { DialogSendResetMailSuccessComponent } from 'src/app/components/dialog-send-reset-mail-success/dialog-send-reset-mail-success.component';
 @Injectable({
   providedIn: 'root',
 })
@@ -136,7 +137,7 @@ export class AuthService {
     return this.afAuth
       .sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
-        window.alert('Password reset email sent, check your inbox.');
+        this.sendResetMailSuccess('500ms', '500ms');
         this.router.navigate(['/']);
       })
       .catch((error) => {
@@ -144,6 +145,7 @@ export class AuthService {
       });
   }
 
+  // function to reset your password
   changePassword(oobCode: string, newPassword: string): Promise<void> {
     return this.afAuth.confirmPasswordReset(oobCode, newPassword);
   }
@@ -206,6 +208,16 @@ export class AuthService {
     exitAnimationDuration: string
   ): void {
     this.dialog.open(DialogErrorLoginComponent, {
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
+
+  sendResetMailSuccess(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
+    this.dialog.open(DialogSendResetMailSuccessComponent, {
       enterAnimationDuration,
       exitAnimationDuration,
     });
