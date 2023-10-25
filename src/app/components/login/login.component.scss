@@ -252,19 +252,17 @@ button[disabled] {
   }
 
   .daBubble-intro {
-    animation: intro 1.5s linear forwards;
-
     img {
       height: 45px;
       position: absolute;
       top: 25px;
       left: 50%;
-      animation: intro-img 1.5s linear forwards;
+      animation: intro-img-mobile 1.5s linear forwards;
     }
   }
 }
 
-@keyframes intro-img {
+@keyframes intro-img-mobile {
   0% {
     top: 50%;
     left: 50%;
