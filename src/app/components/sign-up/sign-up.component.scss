@@ -133,14 +133,6 @@ mat-card {
     left: 0;
     right: 0;
   }
-
-  .sign-up-container {
-    top: unset;
-    align-items: center;
-    bottom: 20px;
-    right: 0;
-    left: 0;
-  }
 }
 
 @media screen and (max-width: 540px) {
@@ -162,10 +154,6 @@ mat-card {
 
   .logo-container {
     top: 17px;
-  }
-
-  .sign-up-container {
-    bottom: 15px;
   }
 }
 
@@ -192,10 +180,6 @@ mat-card {
 
   .logo-container {
     top: 25px;
-  }
-
-  .sign-up-container {
-    bottom: 20px;
   }
 }
 
@@ -300,10 +284,6 @@ mat-card {
 
   .logo-container {
     top: 7px;
-  }
-
-  .sign-up-container {
-    bottom: 0;
   }
 }
 
