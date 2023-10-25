@@ -137,8 +137,9 @@ export class AuthService {
     return this.afAuth
       .sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
-        this.sendResetMailSuccess('500ms', '500ms');
+        this.sendResetMailSuccess();
         setTimeout(() => {
+          this.dialog.closeAll();
           this.router.navigate(['']);
         }, 2000);
       })
@@ -215,13 +216,8 @@ export class AuthService {
     });
   }
 
-  sendResetMailSuccess(
-    enterAnimationDuration: string,
-    exitAnimationDuration: string
-  ): void {
+  sendResetMailSuccess(): void {
     this.dialog.open(DialogSendResetMailSuccessComponent, {
-      enterAnimationDuration,
-      exitAnimationDuration,
       panelClass: 'send-mail-dialog',
     });
   }

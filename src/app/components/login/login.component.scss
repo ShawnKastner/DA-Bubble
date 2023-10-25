@@ -228,3 +228,287 @@ button[disabled] {
     height: 45px;
   }
 }
+
+@media screen and (max-width: 1000px) {
+  mat-card {
+    width: 590px;
+  }
+
+  .logo-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    top: 25px;
+    left: 0;
+    right: 0;
+  }
+
+  .sign-up-container {
+    top: unset;
+    align-items: center;
+    bottom: 20px;
+    right: 0;
+    left: 0;
+  }
+
+  .daBubble-intro {
+    animation: intro 1.5s linear forwards;
+
+    img {
+      height: 45px;
+      position: absolute;
+      top: 25px;
+      left: 50%;
+      animation: intro-img 1.5s linear forwards;
+    }
+  }
+}
+
+@keyframes intro-img {
+  0% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 184px;
+  }
+  100% {
+    top: 25px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 45px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  mat-card {
+    height: 565px;
+    width: 530px;
+    gap: 30px;
+
+    mat-card-header {
+      h1 {
+        margin: unset;
+      }
+    }
+
+    mat-card-subtitle {
+      color: black;
+    }
+  }
+
+  .logo-container {
+    top: 17px;
+  }
+
+  .sign-up-container {
+    bottom: 15px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  mat-card {
+    height: 560px;
+    width: 530px;
+    gap: 25px;
+
+    mat-card-content {
+      .login-form {
+        gap: 20px;
+
+        input {
+          width: 365px;
+        }
+      }
+    }
+
+    .login-with-google-btn {
+      width: 465px;
+    }
+  }
+
+  .logo-container {
+    top: 25px;
+  }
+
+  .sign-up-container {
+    bottom: 20px;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  mat-card {
+    height: 495px;
+    width: 345px;
+    gap: 22px;
+
+    mat-card-header {
+      margin-top: 5px;
+
+      h1 {
+        font-size: 2.5rem;
+      }
+    }
+
+    mat-card-subtitle {
+      font-size: 0.9rem;
+    }
+
+    mat-card-content {
+      .login-form {
+        gap: 15px;
+
+        input {
+          width: 240px;
+        }
+      }
+    }
+
+    .login-with-google-btn {
+      width: 340px;
+    }
+
+    .divider::before,
+    .divider::after {
+      width: 140px;
+    }
+  }
+
+  .logo-container {
+    top: 13px;
+  }
+
+  .sign-up-container {
+    bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  mat-card {
+    height: 495px;
+    width: 345px;
+    gap: 22px;
+
+    mat-card-header {
+      margin-top: 5px;
+
+      h1 {
+        font-size: 2.5rem;
+        margin: unset;
+      }
+    }
+
+    mat-card-content {
+      .login-form {
+        gap: 15px;
+
+        input {
+          width: 240px;
+        }
+      }
+    }
+
+    .login-with-google-btn {
+      width: 340px;
+    }
+
+    .divider::before,
+    .divider::after {
+      width: 140px;
+    }
+  }
+
+  .logo-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    top: 13px;
+    left: 0;
+    right: 0;
+  }
+
+  .sign-up-container {
+    bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  mat-card {
+    height: 360px;
+    width: 305px;
+    gap: 5px;
+
+    mat-card-header {
+      margin-top: 5px;
+
+      h1 {
+        font-size: 2rem;
+        margin: unset;
+      }
+    }
+
+    mat-card-subtitle {
+      font-size: 0.7rem;
+    }
+
+    mat-card-content {
+      .login-form {
+        input {
+          width: 200px;
+          height: 5px;
+        }
+      }
+    }
+
+    .login-with-google-btn {
+      width: 300px;
+      height: 35px;
+    }
+
+    .divider::before,
+    .divider::after {
+      width: 120px;
+    }
+  }
+
+  .logo-container {
+    top: 7px;
+  }
+
+  .sign-up-container {
+    bottom: 0;
+  }
+}
+
+@media screen and (max-width: 280px) {
+  mat-card {
+    height: 445px;
+    width: 270px;
+    gap: 12px;
+
+    mat-card-content {
+      .login-form {
+        input {
+          width: 165px;
+        }
+      }
+    }
+
+    .login-with-google-btn {
+      width: 265px;
+      height: 50px;
+    }
+
+    .divider::before,
+    .divider::after {
+      width: 100px;
+    }
+  }
+
+  .logo-container {
+    top: 28px;
+  }
+
+  .sign-up-container {
+    bottom: 25px;
+  }
+}
