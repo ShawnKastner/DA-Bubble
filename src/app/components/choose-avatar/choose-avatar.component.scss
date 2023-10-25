@@ -18,6 +18,7 @@ mat-card {
     margin-top: 18px;
 
     h1 {
+      text-align: center;
       color: #444df2;
       font-size: 2.8rem;
       font-weight: 700;
@@ -139,5 +140,157 @@ mat-card-content {
 
   img {
     height: 45px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .logo-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    top: 25px;
+    left: 0;
+    right: 0;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  mat-card {
+    width: 530px;
+  }
+
+  .logo-container {
+    top: 7px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  mat-card {
+    width: 475px;
+
+    .back-arrow {
+      top: 15px;
+      left: 15px;
+    }
+  }
+}
+
+@media screen and (max-width: 414px) {
+  mat-card {
+    height: 495px;
+    width: 345px;
+
+    mat-card-header {
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  .avatar-and-name {
+    img {
+      height: 100px;
+      width: 100px;
+    }
+  }
+
+  .list-of-avatars {
+    span {
+      font-size: 1rem;
+    }
+  }
+
+  .avatars {
+    img {
+      width: 40px;
+    }
+  }
+
+  button {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .logo-container {
+    top: 7px;
+  }
+
+  button {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  mat-card {
+    height: 370px;
+    width: 305px;
+    gap: unset;
+
+    mat-card-header {
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  mat-card-content {
+    gap: 5px;
+  }
+
+  .avatar-and-name {
+    span {
+      font-size: 1rem;
+    }
+
+    img {
+      height: 75px;
+      width: 75px;
+    }
+  }
+
+  .logo-container {
+    top: 5px;
+  }
+
+  .list-of-avatars {
+    span {
+      font-size: 1rem;
+    }
+  }
+
+  .avatars {
+    img {
+      width: 30px;
+    }
+  }
+
+  .choose-own-image {
+    span {
+      font-size: 0.8rem;
+    }
+
+    button {
+      font-size: 1rem;
+      padding: 0px 25px;
+    }
+  }
+}
+
+@media screen and (max-width: 280px) {
+  mat-card {
+    height: 500px;
+    width: 270px;
+  }
+
+  .avatar-and-name {
+    img {
+      height: 120px;
+      width: 120px;
+    }
+  }
+
+  .logo-container {
+    top: 15px;
   }
 }
