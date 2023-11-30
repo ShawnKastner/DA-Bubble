@@ -157,3 +157,22 @@ mat-selection-list {
   flex-direction: column;
   gap: 15px;
 }
+
+.header-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .side-menu {
+    border-radius: unset;
+    padding: 20px;
+  }
+
+  .header {
+    display: none;
+  }
+
+  .header-mobile {
+    display: block;
+  }
+}

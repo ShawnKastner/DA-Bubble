@@ -31,3 +31,30 @@
   display: flex;
   gap: 25px;
 }
+
+.logo-and-profile-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .router-outlet,
+  .search-and-profile,
+  .daBubble-logo {
+    display: none;
+  }
+
+  .logo-and-profile-mobile {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 16px;
+
+    img {
+      height: 45px;
+    }
+  }
+
+  .main-content {
+    top: unset;
+    margin: unset;
+  }
+}

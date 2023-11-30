@@ -23,3 +23,20 @@
     transition: ease-in-out 125ms;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .profile-container {
+    span {
+      display: none;
+    }
+
+    img {
+      height: 50px;
+      width: 50px;
+    }
+
+    mat-icon {
+      display: none;
+    }
+  }
+}

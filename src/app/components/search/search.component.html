@@ -1,8 +1,15 @@
 <div class="search-bar">
   <input
+    class="search-input-desk"
     [(ngModel)]="searchService.searchText"
     (input)="search()"
     placeholder="Code learning durchsuchen"
+  />
+  <input
+    class="search-input-mobile"
+    [(ngModel)]="searchService.searchText"
+    (input)="search()"
+    placeholder="Gehe zu..."
   />
   <div
     *ngIf="searchService.searchText"
@@ -14,7 +21,8 @@
     >
       <ng-container *ngIf="result.displayName">
         <span (click)="openUserDetails(result)">
-          Benutzer: <span style="color: blue">{{ result.displayName }}</span></span
+          Benutzer:
+          <span style="color: blue">{{ result.displayName }}</span></span
         >
       </ng-container>
       <ng-container *ngIf="result.channelMessage">
