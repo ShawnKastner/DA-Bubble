@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { User } from '../services/user';
+import { User } from 'src/app/components/_core/interfaces/user';
 import {
   AngularFirestore,
   AngularFirestoreDocument,

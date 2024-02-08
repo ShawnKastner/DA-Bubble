@@ -4,8 +4,8 @@ import {
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
 import { Observable, map, take } from 'rxjs';
-import { Channel } from 'src/app/models/channel.model';
-import { Message } from 'src/app/models/message.model';
+import { Channel } from 'src/app/components/_core/models/channel.model';
+import { Message } from 'src/app/components/_core/models/message.model';
 import { AuthService } from './auth.service';
 import { AddUsersDialogComponent } from 'src/app/components/side-menu/add-channel-dialog/add-users-dialog/add-users-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -34,7 +34,7 @@ export class ChannelService {
     private firestore: AngularFirestore,
     private authService: AuthService,
     private dialog: MatDialog,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
   ) {
     this.channelsCollection = this.firestore.collection<Channel>('channels');
   }

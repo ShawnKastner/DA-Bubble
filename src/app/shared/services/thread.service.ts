@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthService } from './auth.service';
-import { Message } from 'src/app/models/message.model';
+import { Message } from 'src/app/components/_core/models/message.model';
 import { ChannelService } from './channel.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 

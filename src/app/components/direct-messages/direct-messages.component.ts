@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, map, switchMap, tap } from 'rxjs';
-import { privateMessage } from 'src/app/models/private-chat';
+import { privateMessage } from 'src/app/components/_core/interfaces/private-chat';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ChannelService } from 'src/app/shared/services/channel.service';
 import { ChatListControlService } from 'src/app/shared/services/chat-list-control.service';

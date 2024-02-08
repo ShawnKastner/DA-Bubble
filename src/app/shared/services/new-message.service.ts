@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ChannelService } from './channel.service';
 import { AuthService } from './auth.service';
-import { Message } from 'src/app/models/message.model';
+import { Message } from 'src/app/components/_core/models/message.model';
 import { Observable, map } from 'rxjs';
 import { DirectMessagesService } from './direct-messages.service';
 

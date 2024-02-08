@@ -3,10 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddChannelDialogComponent } from './add-channel-dialog/add-channel-dialog.component';
 import { ChannelService } from 'src/app/shared/services/channel.service';
 import { Observable, of, switchMap } from 'rxjs';
-import { Channel } from 'src/app/models/channel.model';
+import { Channel } from 'src/app/components/_core/models/channel.model';
 import { DirectMessagesService } from 'src/app/shared/services/direct-messages.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { User } from 'src/app/shared/services/user';
+import { User } from 'src/app/components/_core/interfaces/user';
 import { ChatListControlService } from 'src/app/shared/services/chat-list-control.service';
 
 @Component({

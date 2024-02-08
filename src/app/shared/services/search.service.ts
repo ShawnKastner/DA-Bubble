@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Channel } from 'src/app/models/channel.model';
-import { Message } from 'src/app/models/message.model';
-import { User } from './user';
+import { Channel } from 'src/app/components/_core/models/channel.model';
+import { Message } from 'src/app/components/_core/models/message.model';
+import { User } from 'src/app/components/_core/interfaces/user';
 
 @Injectable({
   providedIn: 'root',

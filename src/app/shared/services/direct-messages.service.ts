@@ -10,9 +10,9 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { Observable, concatMap, map, take } from 'rxjs';
-import { User } from './user';
+import { User } from 'src/app/components/_core/interfaces/user';
 import { UsersService } from './users.service';
-import { PrivateChat, privateMessage } from 'src/app/models/private-chat';
+import { PrivateChat, privateMessage } from 'src/app/components/_core/interfaces/private-chat';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Injectable({

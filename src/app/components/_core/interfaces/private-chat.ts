@@ -1,5 +1,4 @@
-import { User } from '../shared/services/user';
-import { Timestamp } from 'firebase/firestore';
+import { User } from 'src/app/components/_core/interfaces/user';
 
 export interface PrivateChat {
     id: string;
