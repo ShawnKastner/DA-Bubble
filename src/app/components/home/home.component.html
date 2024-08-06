@@ -4,17 +4,22 @@
   <app-profile></app-profile>
 </div>
 <div class="logo-and-profile-mobile">
-  <img src="assets/img/daBubble-logo.png">
+  <img *ngIf="!isChannelOrChatActive" src="assets/img/daBubble-logo.png" />
+  <div class="mobile-workspace-container" *ngIf="isChannelOrChatActive">
+    <mat-icon class="arrow-left-btn" (click)="backToSideMenu()">chevron_left</mat-icon>
+    <img src="assets/img/Workspace-logo.png" />
+    <span>Code learning</span>
+  </div>
   <app-profile></app-profile>
 </div>
 
 <div class="main-content">
   <div class="side-menu-container">
-    <app-side-menu></app-side-menu>
+    <app-side-menu [class.d-none]="isChannelOrChatActive"></app-side-menu>
   </div>
 
   <div class="router-outlet" [class.gap-25]="isThreadRouteActive()">
-    <router-outlet></router-outlet>
+    <router-outlet [class.hide-mobile]="isChannelOrChatActive"></router-outlet>
     <app-threads *ngIf="isThreadRouteActive()"></app-threads>
   </div>
 </div>

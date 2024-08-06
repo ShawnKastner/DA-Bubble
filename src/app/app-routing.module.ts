@@ -37,7 +37,7 @@ const routes: Routes = [
         component: NewMessageComponent
       },
       {
-        path: ':id',
+        path: 'channel/:id',
         component: ChannelComponent,
         children: [
           {

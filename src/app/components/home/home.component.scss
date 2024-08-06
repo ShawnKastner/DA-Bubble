@@ -36,8 +36,7 @@
   display: none;
 }
 
-@media screen and (max-width: 600px) {
-  .router-outlet,
+@media screen and (max-width: 900px) {
   .search-and-profile,
   .daBubble-logo {
     display: none;
@@ -54,7 +53,23 @@
   }
 
   .main-content {
-    top: unset;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
     margin: unset;
+    gap: unset;
+  }
+
+  .mobile-workspace-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .arrow-left-btn {
+    cursor: pointer;
   }
 }

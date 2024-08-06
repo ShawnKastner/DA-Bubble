@@ -15,7 +15,6 @@ export class AddMemberDialogComponent implements OnInit {
   currentChannelName!: string;
   currentChannelID!: string;
   allUsers!: Observable<any[]>;
-  allChannelMembers!: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -31,7 +30,7 @@ export class AddMemberDialogComponent implements OnInit {
     this.allUsers = this.directMessageService.getAllUsers();
     this.channelService.getAllChannelMembers(this.currentChannelID);
   }
-  
+
   closeDialog() {
     this.channelService.selectedUsers = [];
     this.dialogRef.close();
@@ -53,9 +52,9 @@ export class AddMemberDialogComponent implements OnInit {
     selectedUsers.forEach((userName) => {
       const userData = {
         displayName: userName,
-        avatar: this.channelService.userAvatars[userName], 
+        avatar: this.channelService.userAvatars[userName],
         email: this.channelService.userEmails[userName],
-        uid:  this.channelService.userIds[userName],
+        uid: this.channelService.userIds[userName],
       };
       this.firestore
         .collection('channels')

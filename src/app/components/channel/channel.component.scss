@@ -532,3 +532,55 @@
 .bubble-end {
   justify-content: flex-end;
 }
+
+@media (max-width: 460px) {
+  .answer-count-container {
+    .last-answer {
+      font-size: 0.8rem;
+    }
+
+    .answer-count {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+@media(max-width: 420px) {
+  .members-preview {
+    display: none;
+  }
+
+  .answer-count-container {
+    .last-answer {
+      font-size: 0.7rem;
+    }
+
+    .answer-count {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .answer-count-container {
+    .last-answer {
+      font-size: 0.6rem;
+    }
+
+    .answer-count {
+      font-size: 0.7rem;
+    }
+  }
+}
+
+@media (max-width: 365px) {
+  .answer-count-container {
+    .last-answer {
+      font-size: 0.5rem;
+    }
+
+    .answer-count {
+      font-size: 0.6rem;
+    }
+  }
+}

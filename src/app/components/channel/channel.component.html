@@ -1,4 +1,4 @@
-<div class="channel-content">
+<div [class.hide-mobile]="isThreadActive" class="channel-content">
   <div class="header">
     <div
       (click)="openChannelDetails()"
@@ -87,6 +87,7 @@
                 >add_reaction</mat-icon
               >
               <mat-icon
+                [matBadge]="message.answerCount"
                 class="close-btn"
                 (click)="
                   threadService.createThreadChat(

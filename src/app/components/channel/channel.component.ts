@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ChannelService } from 'src/app/shared/services/channel.service';
 import { AddMemberDialogComponent } from './add-member-dialog/add-member-dialog.component';
@@ -10,6 +10,7 @@ import { ChannelDetailsDialogComponent } from './channel-details-dialog/channel-
 import { ThreadService } from 'src/app/shared/services/thread.service';
 import { TextEditorFunctionsService } from 'src/app/shared/services/text-editor-functions.service';
 import { EmojiService } from 'src/app/shared/services/emoji.service';
+import { Subscription, filter, interval } from 'rxjs';
 
 @Component({
   selector: 'app-channel',
@@ -27,11 +28,13 @@ export class ChannelComponent implements OnInit {
   showEditMessage: boolean = false;
   editMsg: boolean = false;
   showReactionUsers: boolean = false;
+  private resizeSubscription: Subscription | undefined;
 
   constructor(
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private firestore: AngularFirestore,
+    private router: Router,
     public authService: AuthService,
     public channelService: ChannelService,
     public threadService: ThreadService,
@@ -39,6 +42,11 @@ export class ChannelComponent implements OnInit {
     public emojiService: EmojiService
   ) {}
 
+  ngOnDestroy() {
+    if (this.resizeSubscription) {
+      this.resizeSubscription.unsubscribe();
+    }
+  }
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.currentChannelID = params['id'];
@@ -46,6 +54,14 @@ export class ChannelComponent implements OnInit {
       this.getChannelMessages();
       this.getMemberNumber();
       this.channelService.getAllChannelMembers(this.currentChannelID);
+    });
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.updateActiveState();
+      });
+    this.resizeSubscription = interval(500).subscribe(() => {
+      this.updateActiveState();
     });
   }
 
@@ -247,5 +263,12 @@ export class ChannelComponent implements OnInit {
 
   showUsersWhoReacted(reaction: any) {
     reaction.showUsers = !reaction.showUsers;
+  }
+
+  isThreadActive: boolean = false;
+
+  updateActiveState() {
+    const url = this.router.url;
+    this.isThreadActive = window.innerWidth < 900 && url.includes('/thread');
   }
 }

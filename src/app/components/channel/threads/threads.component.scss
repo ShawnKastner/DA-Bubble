@@ -261,3 +261,13 @@
   height: 100px !important;
   width: auto !important;
 }
+
+@media(max-width: 900px) {
+  .thread-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+  }
+}

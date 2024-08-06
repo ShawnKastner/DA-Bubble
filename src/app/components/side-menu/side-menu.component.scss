@@ -162,10 +162,12 @@ mat-selection-list {
   display: none;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 900px) {
   .side-menu {
     border-radius: unset;
     padding: 20px;
+    width: 100vw;
+    height: 100%;
   }
 
   .header {

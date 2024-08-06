@@ -198,3 +198,20 @@ body {
 .message-image {
   max-height: 135px;
 }
+
+@media (max-width: 1350px) {
+  .channel-details-dialog {
+    width: auto;
+    height: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .channel-details-dialog {
+    left: 0;
+  }
+
+  .hide-mobile {
+    display: none;
+  }
+}

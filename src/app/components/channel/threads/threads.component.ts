@@ -73,7 +73,7 @@ export class ThreadsComponent implements OnInit, OnDestroy {
   }
 
   closeThread() {
-    this.route.navigateByUrl('/home/' + this.channelService.currentChannel.id);
+    this.route.navigateByUrl('/home/channel/' + this.channelService.currentChannel.id);
   }
 
 

@@ -29,6 +29,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatBadgeModule } from '@angular/material/badge';
 
 //Components
 import { AppRoutingModule } from './app-routing.module';
@@ -116,6 +118,8 @@ import { DialogSuccessSignUpMessageComponent } from './components/dialog-success
     MatMenuModule,
     MatButtonModule,
     MatTooltipModule,
+    MatSidenavModule,
+    MatBadgeModule
   ],
   providers: [],
   bootstrap: [AppComponent],

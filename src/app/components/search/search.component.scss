@@ -49,34 +49,24 @@
   display: none;
 }
 
-@media screen and (max-width: 600px) {
+@media (max-width: 900px) {
   .search-input-desk {
     display: none;
   }
 }
 
-@media screen and (max-width: 320px) {
-  .search-input-mobile {
-    width: 190px !important;
-  }
-}
-
-@media screen and (max-width: 280px) {
-  .search-input-desk {
-    display: none;
-  }
-
+@media (max-width: 900px) {
   .search-bar {
     mat-icon {
       top: 12px;
     }
-  }
 
-  .search-input-mobile {
-    display: block;
-    border: 1px solid rgba(173, 176, 217, 1) !important;
-    padding: 8px 24px !important;
-    border-radius: 42px !important;
-    width: 190px !important;
+    .search-input-mobile {
+      display: block;
+      border: 1px solid rgba(173, 176, 217, 1) !important;
+      padding: 8px 24px !important;
+      border-radius: 42px !important;
+      width: auto;
+    }
   }
 }

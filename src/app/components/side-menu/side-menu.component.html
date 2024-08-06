@@ -34,7 +34,7 @@
           <div
             *ngIf="userIsMemberMap[channel.id]"
             class="align-center channel-names"
-            [routerLink]="channel.id"
+            [routerLink]="'channel/' + channel.id"
           >
             <mat-icon>tag</mat-icon><span>{{ channel.channelName }}</span>
           </div>
