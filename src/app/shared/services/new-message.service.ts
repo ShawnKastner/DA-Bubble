@@ -68,15 +68,22 @@ export class NewMessageService {
     return chatsCollection.snapshotChanges().pipe(
       map((changes) => {
         for (const change of changes) {
-          const chatData = change.payload.doc.data();
+          const chatData = change.payload.doc.data() as {
+            users?: Array<{ displayName?: string }>;
+          };
           const usersArray = chatData.users;
 
           if (Array.isArray(usersArray) && usersArray.length === 2) {
             const user1 = usersArray[0];
             const user2 = usersArray[1];
+            const user1DisplayName = user1?.displayName;
+            const user2DisplayName = user2?.displayName;
+
             if (
-              user1.displayName === displayName ||
-              user2.displayName === displayName
+              (typeof user1DisplayName === 'string' &&
+                user1DisplayName === displayName) ||
+              (typeof user2DisplayName === 'string' &&
+                user2DisplayName === displayName)
             ) {
               return change.payload.doc.id;
             }

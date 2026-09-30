@@ -1,27 +1,73 @@
 # DaBubble
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.2.
+DaBubble ist eine mit Angular 15 und Firebase umgesetzte Chat-Anwendung.
 
-## Development server
+## Voraussetzungen
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Node.js und npm (für Angular 15 am besten eine unterstützte LTS-Version)
+- Ein Firebase-Projekt mit aktivierter Authentication, Cloud Firestore und Storage
 
-## Code scaffolding
+## Lokale Einrichtung
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+1. Abhängigkeiten installieren:
+
+   ```bash
+   npm install
+   ```
+
+2. Die lokale Environment-Datei aus der Vorlage erzeugen:
+
+   ```bash
+   cp src/environments/environment.example.ts src/environments/environment.ts
+   ```
+
+3. In `src/environments/environment.ts` die Werte unter `firebase` durch die
+   Web-App-Konfiguration des eigenen Firebase-Projekts ersetzen. Sie ist in der
+   Firebase Console unter **Projekteinstellungen > Allgemein > Deine Apps > SDK
+   setup and configuration** zu finden.
+
+   Die Datei muss diese Struktur behalten:
+
+   ```ts
+   export const environment = {
+     production: false,
+     firebase: {
+       apiKey: '...',
+       authDomain: '...',
+       projectId: '...',
+       storageBucket: '...',
+       messagingSenderId: '...',
+       appId: '...',
+     },
+   };
+   ```
+
+   `environment.ts` wird absichtlich nicht versioniert. Die Firebase-Web-App-
+   Konfiguration wird zwar an den Browser ausgeliefert und ist kein Ersatz für
+   Firestore-/Storage-Sicherheitsregeln, dennoch gehören dort niemals private
+   Service-Account-Schlüssel oder andere Server-Geheimnisse hinein.
+
+4. Entwicklungsserver starten:
+
+   ```bash
+   npm start
+   ```
+
+   Die Anwendung ist anschließend unter <http://localhost:4200/> erreichbar und
+   wird bei Quellcodeänderungen automatisch neu geladen.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+npm run build
+```
 
-## Running unit tests
+Das Build-Ergebnis wird in `dist/da-bubble/` abgelegt.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Tests
 
-## Running end-to-end tests
+```bash
+npm test
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Die Unit-Tests werden mit Karma ausgeführt.

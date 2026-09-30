@@ -1,5 +1,5 @@
 <div (click)="openProfileLogoutDialog()" class="profile-container" *ngIf="profileDetails">
   <span>{{ profileDetails.displayName }}</span>
-  <img [src]="profileDetails.avatar || 'assets/img/81. Profile.png'">
+  <img [src]="profileDetails?.avatar || 'assets/img/81. Profile.png'">
   <mat-icon>keyboard_arrow_down</mat-icon>
 </div>

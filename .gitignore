@@ -49,3 +49,4 @@ src/environments/environments.ts
 .runtimeconfig.json
 
 /src/environments/*.ts
+!/src/environments/environment.example.ts
